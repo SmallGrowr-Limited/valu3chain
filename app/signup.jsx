@@ -14,7 +14,7 @@ export default SignUp;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItem: "center",
+    alignItems: "center",
     justifyContent: "center",
   },
 });
