@@ -3,6 +3,9 @@ Welcome to the `Valu3Chain`repository!
 This guide provides instructions on how to collaborate effectively, 
 ensuring a smooth workflow for all team members
 
+## overview
+`Valu3Chain` is a mobile application designed to  facilitate transactions/collaboration and also 
+improve productivity between farmers, extension agents and ecosystem partners.
 
 ## To run the project for development
 
@@ -18,7 +21,7 @@ in a separate branch before being merged into the main repository.
 **Note**
 Please follow the instructions below for a faster review process and to maintain organization.
 
-## Creating a New Branch
+### Creating a New Branch
 1. Pull the latest changes from the master repository, use the following command:
 
 `git checkout master`
@@ -30,16 +33,16 @@ Please follow the instructions below for a faster review process and to maintain
 **Branch Naming:** 
 Use a descriptive branch name, e.g., `feature/login-auth` or `bugfix/fix-header-alignment`.
 
-## Committing Changes
+### Committing Changes
 
- 1. **Stage your changes:**
+1. **Stage your changes:**
 `git add .`
 
-**Commit with a meaningful message:**
+2. **Commit with a meaningful message:**
 `git commit -m "[Short description of the change]"`
 Adhere to the conventional commits format. More information can be found here: https://www.conventionalcommits.org/en/v1.0.0/
 
-**Pushing Changes**
+3. **Pushing Changes**
 Push your branch to the remote repository:
 `git push origin feature/your-feature-name`
 
@@ -51,17 +54,17 @@ Push your branch to the remote repository:
 5. Provide a clear title and description of the changes.
 6. Submit the PR for review.
 
-# Review and Approval
+## Review and Approval
 - All changes must be reviewed by an admin before merging into `master`.
 - A minimum of **one approval** is required before merging.
 - Admins may request modifications or improvements before approving the PR.
 
-# Merging Approved Changes
+## Merging Approved Changes
 1. To ensure your branch is up to date with `master`:
 `git checkout master`
 `git pull origin master`
 
-# Keeping Your Local Repository Updated
+## Keeping Your Local Repository Updated
 Regularly sync your local repository to avoid merge conflicts:
 `git checkout master`
 `git pull origin master`
