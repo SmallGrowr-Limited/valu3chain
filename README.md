@@ -1,7 +1,7 @@
 # Welcome  👋
 Welcome to the `Valu3Chain`repository! 
 This guide provides instructions on how to collaborate effectively, 
-ensuring a smooth workflow for all team members
+ensuring a smooth workflow for all team members. 
 
 ## overview
 `Valu3Chain` is a mobile application designed to  facilitate transactions/collaboration and also 
