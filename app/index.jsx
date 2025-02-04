@@ -17,7 +17,7 @@ export default function Index() {
       setIsFirstLaunch(hasLaunched === null);
 
       if (hasLaunched === null) {
-        router.navigate("/onboarding");
+        router.navigate("/signup");
       } else {
         router.navigate("/home");
       }

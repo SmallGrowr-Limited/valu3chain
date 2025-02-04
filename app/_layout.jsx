@@ -13,7 +13,7 @@ export default function RootLayout() {
       />
       <Stack.Screen
         name="signup"
-        options={{ headerShown: true, title: "Sign up" }}
+        options={{ headerShown: false, title: "Sign up" }}
       />
     </Stack>
   );
