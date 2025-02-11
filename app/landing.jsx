@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import React from 'react'
 
+
 const LandingPage = () => {
   return (
     <SafeAreaView style={styles.container}>
