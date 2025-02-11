@@ -12,8 +12,12 @@ export default function RootLayout() {
         options={{ headerShown: true, title: "Onboarding" }}
       />
       <Stack.Screen
+        name="landing"
+        options={{ headerShown: false, title: "" }}
+      />
+      <Stack.Screen
         name="signup"
-        options={{ headerShown: false, title: "Sign up" }}
+        options={{ headerShown: false, title: "" }}
       />
     </Stack>
   );
