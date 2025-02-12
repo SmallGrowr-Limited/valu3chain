@@ -17,9 +17,9 @@ export default function Index() {
       setIsFirstLaunch(hasLaunched === null);
 
       if (hasLaunched === null) {
-        router.navigate("/signup");
+        router.navigate("/landing");
       } else {
-        router.navigate("/home");
+        router.navigate("/onboarding");
       }
 
       // Hide the splash screen once routing is decided
