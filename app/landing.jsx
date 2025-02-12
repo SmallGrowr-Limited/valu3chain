@@ -7,9 +7,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
+import {useRouter} from "expo-router";
 import image1 from "../assets/images/resources/img_landing1.png";
 
 const LandingPage = () => {
+  const router = useRouter()
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -23,10 +25,10 @@ const LandingPage = () => {
             magni necessitatibus eligendi dolore.
           </Text>
         </View>
-        <TouchableOpacity style={styles.btnSignup}>
+        <TouchableOpacity style={styles.btnSignup} onPress={()=>router.navigate("/auth/signup")}>
           <Text style={{ color: "#fff", fontSize: 16 }}>Create Account</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnLogin}>
+        <TouchableOpacity style={styles.btnLogin} onPress={()=>router.navigate("/auth/login")}>
           <Text style={{ fontSize: 16 }}>Login</Text>
         </TouchableOpacity>
       </View>

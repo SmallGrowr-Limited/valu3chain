@@ -19,7 +19,7 @@ export default function Index() {
       if (hasLaunched === null) {
         router.navigate("/landing");
       } else {
-        router.navigate("/home");
+        router.navigate("/onboarding");
       }
 
       // Hide the splash screen once routing is decided
