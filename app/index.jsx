@@ -15,12 +15,12 @@ export default function Index() {
 
       const hasLaunched = await AsyncStorage.getItem("hasLaunched");
       setIsFirstLaunch(hasLaunched === null);
-
-      if (hasLaunched === null) {
-        router.navigate("/landing");
-      } else {
-        router.navigate("/onboarding");
-      }
+      router.navigate("/onboarding");
+      // if (hasLaunched === null) {
+      //   router.navigate("/landing");
+      // } else {
+      //   router.navigate("/onboarding");
+      // }
 
       // Hide the splash screen once routing is decided
       SplashScreen.hideAsync();

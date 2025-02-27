@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Dimensions } from "react-native";
 import React from "react";
-import Image1 from "../assets/images/resources/img_landing1.png";
+import Image1 from "../assets/images/resources/onboarding11.png";
 import { AntDesign } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
@@ -42,28 +42,31 @@ const styles = StyleSheet.create({
   },
   skip: {
     fontSize: 15,
-    color: "grey",
+    color: "#fff",
     fontWeight: "500",
     marginLeft: width * 0.8,
+    marginTop:  10,
   },
   text: {
-    marginTop: height * 0.35,
-    flexDirection: "column",
-    width: "100%",
-    marginLeft: width * 0.1,
+    // borderWidth:1,
+    flex:1,
+    marginVertical:5,
+    justifyContent:"center",
+    alignItems:"center"
+   
   },
   subtitle: {
     fontSize: 15,
-    color: "grey",
-    fontWeight: "500",
-    width: "80%",
-    marginLeft: width * 0.1,
+    color: "#fff",
+    fontWeight: "400",
+    textAlign:"center"
+    
   },
   title: {
     fontSize: 24,
     color: "#fff",
     fontWeight: "500",
-    marginLeft: width * 0.15,
+    
   },
   buttonContainer: {
     width: 70,
