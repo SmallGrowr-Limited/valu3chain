@@ -8,19 +8,19 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen
           name="index"
-          options={{ headerShown: true, title: "Home" }}
+          options={{ headerShown: false, title: "Home" }}
         />
         <Stack.Screen
           name="onboarding"
-          options={{ headerShown: true, title: "Onboarding" }}
+          options={{ headerShown: false, title: "Onboarding" }}
         />
         <Stack.Screen
           name="onboarding1"
-          options={{ headerShown: true, title: "Onboarding" }}
+          options={{ headerShown: true, title: "" }}
         />
         <Stack.Screen
           name="onboarding2"
-          options={{ headerShown: true, title: "Onboarding" }}
+          options={{ headerShown: true, title: "" }}
         />
         <Stack.Screen
           name="landing"

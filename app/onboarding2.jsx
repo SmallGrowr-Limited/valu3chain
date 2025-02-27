@@ -1,31 +1,37 @@
 import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Dimensions } from "react-native";
 import React from "react";
-import Image1 from "../assets/images/resources/img_landing1.png";
+import {useRouter} from "expo-router";
+import Image1 from "../assets/images/resources/onboarding2.png";
 import { AntDesign } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
 
 const Onboarding2 = () => {
+  const router = useRouter()
   return (
     <ImageBackground source={Image1} style={styles.container}>
       {/* Skip Button */}
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
         <Text style={styles.skip}>Skip</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       {/* Title & Subtitle */}
       <View style={styles.text}>
         <Text style={styles.title}>Anywhere you are</Text>
         <Text style={styles.subtitle}>
-          Access Value3chain easily with our easy-to-use mobile app which delivers exceptional services.
+          Access Value3chain easily with our easy-to-use mobile app which
+          delivers exceptional services.
         </Text>
       </View>
 
       <View style={styles.buttonContainer}>
         <View style={styles.halfColorLeft} />
         <View style={styles.halfColorRight} />
-        <TouchableOpacity style={styles.button}>
-          <Text style={{color: 'white', fontWeight: 500}}>GO</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.navigate("/auth/login")}
+        >
+          <Text style={{ color: "white", fontWeight: 500 }}>GO</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -42,28 +48,28 @@ const styles = StyleSheet.create({
   },
   skip: {
     fontSize: 15,
-    color: "grey",
+    color: "#fff",
     fontWeight: "500",
     marginLeft: width * 0.8,
+    marginTop: 10,
   },
   text: {
-    marginTop: height * 0.35,
-    flexDirection: "column",
-    width: "100%",
-    marginLeft: width * 0.1,
+    // borderWidth:1,
+    flex: 1,
+    marginVertical: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
   subtitle: {
     fontSize: 15,
-    color: "grey",
-    fontWeight: "500",
-    width: "80%",
-    marginLeft: width * 0.1,
+    color: "#fff",
+    fontWeight: "400",
+    textAlign: "center",
   },
   title: {
     fontSize: 24,
     color: "#fff",
     fontWeight: "500",
-    marginLeft: width * 0.15,
   },
   buttonContainer: {
     width: 70,
@@ -73,26 +79,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
     marginTop: height * 0.2,
-    overflow: "hidden", 
+    overflow: "hidden",
   },
   halfColorLeft: {
     position: "absolute",
-    width: "200%", 
+    width: "200%",
     height: "100%",
-    backgroundColor: "white", 
+    backgroundColor: "white",
     left: 0,
     borderTopRightRadius: 50,
-    borderBottomRightRadius: 50, 
+    borderBottomRightRadius: 50,
     borderBottomLeftRadius: 50,
-    borderTopLeftRadius: 50, 
+    borderTopLeftRadius: 50,
   },
   halfColorRight: {
     position: "absolute",
     width: "150%",
     height: "100%",
-    backgroundColor: "grey", 
+    backgroundColor: "grey",
     right: 0,
-    borderRadius: 50 
+    borderRadius: 50,
   },
   button: {
     width: 60,
