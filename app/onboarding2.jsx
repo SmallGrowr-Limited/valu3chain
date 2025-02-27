@@ -1,31 +1,37 @@
 import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Dimensions } from "react-native";
 import React from "react";
+import {useRouter} from "expo-router";
 import Image1 from "../assets/images/resources/onboarding2.png";
 import { AntDesign } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
 
 const Onboarding2 = () => {
+  const router = useRouter()
   return (
     <ImageBackground source={Image1} style={styles.container}>
       {/* Skip Button */}
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
         <Text style={styles.skip}>Skip</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       {/* Title & Subtitle */}
       <View style={styles.text}>
         <Text style={styles.title}>Anywhere you are</Text>
         <Text style={styles.subtitle}>
-          Access Value3chain easily with our easy-to-use mobile app which delivers exceptional services.
+          Access Value3chain easily with our easy-to-use mobile app which
+          delivers exceptional services.
         </Text>
       </View>
 
       <View style={styles.buttonContainer}>
         <View style={styles.halfColorLeft} />
         <View style={styles.halfColorRight} />
-        <TouchableOpacity style={styles.button}>
-          <Text style={{color: 'white', fontWeight: 500}}>GO</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.navigate("/auth/login")}
+        >
+          <Text style={{ color: "white", fontWeight: 500 }}>GO</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
