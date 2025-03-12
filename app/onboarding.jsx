@@ -1,37 +1,41 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, Dimensions } from "react-native";
 import React from "react";
+import {useRouter} from "expo-router";
 import Image1 from "../assets/images/resources/img_landing1.png";
+import bgImage from "../assets/images/resources/bg_black.png";
+
 
 const { width, height } = Dimensions.get('window');
 
 const Onboarding = () => {
+  const router = useRouter()
   return (
-    <View style={styles.container}>
+    <ImageBackground style={styles.container}>
       <Text style={styles.text}>You are</Text>
       <View style={styles.imageContainer}>
-        <TouchableOpacity style={styles.imageContainer1}>      
-           <Image 
-            style={styles.image}
-            alt="Image"
-            source={Image1}
-            />
-            <Text style={styles.imageText}>Agent</Text>
+        <TouchableOpacity
+          style={styles.imageContainer1}
+          onPress={() => router.navigate("/onboarding1")}
+        >
+          <Image style={styles.image} alt="Image" source={Image1} />
+          <Text style={styles.imageText}>Agent</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.imageContainer1}>      
-           <Image 
-            style={[styles.image, {borderColor: 'indigo'}]}
+        <TouchableOpacity
+          style={styles.imageContainer1}
+          onPress={() => router.navigate("/onboarding2")}
+        >
+          <Image
+            style={[styles.image, { borderColor: "indigo" }]}
             alt="Image"
             source={Image1}
-            />
-            <Text style={styles.imageText}>Partner</Text>
+          />
+          <Text style={styles.imageText}>Partner</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>
-          Set up Profile
-        </Text>
+        <Text style={styles.buttonText}>Set up Profile</Text>
       </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -40,7 +44,7 @@ export default Onboarding;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-     alignItems: "center" ,
+    alignItems: "center" ,
     padding : 16
   },
   text: {
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
     fontWeight: 500
   },
   imageContainer: {
-    marginTop: height * 0.08,
+    marginTop: height * 0.15,
     flexDirection: 'row',
     width: '90%',
     paddingHorizontal:20

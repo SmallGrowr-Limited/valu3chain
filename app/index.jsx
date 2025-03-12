@@ -1,6 +1,6 @@
 import { Text, View, ActivityIndicator } from "react-native";
-import React, {useState, useEffect} from "react";
-import {useRouter} from "expo-router";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -45,7 +45,7 @@ export default function Index() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size="large" color="red"/>
+      <ActivityIndicator size="large" color="red" />
     </View>
   );
 }
