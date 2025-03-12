@@ -35,8 +35,8 @@ const BarChartComponent = () => {
       </View>
       <BarChart
         data={data}
-        width={screenWidth - 30}
-        height={220}
+        width={screenWidth - 40}
+        height={230}
         yAxisLabel="₦"
         chartConfig={{
           backgroundColor: "#1cc910",
