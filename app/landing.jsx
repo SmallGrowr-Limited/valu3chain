@@ -11,6 +11,7 @@ import {
 import React from "react";
 import {useRouter} from "expo-router";
 import bgImage from "../assets/images/resources/onboarding2.png";
+import BarChartComponent from "../components/chart";
 
 const {width, height} = Dimensions.get("window")
 
@@ -18,29 +19,23 @@ const LandingPage = () => {
   const router = useRouter()
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground source={bgImage} style={styles.contentWrapper}>
-        <View style={styles.brandContainer}>
-          <Text style={styles.brand}>Valu3Chain</Text>
-          <View style={styles.highlight}>
-            <Text style={styles.highlightText}>Welcome!!</Text>
-            
-          </View>
-        </View>
-        <View style={styles.buttonSection}>
-          <TouchableOpacity
-            style={styles.authButton}
-            onPress={() => router.navigate("/auth/signup")}
-          >
-            <Text style={styles.authButtonText}>Create Account</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.authButton}
-            onPress={() => router.navigate("/auth/login")}
-          >
-            <Text style={styles.authButtonText}>Login</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
+      <View style={styles.brandContainer}>
+        <BarChartComponent />
+      </View>
+      <View style={styles.buttonSection}>
+        <TouchableOpacity
+          style={styles.authButton}
+          onPress={() => router.navigate("/auth/signup")}
+        >
+          <Text style={styles.authButtonText}>Create Account</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.authButton}
+          onPress={() => router.navigate("/auth/login")}
+        >
+          <Text style={styles.authButtonText}>Login</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -56,8 +51,8 @@ const styles = StyleSheet.create({
     marginTop: height * 0.05,
   },
   brandContainer: {
-    flex: 2,
-    marginTop: 20,
+    flex: 1,
+    marginTop: height * 0.06,
     padding: 10,
   },
 
