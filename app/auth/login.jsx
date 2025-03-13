@@ -12,17 +12,24 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../redux/slices/authSlice";
 
 const Login = () => {
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const {loading, error} = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const handleLogin = ()=>{
+    dispatch(login({email, password}))
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,11 +40,11 @@ const Login = () => {
             <View style={styles.formInput}>
               <TextInput
                 style={styles.formControl}
-                value={userName}
+                value={email}
                 placeholder="Email or Phone Number"
                 placeholderTextColor="#aaa"
                 keyboardType="text"
-                onChangeText={(val) => setUserName(val)}
+                onChangeText={(val) => setEmail(val)}
               />
             </View>
 
@@ -60,7 +67,7 @@ const Login = () => {
             </View>
 
             <View style={styles.formInput}>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={handleLogin}>
                 {loading ? (
                   <ActivityIndicator size="small" color="#0000ff" />
                 ) : (
