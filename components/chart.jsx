@@ -23,6 +23,36 @@ const BarChartComponent = () => {
     
   };
 
+  const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+  };
+
+  const config = {
+    // backgroundColor: "#f3512e",
+    // backgroundGradientFrom: "#2c3e50",
+    // backgroundGradientTo: "#4ca1af",
+    backgroundColor: "#e26a00",
+    backgroundGradientFrom: "#e26a00",
+    backgroundGradientTo: "#e26a00",
+    decimalPlaces: 0,
+    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    style: { borderRadius: 12 },
+    propsForBackgroundLines: { strokeDasharray: "" },
+    propsForDots: {
+      r: "6",
+      strokeWidth: "2",
+      stroke: "#ffa726",
+    },
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ marginVertical: 10 }}>
@@ -38,16 +68,7 @@ const BarChartComponent = () => {
         width={screenWidth - 40}
         height={230}
         yAxisLabel="₦"
-        chartConfig={{
-          backgroundColor: "#1cc910",
-          backgroundGradientFrom: "#2c3e50",
-          backgroundGradientTo: "#4ca1af",
-          decimalPlaces: 0,
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: { borderRadius: 12 },
-          propsForBackgroundLines: { strokeDasharray: "" },
-        }}
+        chartConfig={config}
         style={styles.chart}
         verticalLabelRotation={0}
         showValuesOnTopOfBars
