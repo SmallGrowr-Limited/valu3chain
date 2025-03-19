@@ -73,7 +73,7 @@ const BarChartComponent = () => {
         verticalLabelRotation={0}
         showValuesOnTopOfBars
       />
-      <Text style={styles.title}>SmallGrowr Weekly Price</Text>
+      <Text style={styles.title}>SmallGrowr Weekly Price Update</Text>
     </View>
   );
 };
@@ -82,9 +82,9 @@ const styles = StyleSheet.create({
   container: { padding: 10, backgroundColor: "#fff", borderRadius: 10 },
   title: {
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "bold",
-    marginVertical: 10,
+    marginBottom: 10,
   },
   chart: { borderRadius: 16 },
 });
