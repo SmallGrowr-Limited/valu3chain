@@ -12,8 +12,9 @@ import React from "react";
 import {useRouter} from "expo-router";
 import bgImage from "../assets/images/resources/onboarding2.png";
 import BarChartComponent from "../components/chart";
+import CarouselComponent from "../components/carousel";
 
-const {width, height} = Dimensions.get("window")
+const {width, height} = Dimensions.get("window");
 
 const LandingPage = () => {
   const router = useRouter()
@@ -22,19 +23,31 @@ const LandingPage = () => {
       <View style={styles.brandContainer}>
         <BarChartComponent />
       </View>
-      <View style={styles.buttonSection}>
-        <TouchableOpacity
-          style={styles.authButton}
-          onPress={() => router.navigate("/auth/signup")}
-        >
-          <Text style={styles.authButtonText}>Create Account</Text>
+      <View style={styles.carousel}>
+        <TouchableOpacity>
+          <CarouselComponent />
         </TouchableOpacity>
+      </View>
+      <View style={styles.buttonSection}>
         <TouchableOpacity
           style={styles.authButton}
           onPress={() => router.navigate("/auth/login")}
         >
           <Text style={styles.authButtonText}>Login</Text>
         </TouchableOpacity>
+        <View
+          style={{
+            marginTop: 10,
+            flexDirection: "row",
+            justifyContent: "center",
+            //borderWidth: 1,
+          }}
+        >
+          <Text style={{ color: "grey" }}>Don't have an account?</Text>
+          <TouchableOpacity onPress={() => router.navigate("/auth/signup")}>
+            <Text style={{ color: "#16B116" }}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -90,6 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
+    backgroundColor: "#16B116",
     borderColor: "#16B116",
     padding: 10,
     borderRadius: 8,
@@ -98,5 +112,11 @@ const styles = StyleSheet.create({
   authButtonText: {
     color: "#fff",
     fontSize: 16,
+  },
+
+  carousel: {
+    //borderWidth: 1,
+    marginTop: height * 0.3,
+    marginBottom: 15,
   },
 });
