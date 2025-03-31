@@ -31,23 +31,23 @@ const QuickLinks = () => {
             onPress={() => router.navigate("/qrcode")}
           >
             <Ionicons name="qr-code" size={44} color="#000" />
-            <Text style={{ fontWeight: "bol", color: "#000", fontSize: 10 }}>
-              Scan
+            <Text style={{ fontWeight: "bol", color: "#f0604a", fontSize: 10 }}>
+              Scan Qr-Code
             </Text>
           </TouchableOpacity>
         </View>
         <View style={[styles.card25, styles.shadowProp, styles.bgColor]}>
           <TouchableOpacity
             style={{ alignItems: "center" }}
-            onPress={() => router.navigate("/")}
+            onPress={() => router.navigate("/weather")}
           >
             <MaterialCommunityIcons
               name="weather-pouring"
               size={44}
               color="black"
             />
-            <Text style={{ fontWeight: "bol", color: "#000", fontSize: 10 }}>
-              Resources
+            <Text style={{ fontWeight: "bol", color: "#f0604a", fontSize: 10 }}>
+              Weaher Forcast
             </Text>
           </TouchableOpacity>
         </View>
@@ -57,7 +57,7 @@ const QuickLinks = () => {
             onPress={() => router.navigate("/")}
           >
             <Ionicons name="folder" size={44} color="#000" />
-            <Text style={{ fontWeight: "bol", color: "#000", fontSize: 10 }}>
+            <Text style={{ fontWeight: "bol", color: "#f0604a", fontSize: 10 }}>
               Resources
             </Text>
           </TouchableOpacity>
@@ -71,7 +71,7 @@ export default QuickLinks;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: height * 0.5,
+    marginTop: height * 0.2,
   },
   header: {
     paddingHorizontal: 10,
@@ -96,7 +96,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
   },
+  
+  bgColor1: {
+    backgroundColor: "#f0604a",
+  },
   bgColor2: {
     backgroundColor: "#0a990b",
+  },
+  bgColor3: {
+    backgroundColor: "#ffcc33",
   },
 });

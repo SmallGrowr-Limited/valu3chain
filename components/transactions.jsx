@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { View, Text, FlatList, Switch, StyleSheet } from "react-native";
 
 const transactions = [
-  { id: "1", title: "Soya Beans", amount: "120tons", date: "2025-03-30" },
-  { id: "2", title: "Maize", amount: "150tons", date: "2025-03-28" },
-  { id: "3", title: "Rice", amount: "105tos", date: "2025-03-27" },
+  { id: "1", title: "Soya Beans", unit: "120tons", date: "2025-03-30" },
+  { id: "2", title: "Maize", unit: "150tons", date: "2025-03-28" },
+  { id: "3", title: "Rice", unit: "105tos", date: "2025-03-27" },
   {
     id: "4",
     title: "Onions",
-    amount: "60tons",
+    unit: "60tons",
     date: "2025-03-26",
   },
-  { id: "5", title: "Cabbages", amount: "76tons", date: "2025-03-25" },
+  { id: "5", title: "Cabbages", unit: "76tons", date: "2025-03-25" },
 ];
 
 const Transactions = () => {
@@ -22,7 +22,7 @@ const Transactions = () => {
       style={[styles.transaction, isRow ? styles.rowItem : styles.columnItem]}
     >
       <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.amount}>{item.amount}</Text>
+      <Text style={styles.unit}>{item.unit}</Text>
       <Text style={styles.date}>{item.date}</Text>
     </View>
   );
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  amount: {
+  unit: {
     fontSize: 14,
     color: "#ff4500",
   },
