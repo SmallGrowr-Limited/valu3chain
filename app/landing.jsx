@@ -6,7 +6,8 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  ScrollView
 } from "react-native";
 import React from "react";
 import {useRouter} from "expo-router";
@@ -16,23 +17,20 @@ import CarouselComponent from "../components/carousel";
 import QuickLinks from "../components/quicklinks";
 import Transactions from "../components/transactions";
 
+
 const {width, height} = Dimensions.get("window");
 
 const LandingPage = () => {
   const router = useRouter()
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.brandContainer}>
         <BarChartComponent />
       </View>
       <View>
         <QuickLinks/>
       </View>
-      {/* <View style={styles.carousel}>
-        <TouchableOpacity onPress={() => router.navigate("/qrcode")}>
-          <CarouselComponent />
-        </TouchableOpacity>
-      </View> */}
       <View>
         <Transactions/>
       </View>
@@ -57,6 +55,7 @@ const LandingPage = () => {
           </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -66,11 +65,9 @@ export default LandingPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#FBF4F7",
   },
-  contentWrapper: {
-    flex: 1,
-    marginTop: height * 0.05,
-  },
+
   brandContainer: {
     flex: 1,
     marginTop: height * 0.06,
@@ -102,8 +99,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
-    marginTop: height * 0.06,
-    // borderWidth: 1,
+    
   },
 
   authButton: {

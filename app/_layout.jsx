@@ -2,10 +2,12 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import {Provider} from "react-redux";
 import {store} from "../redux/store"
+import AuthContext, { AuthProvider } from "../context/AuthContext";
 
 export default function RootLayout() {
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
+    <AuthProvider>
       <StatusBar style="auto" />
       <Stack>
         <Stack.Screen
@@ -40,7 +42,16 @@ export default function RootLayout() {
           name="qrcode"
           options={{ headerShown: true, title: "Scane QR Code" }}
         />
+        <Stack.Screen
+          name="weather"
+          options={{ headerShown: true, title: "Weather" }}
+        />
+        <Stack.Screen
+          name="agent"
+          options={{ headerShown: false, title: "" }}
+        />
       </Stack>
-    </Provider>
+    </AuthProvider>
+    // </Provider>
   );
 }
