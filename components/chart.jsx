@@ -17,7 +17,7 @@ const BarChartComponent = () => {
     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     datasets: [
       {
-        data: [5040, 54000, 43000, 23000],
+        data: [45000, 44000, 43000, 42000],
       },
     ],
     
@@ -55,7 +55,7 @@ const BarChartComponent = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginVertical: 10 }}>
+      <View style={{ marginVertical: 5 }}>
         <SelectList
           setSelected={(val) => setCrop(val)}
           data={crops}
