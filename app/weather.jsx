@@ -30,8 +30,8 @@ const WeatherForecast = () => {
   //Get weather and location
   const date = new Date();
 
-  const { city } = useContext(AuthContext);
-
+  // const { city } = useContext(AuthContext);
+   const [city, setCity]  = useState("");
   //fetch current waether using user current location
   const fetchWeather = async () => {
     setLoading(true);
@@ -53,7 +53,7 @@ const WeatherForecast = () => {
   };
 
   useEffect(() => {
-    fetchWeather();
+    //fetchWeather();
   }, []);
 
   return (

@@ -70,8 +70,8 @@ const BarChartComponent = () => {
         yAxisLabel="₦"
         chartConfig={config}
         style={styles.chart}
-        verticalLabelRotation={0}
-        showValuesOnTopOfBars
+        verticalLabelRotation={2}
+        //showValuesOnTopOfBars
       />
       <Text style={styles.title}>SmallGrowr Weekly Price Update</Text>
     </View>

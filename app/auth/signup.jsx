@@ -10,6 +10,7 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import {useRouter} from "expo-router";
+import { SelectList } from "react-native-dropdown-select-list";
 
 const Signup = () => {
   const [selectedGender, setSelectedGender] = useState("");
@@ -51,6 +52,7 @@ const Signup = () => {
           <Picker
             selectedValue={selectedGender}
             onValueChange={(itemValue) => setSelectedGender(itemValue)}
+            style={styles.input}
           >
             <Picker.Item label="Gender" value="" />
             <Picker.Item label="Male" value="male" />

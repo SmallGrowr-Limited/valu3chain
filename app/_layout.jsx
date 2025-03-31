@@ -6,8 +6,8 @@ import AuthContext, { AuthProvider } from "../context/AuthContext";
 
 export default function RootLayout() {
   return (
-    // <Provider store={store}>
-    <AuthProvider>
+    <Provider store={store}>
+    {/* <AuthProvider> */}
       <StatusBar style="auto" />
       <Stack>
         <Stack.Screen
@@ -51,7 +51,7 @@ export default function RootLayout() {
           options={{ headerShown: false, title: "" }}
         />
       </Stack>
-    </AuthProvider>
-    // </Provider>
+    {/* </AuthProvider> */}
+    </Provider>
   );
 }
