@@ -65,7 +65,7 @@ export default LandingPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FBF4F7",
+    backgroundColor: "#ffffff",
   },
 
   brandContainer: {

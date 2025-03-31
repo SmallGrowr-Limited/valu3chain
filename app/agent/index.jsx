@@ -88,7 +88,7 @@ export default function AgentDashboard() {
                 <Text
                   style={{ fontWeight: "bol", color: "#fff", fontSize: 10 }}
                 >
-                  Farmers
+                  Farmer Onboarding
                 </Text>
               </TouchableOpacity>
             </View>
@@ -111,7 +111,11 @@ export default function AgentDashboard() {
                 style={{ alignItems: "center" }}
                 onPress={() => router.navigate("/")}
               >
-                <Fontisto name="line-chart" size={44} color="#fff" />
+                <MaterialCommunityIcons
+                  name="focus-field"
+                  size={54}
+                  color="#fff"
+                />
                 <Text style={{ marginTop: 5, color: "#fff", fontSize: 10 }}>
                   Farm Audit
                 </Text>
@@ -122,7 +126,7 @@ export default function AgentDashboard() {
                 style={{ alignItems: "center" }}
                 onPress={() => router.navigate("/agent/onboardfarmer")}
               >
-                <Ionicons name="people" size={54} color="#fff" />
+                <Ionicons name="aperture" size={54} color="#fff" />
                 <Text
                   style={{ fontWeight: "bol", color: "#fff", fontSize: 10 }}
                 >
@@ -138,7 +142,7 @@ export default function AgentDashboard() {
                 style={{ alignItems: "center" }}
                 onPress={() => router.navigate("/")}
               >
-                <SimpleLineIcons name="size-actual" size={34} color="#0a990b" />
+                <FontAwesome6 name="sack-dollar" size={34} color="#0a990b" />
                 <Text
                   style={{ fontWeight: "bol", color: "#f0604a", fontSize: 10 }}
                 >
@@ -164,7 +168,7 @@ export default function AgentDashboard() {
                 style={{ alignItems: "center" }}
                 onPress={() => router.navigate("/agent")}
               >
-                <Ionicons name="flash" size={34} color="#0a990b" />
+                <Ionicons name="folder" size={34} color="#0a990b" />
                 <Text
                   style={{ fontWeight: "bol", color: "#f0604a", fontSize: 10 }}
                 >
@@ -177,7 +181,7 @@ export default function AgentDashboard() {
                 style={{ alignItems: "center" }}
                 onPress={() => router.navigate("/resources")}
               >
-                <Ionicons name="folder" size={34} color="#0a990b" />
+                <Ionicons name="support" size={34} color="#0a990b" />
                 <Text
                   style={{ fontWeight: "bol", color: "#f0604a", fontSize: 10 }}
                 >
@@ -213,13 +217,13 @@ export default function AgentDashboard() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FBF4F7",
+    backgroundColor: "#ffffff",
   },
 
   contentWrapper: {
     flex: 1,
     padding: 10,
-    backgroundColor: "#FBF4F7",
+    //backgroundColor: "#FBF4F7",
   },
 
   notifications: {
