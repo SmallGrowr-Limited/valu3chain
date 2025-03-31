@@ -45,7 +45,7 @@ const LandingPage = () => {
         </TouchableOpacity>
         <View
           style={{
-            marginTop: 10,
+            marginTop: 5,
             flexDirection: "row",
             justifyContent: "center",
             //borderWidth: 1,
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
+    marginTop: height * 0.06,
     // borderWidth: 1,
   },
 
@@ -127,6 +128,4 @@ const styles = StyleSheet.create({
     marginTop: height * 0.3,
     marginBottom: 15,
   },
-
-  
 });
