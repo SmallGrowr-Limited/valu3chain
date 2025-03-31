@@ -13,6 +13,8 @@ import {useRouter} from "expo-router";
 import bgImage from "../assets/images/resources/onboarding2.png";
 import BarChartComponent from "../components/chart";
 import CarouselComponent from "../components/carousel";
+import QuickLinks from "../components/quicklinks";
+import Transactions from "../components/transactions";
 
 const {width, height} = Dimensions.get("window");
 
@@ -23,10 +25,16 @@ const LandingPage = () => {
       <View style={styles.brandContainer}>
         <BarChartComponent />
       </View>
-      <View style={styles.carousel}>
-        <TouchableOpacity>
+      <View>
+        <QuickLinks/>
+      </View>
+      {/* <View style={styles.carousel}>
+        <TouchableOpacity onPress={() => router.navigate("/qrcode")}>
           <CarouselComponent />
         </TouchableOpacity>
+      </View> */}
+      <View>
+        <Transactions/>
       </View>
       <View style={styles.buttonSection}>
         <TouchableOpacity
@@ -119,4 +127,6 @@ const styles = StyleSheet.create({
     marginTop: height * 0.3,
     marginBottom: 15,
   },
+
+  
 });

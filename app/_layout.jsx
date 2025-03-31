@@ -36,6 +36,10 @@ export default function RootLayout() {
           name="auth/login"
           options={{ headerShown: true, title: "" }}
         />
+        <Stack.Screen
+          name="qrcode"
+          options={{ headerShown: true, title: "Scane QR Code" }}
+        />
       </Stack>
     </Provider>
   );
