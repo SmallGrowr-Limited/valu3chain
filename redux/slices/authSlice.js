@@ -81,7 +81,7 @@ export const login = createAsyncThunk(
 );
 
 export const signup = createAsyncThunk(
-  'auth/signup',
+  "auth/signupAgent",
   async ({ email, password }, { dispatch }) => {
     dispatch(signupRequest());
     try {
