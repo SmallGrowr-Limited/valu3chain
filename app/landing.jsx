@@ -25,36 +25,36 @@ const LandingPage = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.brandContainer}>
-        <BarChartComponent />
-      </View>
-      <View>
-        <QuickLinks/>
-      </View>
-      <View>
-        <Transactions/>
-      </View>
-      <View style={styles.buttonSection}>
-        <TouchableOpacity
-          style={styles.authButton}
-          onPress={() => router.navigate("/auth/login")}
-        >
-          <Text style={styles.authButtonText}>Login</Text>
-        </TouchableOpacity>
-        <View
-          style={{
-            marginTop: 5,
-            flexDirection: "row",
-            justifyContent: "center",
-            //borderWidth: 1,
-          }}
-        >
-          <Text style={{ color: "grey" }}>Don't have an account?</Text>
-          <TouchableOpacity onPress={() => router.navigate("/auth/signup")}>
-            <Text style={{ color: "#16B116" }}>Sign Up</Text>
-          </TouchableOpacity>
+        <View style={styles.brandContainer}>
+          <BarChartComponent />
         </View>
-      </View>
+        <View>
+          <QuickLinks />
+        </View>
+        <View>
+          <Transactions />
+        </View>
+        <View style={styles.buttonSection}>
+          <TouchableOpacity
+            style={styles.authButton}
+            onPress={() => router.navigate("/auth/login")}
+          >
+            <Text style={styles.authButtonText}>Login</Text>
+          </TouchableOpacity>
+          <View
+            style={{
+              marginTop: 5,
+              flexDirection: "row",
+              justifyContent: "center",
+              //borderWidth: 1,
+            }}
+          >
+            <Text style={{ color: "grey" }}>Don't have an account?</Text>
+            <TouchableOpacity onPress={() => router.navigate("/auth/userType")}>
+              <Text style={{ color: "#16B116" }}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
