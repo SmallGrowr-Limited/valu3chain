@@ -7,7 +7,7 @@ import AuthContext, { AuthProvider } from "../context/AuthContext";
 export default function RootLayout() {
   return (
     <Provider store={store}>
-    {/* <AuthProvider> */}
+      {/* <AuthProvider> */}
       <StatusBar style="auto" />
       <Stack>
         <Stack.Screen
@@ -31,12 +31,20 @@ export default function RootLayout() {
           options={{ headerShown: false, title: "" }}
         />
         <Stack.Screen
+          name="auth/userType"
+          options={{ headerShown: false, title: "" }}
+        />
+        <Stack.Screen
           name="auth/signup"
           options={{ headerShown: true, title: "" }}
         />
         <Stack.Screen
           name="auth/login"
           options={{ headerShown: true, title: "" }}
+        />
+        <Stack.Screen
+          name="auth/verifyPhone"
+          options={{ headerShown: false, title: "" }}
         />
         <Stack.Screen
           name="qrcode"
@@ -51,7 +59,7 @@ export default function RootLayout() {
           options={{ headerShown: false, title: "" }}
         />
       </Stack>
-    {/* </AuthProvider> */}
+      {/* </AuthProvider> */}
     </Provider>
   );
 }

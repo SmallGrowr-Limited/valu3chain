@@ -19,6 +19,8 @@ const Signup = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const router = useRouter()
 
+  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign up</Text>

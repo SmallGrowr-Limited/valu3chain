@@ -17,7 +17,7 @@ export default function Index() {
       setIsFirstLaunch(hasLaunched === null);
 
       if (hasLaunched === null) {
-        router.navigate("/landing");
+        router.navigate("/auth/verifyPhone");
       } else {
         router.navigate("/onboarding");
       }
