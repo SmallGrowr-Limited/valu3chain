@@ -7,17 +7,27 @@ import { SelectList } from "react-native-dropdown-select-list";
 const screenWidth = Dimensions.get("window").width;
 
 const BarChartComponent = () => {
-  const [crop, setCrop] = useState("")
+  const [crop, setCrop] = useState("");
+  const [da, setCro] = useState("");
+  
    const crops = [
      { key: "1", value: "White Maize" },
      { key: "2", value: "Rice" },
      { key: "4", value: "Beans" },
    ];
+   
+   const handleCropSelection = (val)=>{
+    setCrop(val)
+    console.log(crop)
+   }
+
+   const dd = [45000, 44000, 43000, 42000];
+
   const data = {
     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     datasets: [
       {
-        data: [45000, 44000, 43000, 42000],
+        data: dd,
       },
     ],
     
@@ -35,9 +45,7 @@ const BarChartComponent = () => {
   };
 
   const config = {
-    // backgroundColor: "#f3512e",
-    // backgroundGradientFrom: "#2c3e50",
-    // backgroundGradientTo: "#4ca1af",
+   
     backgroundColor: "#e26a00",
     backgroundGradientFrom: "#e26a00",
     backgroundGradientTo: "#e26a00",
@@ -57,10 +65,10 @@ const BarChartComponent = () => {
     <View style={styles.container}>
       <View style={{ marginVertical: 5 }}>
         <SelectList
-          setSelected={(val) => setCrop(val)}
+          setSelected={handleCropSelection}
           data={crops}
           save="value"
-          defaultOption={{ key: "1", value: "Maize" }}
+          defaultOption={{ key: "1", value: "White Maize" }}
         />
       </View>
       <BarChart
