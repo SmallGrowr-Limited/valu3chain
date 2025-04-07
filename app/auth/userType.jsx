@@ -1,17 +1,31 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from "react-native";
-import React, {useState} from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import valu3chain from "../../assets/images/resources/valu3chain.png";
-import {useRouter} from "expo-router"
+import { useRouter } from "expo-router";
 
 const UserType = () => {
-    const [userType, setUserType] = useState("");
-    const router = useRouter()
+  const [userType, setUserType] = useState("");
+  const router = useRouter();
 
-    const userValue = [
-      { key: "1", value: "Extention Agent" },
-      { key: "2", value: "Ecosystem Partner" },
-    ];
+  const userValue = [
+    { key: "1", value: "Extention Agent" },
+    { key: "2", value: "Ecosystem Partner" },
+  ];
+
+  const checkUserType = () => {
+    if (userType === "Extention Agent") router.navigate("/auth/signupAgent");
+    if (userType === "Ecosystem Partner")
+      router.navigate("/auth/signupPartner");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -28,10 +42,7 @@ const UserType = () => {
           />
         </View>
         <View style={styles.buttonSection}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => router.navigate("/auth/signup")}
-          >
+          <TouchableOpacity style={styles.button} onPress={checkUserType}>
             <Text style={styles.buttonText}>Proceed</Text>
           </TouchableOpacity>
           <View style={styles.signIn}>
@@ -70,7 +81,7 @@ const styles = StyleSheet.create({
   image: {
     width: 280,
     height: 90,
-    marginTop:20
+    marginTop: 20,
   },
   formInput: {
     flex: 3,

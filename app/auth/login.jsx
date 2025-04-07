@@ -19,7 +19,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const {loading, error} = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -27,9 +27,9 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = ()=>{
-    dispatch(login({email, password}))
-  }
+  const handleLogin = () => {
+    dispatch(login({ email, password }));
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -131,7 +131,9 @@ const Login = () => {
               }}
             >
               <Text style={{ color: "grey" }}>Don't have an account?</Text>
-              <TouchableOpacity onPress={() => router.navigate("/auth/signup")}>
+              <TouchableOpacity
+                onPress={() => router.navigate("/auth/signupAgent")}
+              >
                 <Text style={{ color: "#16B116" }}>Sign Up</Text>
               </TouchableOpacity>
             </View>
