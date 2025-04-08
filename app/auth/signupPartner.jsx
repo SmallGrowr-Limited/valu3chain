@@ -25,7 +25,7 @@ const SignupPartner = () => {
         </View>
         <View style={styles.buttonSection}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Submit</Text>
+            <Text style={styles.buttonText}>Proceed</Text>
           </TouchableOpacity>
           <View style={styles.signIn}>
             <Text style={styles.signInText}>
