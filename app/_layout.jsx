@@ -62,6 +62,10 @@ export default function RootLayout() {
           name="agent"
           options={{ headerShown: false, title: "" }}
         />
+        <Stack.Screen
+          name="partners"
+          options={{ headerShown: false, title: "" }}
+        />
       </Stack>
       {/* </AuthProvider> */}
     </Provider>

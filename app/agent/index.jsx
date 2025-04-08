@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchBar from "../../components/searchbar";
-import { quickAccess } from "./data";
+import { quickAccess, farmers } from "../../components/data";
 
 export default function AgentDashboard() {
   const [loading, setLoading] = useState(false);
@@ -31,78 +31,7 @@ export default function AgentDashboard() {
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const farmers = [
-    {
-      id: "1",
-      name: "Idris Ahmed",
-      community: "Kanam",
-      crop: "Sorghum",
-      season: "Dry Season",
-    },
-    {
-      id: "2",
-      name: "Aisha Ibrahim",
-      community: "Shanono",
-      crop: "Maize",
-      season: "Rainfed",
-    },
-    {
-      id: "3",
-      name: "Gloria Mark",
-      community: "Shika",
-      crop: "Soya Beans",
-      season: "Rainfed",
-    },
-    {
-      id: "4",
-      name: "Aliyu Abubakar",
-      community: "Zaria",
-      crop: "Cabbages",
-      season: "Dry Season",
-    },
-    {
-      id: "5",
-      name: "Sadiya Umar",
-      community: "Zaria",
-      crop: "Tomatoes",
-      season: "Dry Season",
-    },
-    {
-      id: "6",
-      name: "Musa Mai Shanu",
-      community: "Gusau",
-      crop: "Millet",
-      season: "Rainfed",
-    },
-    {
-      id: "7",
-      name: "Yakubu Dauda",
-      community: "Adamami",
-      crop: "Onion",
-      season: "Rainfed",
-    },
-    {
-      id: "8",
-      name: "Shamsuddeen Aliyu",
-      community: "Tureta",
-      crop: "Maize",
-      season: "Rainfed",
-    },
-    {
-      id: "9",
-      name: "Emmanuel James",
-      community: "Goronyo",
-      crop: "Rice",
-      season: "Dry Season",
-    },
-    {
-      id: "10",
-      name: "Esther Bayero",
-      community: "Sabon birni",
-      crop: "Garlic",
-      season: "Rainfed",
-    },
-  ];
+  
 
   const renderItem = ({ item }) => (
     <View style={styles.rowItem}>
