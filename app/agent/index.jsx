@@ -3,12 +3,11 @@ import {
   Text,
   SafeAreaView,
   StyleSheet,
-  Image,
   ScrollView,
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -26,12 +25,8 @@ export default function AgentDashboard() {
   const [task, setTask] = useState(4);
   const [auditedFarms, setAuditedFarms] = useState(18);
   const router = useRouter();
-
-  //const { city, setUser } = useContext(AuthContext);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
-  
 
   const renderItem = ({ item }) => (
     <View style={styles.rowItem}>
@@ -53,7 +48,7 @@ export default function AgentDashboard() {
       </View>
       <View style={styles.btnFieldWrap}>
         <TouchableOpacity>
-          <Text style={{color:"#fff"}}>View</Text>
+          <Text style={{ color: "#fff" }}>View</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -238,9 +233,9 @@ const styles = StyleSheet.create({
   },
   btnFieldWrap: {
     borderRadius: 4,
-    paddingHorizontal:10,
-    paddingVertical:3,
-    backgroundColor:"#321DF1",
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: "#321DF1",
 
     // width: "30%",
   },

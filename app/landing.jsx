@@ -11,8 +11,7 @@ import {
 } from "react-native";
 import React from "react";
 import {useRouter} from "expo-router";
-import bgImage from "../assets/images/resources/onboarding2.png";
-import BarChartComponent from "../components/chart";
+import BarChartComponent from "../components/charts/barChart";
 import CarouselComponent from "../components/carousel";
 import QuickLinks from "../components/quicklinks";
 import Transactions from "../components/transactions";

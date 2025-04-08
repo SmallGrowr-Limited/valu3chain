@@ -170,3 +170,50 @@ export const farmers = [
   },
 ];
 
+export const trades = [
+  {
+    id: "1",
+    name: "Seedlings Distribution",
+    date: "07/4/2025",
+    status: "In-Progress",
+  },
+  {
+    id: "2",
+    name: "Suya Beans Order",
+    date: "28/3/2025",
+    status: "In-Progress",
+  },
+  {
+    id: "3",
+    name: "Fertilizer Distribution",
+    date: "25/3/2025",
+    status: "Completed",
+  },
+  { id: "4", name: "Maize Order", date: "22/3/2025", status: "Completed" },
+  { id: "5", name: "Maize Order", date: "22/3/2025", status: "Completed" },
+  {
+    id: "6",
+    name: "Fertilizer Distribution",
+    date: "25/3/2025",
+    status: "Failed",
+  },
+  {
+    id: "7",
+    name: "Fertilizer Distribution",
+    date: "25/3/2025",
+    status: "Completed",
+  },
+  {
+    id: "8",
+    name: "Fertilizer Distribution",
+    date: "25/3/2025",
+    status: "Failed",
+  },
+  {
+    id: "9",
+    name: "Fertilizer Distribution",
+    date: "25/3/2025",
+    status: "Completed",
+  },
+];
+
