@@ -10,7 +10,7 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import {useRouter} from "expo-router";
-import { SelectList } from "react-native-dropdown-select-list";
+
 
 const Signup = () => {
   const [selectedGender, setSelectedGender] = useState("");

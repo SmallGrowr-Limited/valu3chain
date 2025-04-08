@@ -26,10 +26,7 @@ export default function RootLayout() {
           name="onboarding2"
           options={{ headerShown: true, title: "" }}
         />
-        <Stack.Screen
-          name="landing"
-          options={{ headerShown: false, title: "" }}
-        />
+        <Stack.Screen name="home" options={{ headerShown: false, title: "" }} />
         <Stack.Screen
           name="auth/userType"
           options={{ headerShown: true, title: "" }}
@@ -40,6 +37,14 @@ export default function RootLayout() {
         />
         <Stack.Screen
           name="auth/signupPartner"
+          options={{ headerShown: true, title: "Ecosystem Partner" }}
+        />
+        <Stack.Screen
+          name="auth/signupPartner2"
+          options={{ headerShown: true, title: "Ecosystem Partner" }}
+        />
+        <Stack.Screen
+          name="auth/signupPartner3"
           options={{ headerShown: true, title: "Ecosystem Partner" }}
         />
         <Stack.Screen
