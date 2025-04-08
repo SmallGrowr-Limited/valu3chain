@@ -45,12 +45,7 @@ const Transactions = () => {
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
         />
-        // <FlatList
-        //   data={transactions}
-        //   keyExtractor={(item) => item.id}
-        //   renderItem={renderItem}
-        //   numColumns={2}
-        // />
+        
       )}
     </View>
   );

@@ -132,7 +132,7 @@ const Login = () => {
             >
               <Text style={{ color: "grey" }}>Don't have an account?</Text>
               <TouchableOpacity
-                onPress={() => router.navigate("/auth/signupAgent")}
+                onPress={() => router.navigate("/auth/userType")}
               >
                 <Text style={{ color: "#16B116" }}>Sign Up</Text>
               </TouchableOpacity>

@@ -1,18 +1,36 @@
-import { View, Text, SafeAreaView, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import React, {useState} from 'react';
-
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
+import { useRouter } from "expo-router";
 
 export default function PhoneVerificaion() {
-    const [verificaionCode, setVerificationCode] = useState("")
+  const [verificaionCode, setVerificationCode] = useState("");
+  const router = useRouter();
+
+  const verifyCode = () => {
+    
+    if (verificaionCode === "123456") router.navigate("/agent");
+    if (verificaionCode === "225566") router.navigate("/");
+  
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Phone Verificaion</Text>
-          <Text style={styles.headerSubText}>Enter Verification Code</Text>
+          <Text style={styles.headerSubText}>
+            Verification Code have been Sent to your Phone Number.
+          </Text>
         </View>
 
         <View style={styles.formInput}>
+          <Text style={styles.formLabel}>Enter Verification Code</Text>
           <TextInput
             style={styles.formControl}
             placeholder=""
@@ -21,7 +39,7 @@ export default function PhoneVerificaion() {
           />
         </View>
         <View style={styles.buttonSection}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={verifyCode}>
             <Text style={styles.buttonText}>Verify</Text>
           </TouchableOpacity>
         </View>

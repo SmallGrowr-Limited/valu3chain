@@ -9,8 +9,11 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import EcosystemPartnerSignup from "../../components/forms/ecosystemPartnerSignup";
+import { useRouter } from "expo-router";
 
 const SignupPartner = () => {
+    
+    const router = useRouter()
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
