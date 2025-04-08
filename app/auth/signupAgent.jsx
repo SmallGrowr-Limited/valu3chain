@@ -19,7 +19,9 @@ const Signup = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const router = useRouter()
 
-  
+  const handleSignUp = ()=>{
+    router.navigate("/auth/verifyPhone");
+  }
 
   return (
     <View style={styles.container}>
@@ -76,7 +78,7 @@ const Signup = () => {
           .
         </Text>
 
-        <TouchableOpacity style={styles.signUpButton}>
+        <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
           <Text style={styles.signUpText}>Sign Up</Text>
         </TouchableOpacity>
 
@@ -112,7 +114,7 @@ const Signup = () => {
 
         <Text style={styles.signInText}>
           Already have an account?{" "}
-          <TouchableOpacity onPress={()=>router.navigate("/auth/login")}>
+          <TouchableOpacity onPress={() => router.navigate("/auth/login")}>
             <Text style={[styles.linkText, { marginBottom: -5 }]}>Sign in</Text>
           </TouchableOpacity>
         </Text>
