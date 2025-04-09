@@ -27,7 +27,7 @@ export default function SignUpEmail({ navigation }) {
   const [role, setRole] = useState("Farmer");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { user, setUser } = useContext(AuthContext);
+  //const { user, setUser } = useContext(AuthContext);
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
@@ -117,7 +117,6 @@ export default function SignUpEmail({ navigation }) {
                 style={styles.formInput}
               />
             </View>
-            
 
             <View style={styles.formInput}>
               <Text style={styles.formLabel}>Email</Text>
@@ -125,6 +124,8 @@ export default function SignUpEmail({ navigation }) {
                 style={styles.formControl}
                 placeholder=""
                 keyboardType="text"
+                placeholder="Enter email if any"
+                placeholderTextColor="#aaa"
                 onChangeText={(val) => setEmail(val)}
               />
             </View>
@@ -152,7 +153,7 @@ export default function SignUpEmail({ navigation }) {
             </View>
 
             <View style={styles.formInput}>
-              <TouchableOpacity style={styles.button} >
+              <TouchableOpacity style={styles.button}>
                 {loading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#FBF4F7",
+    backgroundColor: "#fff",
   },
   header: {
     marginTop: 10,

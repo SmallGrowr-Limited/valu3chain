@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: 500,
-    color: "#0a990b",
+    // color: "#0a990b",
     paddingHorizontal: 5,
   },
   columns: {
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     padding: 5,
+    marginBottom:10
     // backgroundColor: "#fff",
   },
 
