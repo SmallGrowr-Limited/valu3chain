@@ -28,7 +28,7 @@ const RegisterFarmer = () => {
   const router = useRouter();
 
   //input fields
-  const { farmerId, setFarmerId, setProfileUpdate } = useContext(AuthContext);
+  //const { farmerId, setFarmerId, setProfileUpdate } = useContext(AuthContext);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [state, setState] = useState("");
@@ -197,7 +197,7 @@ export default RegisterFarmer;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FBF4F7",
+    backgroundColor: "#fff",
   },
 
   contentWrapper: {
