@@ -9,11 +9,7 @@ export default function AgentLayout() {
         name="updateAgent"
         options={{ headerShown: true, title: "" }}
       />
-      <Stack.Screen
-        name="profile"
-        options={{ headerShown: true, title: "" }}
-        
-      />
+      <Stack.Screen name="profile" options={{ headerShown: true, title: "" }} />
       <Stack.Screen
         name="onboardfarmer"
         options={{ headerShown: true, title: "Farmer Onboarding" }}
@@ -21,6 +17,10 @@ export default function AgentLayout() {
       <Stack.Screen
         name="updatefarmer"
         options={{ headerShown: true, title: "Farmer Onboarding" }}
+      />
+      <Stack.Screen
+        name="demand"
+        options={{ headerShown: true, title: "" }}
       />
     </Stack>
   );
