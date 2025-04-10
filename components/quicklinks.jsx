@@ -54,7 +54,7 @@ const QuickLinks = () => {
         <View style={[styles.card25, styles.shadowProp, styles.bgColor]}>
           <TouchableOpacity
             style={{ alignItems: "center" }}
-            onPress={() => router.navigate("/")}
+            onPress={() => router.navigate("/home")}
           >
             <Ionicons name="folder" size={44} color="#000" />
             <Text style={{ fontWeight: "bol", color: "#f0604a", fontSize: 10 }}>

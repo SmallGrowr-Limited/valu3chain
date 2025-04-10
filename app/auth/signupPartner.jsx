@@ -18,13 +18,16 @@ const SignupPartner = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.headerTex}>Sign-Up</Text>
+          <Text style={styles.headerTex}>Submit</Text>
         </View>
         <View style={styles.formSection}>
           <EcosystemPartnerSignup />
         </View>
         <View style={styles.buttonSection}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.navigate("/auth/signupPartner2")}
+          >
             <Text style={styles.buttonText}>Proceed</Text>
           </TouchableOpacity>
           <View style={styles.signIn}>

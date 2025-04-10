@@ -1,4 +1,11 @@
-import {SimpleLineIcons, MaterialCommunityIcons, FontAwesome6, MaterialIcons, Entypo} from "@expo/vector-icons";
+import {
+  SimpleLineIcons,
+  MaterialCommunityIcons,
+  FontAwesome6,
+  MaterialIcons,
+  Entypo,
+  Ionicons,
+} from "@expo/vector-icons";
 
 export const demand = [
     {
@@ -86,13 +93,22 @@ export const quickAccess = [
   {
     title: "Input Dist.",
     icon: (
-      <MaterialCommunityIcons name="email-open-multiple" size={34} color="#fff" />
+      <MaterialCommunityIcons
+        name="email-open-multiple"
+        size={34}
+        color="#fff"
+      />
     ),
     path: "/agent",
   },
   {
     title: "Reports",
     icon: <Entypo name="open-book" size={34} color="#fff" />,
+    path: "/agent",
+  },
+  {
+    title: "Settings",
+    icon: <Ionicons name="settings" size={34} color="#fff" />,
     path: "/agent",
   },
 ];

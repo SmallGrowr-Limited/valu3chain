@@ -2,8 +2,10 @@ import {
   StyleSheet, Text, View, SafeAreaView, TouchableOpacity, TextInput} from "react-native";
 import React, {useState} from 'react';
 import Checkbox from "expo-checkbox";
+import { useRouter } from "expo-router";
 
 export default function TermsOfService() {
+  const router = useRouter();
   const [isChecked1, setChecked1] = useState(false);
   const [isChecked2, setChecked2] = useState(false);
   return (
@@ -35,7 +37,10 @@ export default function TermsOfService() {
           </View>
         </View>
         <View style={styles.buttonSection}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.navigate("/partners")}
+          >
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
