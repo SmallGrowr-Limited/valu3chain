@@ -20,6 +20,11 @@ export default function UpdatePartnerSignup() {
     { key: "1", value: "Extention Agent" },
     { key: "2", value: "Ecosystem Partner" },
   ];
+
+  const permit = [
+    { key: "1", value: "Yes" },
+    { key: "2", value: "No" },
+  ];
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -49,7 +54,7 @@ export default function UpdatePartnerSignup() {
             <Text style={styles.formLabel}></Text>
             <SelectList
               setSelected={(val) => setUserObjective(val)}
-              data={userValue}
+              data={permit}
               save="value"
               defaultOption={{
                 key: "1",
@@ -81,7 +86,7 @@ export default function UpdatePartnerSignup() {
             <Text style={styles.formLabel}></Text>
             <SelectList
               setSelected={(val) => setUserObjective(val)}
-              data={userValue}
+              data={permit}
               save="value"
               defaultOption={{
                 key: "1",
@@ -91,7 +96,10 @@ export default function UpdatePartnerSignup() {
           </View>
         </View>
         <View style={styles.buttonSection}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.navigate("/auth/signupPartner3")}
+          >
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>

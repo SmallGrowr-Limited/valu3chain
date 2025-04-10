@@ -18,15 +18,15 @@ import { quickAccess, farmers } from "../../components/data";
 
 export default function AgentDashboard() {
   const [loading, setLoading] = useState(false);
-
   const [fullName, setFullName] = useState("Fatima Aliyu");
   const [profilePicture, setProfilePicture] = useState(null);
   const [assignedFarmers, setAssignedFarmers] = useState(25);
   const [task, setTask] = useState(4);
   const [auditedFarms, setAuditedFarms] = useState(18);
-  const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const router = useRouter();
 
   const renderItem = ({ item }) => (
     <View style={styles.rowItem}>
@@ -104,7 +104,7 @@ export default function AgentDashboard() {
                   return (
                     <TouchableOpacity
                       style={styles.quickAccessItem}
-                      onPress={item.path}
+                      onPress={() => router.navigate(`${item.path}`)}
                       key={index}
                     >
                       <View style={styles.quickAccessIcon}>{item.icon}</View>

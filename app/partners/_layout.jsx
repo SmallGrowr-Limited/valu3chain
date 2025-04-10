@@ -8,8 +8,12 @@ export default function Partners(params) {
           options={{ headerShown: false, title: "" }}
         />
         <Stack.Screen
-          name="demand"
+          name="transactions"
           options={{ headerShown: true, title: "" }}
+        />
+        <Stack.Screen
+          name="orderPreview"
+          options={{ headerShown: false, title: "" }}
         />
       </Stack>
     );

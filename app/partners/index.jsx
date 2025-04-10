@@ -6,14 +6,59 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  Dimensions
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import PieChartComponent from "../../components/charts/pieChart";
 import { trades } from "../../components/data";
+import SlideUpModal from "../../components/modal";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from "react-native-reanimated";
+
+// Disable Reanimate strict mode
+  configureReanimatedLogger({
+    level: ReanimatedLogLevel.warn,
+    strict: false,
+  });
+  const { height } = Dimensions.get("window");
 
 const Index = () => {
+
+  const router = useRouter()
+
+  const [modalVisible, setModalVisible] = useState(false);
+  // Shared values for animation
+  const translateY = useSharedValue(height);
+  const opacity = useSharedValue(0);
+
+  const openModal = () => {
+    setModalVisible(true);
+    translateY.value = withTiming(0, { duration: 600 });
+    opacity.value = withTiming(1, { duration: 300 });
+  };
+
+  const closeModal = () => {
+    translateY.value = withTiming(height, { duration: 300 });
+    opacity.value = withTiming(0, { duration: 300 });
+    setModalVisible(false);
+  };
+
+  // Animated styles
+  const animatedContainerStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
+
+  const animatedBackdropStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.rowItem}>
       <View style={styles.nameFieldWrap}>
@@ -45,31 +90,29 @@ const Index = () => {
         <View>
           <Text style={styles.userName}>Hello, Admin</Text>
         </View>
+        {/* <MenuComponent /> */}
         <Ionicons name="notifications-circle" size={30} color="#000" />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.chartSection}>
-          <Text style={[styles.title, {padding:10}]}>Commodity Price Chart</Text>
+          <Text style={[styles.title, { padding: 10 }]}>
+            Commodity Price Chart
+          </Text>
           <PieChartComponent />
         </View>
-        <View style={[styles.columns, {marginTop:10}]}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <TouchableOpacity
-              style={[styles.actionButton, styles.shadowProp, styles.bgColor4]}
-            >
-              <Text style={styles.buttonText}>Buy Products</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.actionButton, styles.shadowProp, styles.bgColor2]}
-            >
-              <Text style={styles.buttonText}>Sell Products</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.actionButton, styles.shadowProp, styles.bgColor3]}
-            >
-              <Text style={styles.buttonText}>Make Investment</Text>
-            </TouchableOpacity>
-          </ScrollView>
+        <View style={[styles.columns, { marginTop: 10 }]}>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.shadowProp, styles.bgColor4]}
+            onPress={() => router.navigate("/partners/transactions")}
+          >
+            <Text style={styles.buttonText}>Transactions</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.shadowProp, styles.bgColor3]}
+            onPress={openModal}
+          >
+            <Text style={styles.buttonText}>Investments</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.listItem}>
           <Text style={styles.title}>Transaction History</Text>
@@ -80,6 +123,12 @@ const Index = () => {
           />
         </View>
       </ScrollView>
+      <SlideUpModal
+        modalVisible={modalVisible}
+        closeModal={closeModal}
+        animatedBackdropStyle={animatedBackdropStyle}
+        animatedContainerStyle={animatedContainerStyle}
+      />
     </SafeAreaView>
   );
 };
@@ -139,10 +188,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 5,
     marginBottom: 10,
-    // backgroundColor: "#fff",
+    // backgroundColor: "#000",
   },
   actionButton: {
-    width: "30%",
+    width: "46%",
     backgroundColor: "#fff",
     padding: 15,
     margin: 5,
