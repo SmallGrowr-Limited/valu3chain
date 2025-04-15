@@ -45,7 +45,8 @@ export default function MakeDemand() {
           ) : null}
         </View>
         <View style={styles.buttonSection} >
-          <TouchableOpacity style={styles.button} onPress={()=>router.navigate("/partners/orderPreview")}>
+          <TouchableOpacity style={styles.button} 
+            onPress={()=>router.navigate("/partners/orderPreview")}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>

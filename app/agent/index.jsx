@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: 500,
-    // color: "#0a990b",
     paddingHorizontal: 5,
   },
   columns: {

@@ -29,6 +29,7 @@ const SlideUpModal = ({
   animatedBackdropStyle,
 }) => {
   
+  const router = useRouter()
 
   return (
     <View style={styles.containe}>
@@ -56,7 +57,7 @@ const SlideUpModal = ({
 
           <View style={styles.contentWrapper}>
             <View style={styles.investments}>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={()=>router.navigate("/partners/fundAllocation")}>
                 <MaterialIcons name="attach-money" size={24} color="#0a990b" />
                 <Text style={styles.buttonText}>Fund Allocation</Text>
               </TouchableOpacity>

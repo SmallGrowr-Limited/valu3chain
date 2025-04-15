@@ -71,6 +71,10 @@ export default function RootLayout() {
           name="partners"
           options={{ headerShown: false, title: "" }}
         />
+        <Stack.Screen
+          name="farmAudit"
+          options={{ headerShown: true, title: "Farm Audit" }}
+        />
       </Stack>
       {/* </AuthProvider> */}
     </Provider>

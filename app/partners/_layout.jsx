@@ -15,6 +15,10 @@ export default function Partners(params) {
           name="orderPreview"
           options={{ headerShown: false, title: "" }}
         />
+        <Stack.Screen
+          name="fundAllocation"
+          options={{ headerShown: true, title: "" }}
+        />
       </Stack>
     );
 }
