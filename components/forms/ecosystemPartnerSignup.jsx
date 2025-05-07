@@ -9,57 +9,90 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 export default function EcosystemPartnerSignup() {
-  const [businessName, setBusinessName] = useState("");
-  const [contactPersonName, setContactPersonName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
+  const router = useRouter();
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const [partnerData, setPartnerData] = useState({
+    businessName: "",
+    contactPersonName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    businessAddress: "",
+    userObjective: "",
+    businessPermit: "",
+    statesOfOperation: "",
+  });
+ 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleChange = (name, value)=>{
+    setPartnerData((prev)=>({...prev, [name]: value}))
+  }
+
+   const submitForm = (name, value) => {
+     console.log("partnerData", partnerData);
+     router.navigate("/auth/signupPartner2");
+   };
+
   return (
     <>
       <View style={styles.formInput}>
+        <Text style={styles.formLabel}>Name of Business</Text>
         <TextInput
           style={styles.formControl}
-          value={businessName}
+          value={partnerData.businessName}
           placeholder="Name of Business"
           placeholderTextColor="#aaa"
           keyboardType="text"
-          onChangeText={(val) => setBusinessName(val)}
+          onChangeText={(val) => handleChange("businessName", val)}
         />
       </View>
       <View style={styles.formInput}>
+        <Text style={styles.formLabel}>Name of Contact Person</Text>
         <TextInput
           style={styles.formControl}
-          value={contactPersonName}
+          value={partnerData.contactPersonName}
           placeholder="Name of Contact Person"
           placeholderTextColor="#aaa"
           keyboardType="text"
-          onChangeText={(val) => setContactPersonName(val)}
+          onChangeText={(val) => handleChange("contactPersonName", val)}
         />
       </View>
       <View style={styles.formInput}>
+        <Text style={styles.formLabel}>Email Address</Text>
         <TextInput
           style={styles.formControl}
-          value={password}
+          value={partnerData.email}
           placeholder="Email Address"
           placeholderTextColor="#aaa"
           keyboardType="text"
-          onChangeText={(val) => setEmail(val)}
+          onChangeText={(val) => handleChange("email", val)}
         />
       </View>
+      <View style={styles.formInput}>
+        <Text style={styles.formLabel}>PhoneNumber</Text>
+        <TextInput
+          style={styles.formControl}
+          value={partnerData.phoneNumber}
+          placeholder="phoneNumber"
+          placeholderTextColor="#aaa"
+          keyboardType="text"
+          onChangeText={(val) => handleChange("phoneNumber", val)}
+        />
+      </View>
+      <Text style={styles.formLabel}>Enter Your Password</Text>
       <View style={styles.passwordContainer}>
         <TextInput
           secureTextEntry={!showPassword}
-          value={password}
-          onChangeText={(val) => setPassword(val)}
+          value={partnerData.password}
+          onChangeText={(val) => handleChange("password", val)}
           style={styles.input}
           placeholder="Enter Your Password"
           placeholderTextColor="#aaa"
@@ -73,16 +106,7 @@ export default function EcosystemPartnerSignup() {
         />
       </View>
       <View style={styles.formInput}>
-        <TextInput
-          style={styles.formControl}
-          value={email}
-          placeholder="Password"
-          placeholderTextColor="#aaa"
-          keyboardType="text"
-          onChangeText={(val) => setPassword(val)}
-        />
-      </View>
-      <View style={styles.formInput}>
+        <Text style={styles.formLabel}>Confirm Password</Text>
         <TextInput
           style={styles.formControl}
           value={confirmPassword}
@@ -91,6 +115,25 @@ export default function EcosystemPartnerSignup() {
           keyboardType="text"
           onChangeText={(val) => setConfirmPassword(val)}
         />
+      </View>
+      <View style={styles.buttonSection}>
+        <TouchableOpacity
+          style={styles.button}
+          // onPress={() => router.navigate("/auth/signupPartner2")}
+          onPress={submitForm}
+        >
+          <Text style={styles.buttonText}>Proceed</Text>
+        </TouchableOpacity>
+        <View style={styles.signIn}>
+          <Text style={styles.signInText}>
+            Already have an account?{" "}
+            <TouchableOpacity onPress={() => router.navigate("/auth/login")}>
+              <Text style={[styles.linkText, { marginBottom: -5 }]}>
+                Sign in
+              </Text>
+            </TouchableOpacity>
+          </Text>
+        </View>
       </View>
     </>
   );
@@ -127,5 +170,31 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 10,
+  },
+  buttonSection: { flex: 1 },
+  button: {
+    marginVertical: 20,
+    backgroundColor: "#0a990b",
+    borderRadius: 10,
+    padding: 10,
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "#ffffff",
+    fontSize: 16,
+  },
+  signIn: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+
+  linkText: {
+    color: "green",
+  },
+
+  formLabel: {
+    marginBottom: 5,
+    marginTop: 5,
+    color: "#000",
   },
 });

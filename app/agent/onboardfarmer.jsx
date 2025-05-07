@@ -15,8 +15,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-// import DateTimePicker from "@react-native-community/datetimepicker";
-import AuthContext from "../../context/AuthContext";
+
 
 export default function SignUpEmail({ navigation }) {
   const [name, setName] = useState("");
@@ -27,7 +26,6 @@ export default function SignUpEmail({ navigation }) {
   const [role, setRole] = useState("Farmer");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  //const { user, setUser } = useContext(AuthContext);
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");

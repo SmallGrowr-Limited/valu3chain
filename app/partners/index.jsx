@@ -109,7 +109,8 @@ const Index = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.actionButton, styles.shadowProp, styles.bgColor3]}
-            onPress={openModal}
+            onPress={() => router.navigate("/partners/investments")}
+            // onPress={openModal}
           >
             <Text style={styles.buttonText}>Investments</Text>
           </TouchableOpacity>

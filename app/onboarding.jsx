@@ -44,48 +44,48 @@ export default Onboarding;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center" ,
-    padding : 16
+    alignItems: "center",
+    padding: 16,
   },
   text: {
     fontSize: 15,
-    color: 'grey',
+    color: "grey",
     top: height * 0.05,
-    fontWeight: 500
+    fontWeight: 500,
   },
   imageContainer: {
     marginTop: height * 0.15,
-    flexDirection: 'row',
-    width: '90%',
-    paddingHorizontal:20
+    flexDirection: "row",
+    width: "90%",
+    paddingHorizontal: 20,
   },
   imageContainer1: {
-     flexDirection: 'column',
-     marginHorizontal: 25
+    flexDirection: "column",
+    marginHorizontal: 25,
   },
- image: {
-  width: 80,
-  height: 80,
-  borderWidth: 2,
-  borderRadius: 50,
-  borderColor: 'green'
- },
- imageText: { 
-  marginTop: height * 0.01,
-  marginLeft: width * 0.05
- },
- button: {
-  marginTop: height * 0.5,
-  width: "90%",
-  justifyContent: "center",
-  alignItems: "center",
-  marginBottom: 20,
-  backgroundColor: "#16B116",
-  padding: 10,
-  borderRadius: 8,
- },
- buttonText: {
-  fontSize: 16,
-  color: "#fff",
- }
+  image: {
+    width: 80,
+    height: 80,
+    borderWidth: 2,
+    borderRadius: 50,
+    borderColor: "green",
+  },
+  imageText: {
+    marginTop: height * 0.01,
+    marginLeft: width * 0.05,
+  },
+  button: {
+    marginTop: height * 0.5,
+    width: "90%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+    backgroundColor: "#508060",
+    padding: 10,
+    borderRadius: 8,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "#fff",
+  },
 });

@@ -2,12 +2,10 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import {Provider} from "react-redux";
 import {store} from "../redux/store"
-import AuthContext, { AuthProvider } from "../context/AuthContext";
 
 export default function RootLayout() {
   return (
     <Provider store={store}>
-      {/* <AuthProvider> */}
       <StatusBar style="auto" />
       <Stack>
         <Stack.Screen
@@ -76,7 +74,6 @@ export default function RootLayout() {
           options={{ headerShown: true, title: "Farm Audit" }}
         />
       </Stack>
-      {/* </AuthProvider> */}
     </Provider>
   );
 }

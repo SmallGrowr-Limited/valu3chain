@@ -66,7 +66,7 @@ export const quickAccess = [
   {
     title: "Request",
     icon: <FontAwesome6 name="clipboard-question" size={34} color="#fff" />,
-    path: "/agent",
+    path: "/agent/request",
   },
   {
     title: "Farm Audit",

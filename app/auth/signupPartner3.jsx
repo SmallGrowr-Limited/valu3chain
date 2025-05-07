@@ -52,17 +52,18 @@ export default function TermsOfService() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e8f5e4",
   },
-  content: { flex: 1, padding: 20, marginTop: 20 },
-  service: { flex: 3 },
+  content: { flex: 1, padding: 10, margin: 20, backgroundColor: "#fff",  },
+  service: { flex: 3, padding: 20 },
   section: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop:10
+    marginTop: 10,
   },
   paragraph: {
     fontSize: 18,
+    lineHeight: 32,
   },
   checkbox: {
     margin: 8,
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   buttonSection: { flex: 1 },
   button: {
     marginVertical: 20,
-    backgroundColor: "#0a990b",
+    backgroundColor: "#508060",
     borderRadius: 10,
     padding: 10,
   },

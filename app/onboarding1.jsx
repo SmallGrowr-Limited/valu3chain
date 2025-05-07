@@ -51,28 +51,25 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "500",
     marginLeft: width * 0.8,
-    marginTop:  10,
+    marginTop: 10,
   },
   text: {
     // borderWidth:1,
-    flex:1,
-    marginVertical:5,
-    justifyContent:"center",
-    alignItems:"center"
-   
+    flex: 1,
+    marginVertical: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
   subtitle: {
     fontSize: 15,
     color: "#fff",
     fontWeight: "400",
-    textAlign:"center"
-    
+    textAlign: "center",
   },
   title: {
     fontSize: 24,
     color: "#fff",
     fontWeight: "500",
-    
   },
   buttonContainer: {
     width: 70,
@@ -82,31 +79,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
     marginTop: height * 0.2,
-    overflow: "hidden", 
+    overflow: "hidden",
   },
   halfColorLeft: {
     position: "absolute",
-    width: "200%", 
+    width: "200%",
     height: "100%",
-    backgroundColor: "white", 
+    backgroundColor: "white",
     left: 0,
     borderTopRightRadius: 50,
-    borderBottomRightRadius: 50, 
+    borderBottomRightRadius: 50,
     borderBottomLeftRadius: 50,
-    borderTopLeftRadius: 50, 
+    borderTopLeftRadius: 50,
   },
   halfColorRight: {
     position: "absolute",
     width: "150%",
     height: "100%",
-    backgroundColor: "grey", 
+    backgroundColor: "grey",
     right: 0,
-    borderRadius: 50 
+    borderRadius: 50,
   },
   button: {
     width: 60,
     height: 60,
-    backgroundColor: "green",
+    backgroundColor: "#508060",
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",

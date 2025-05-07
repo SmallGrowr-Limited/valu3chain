@@ -18,14 +18,14 @@ export default function DemandForm() {
     { key: "3", value: "Equity" },
   ];
 
-  itemtype = [
+  const itemtype = [
     { key: "1", value: "Seed" },
     { key: "2", value: "Seedlings" },
     { key: "3", value: "Other input" },
     { key: "4", value: "Equipment" },
   ];
 
-  termofdemand = [
+  const termofdemand = [
     { key: "1", value: "1 year" },
     { key: "2", value: "2 years" },
     { key: "3", value: "3 years" },

@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
-    
   },
 
   authButton: {
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
-    backgroundColor: "#16B116",
+    backgroundColor: "#508060",
     borderColor: "#16B116",
     padding: 10,
     borderRadius: 8,

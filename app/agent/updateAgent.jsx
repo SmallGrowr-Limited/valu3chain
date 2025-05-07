@@ -20,13 +20,11 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { stateslist } from "../../states";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AuthContext from "../../context/AuthContext";
 import { useRouter } from "expo-router";
 
 const AgentPersonalInformation = ({ navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { agentId, setAgentId } = useContext(AuthContext);
   const router = useRouter();
 
   //input fields

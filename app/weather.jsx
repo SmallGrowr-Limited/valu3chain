@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import axios from "axios";
-import AuthContext from "../context/AuthContext";
+
 // import WeatherComponent from "../components/weather";
 
 import Ionicons from "@expo/vector-icons/Ionicons";

@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   buttonSection: { flex: 1 },
   button: {
     marginVertical: 20,
-    backgroundColor: "#0a990b",
+    backgroundColor: "#508060",
     borderRadius: 10,
     padding: 10,
   },

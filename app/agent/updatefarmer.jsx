@@ -18,7 +18,6 @@ import {
 import { SelectList } from "react-native-dropdown-select-list";
 import { stateslist } from "../../states";
 import { banks } from "../../banks";
-import AuthContext from "../../context/AuthContext";
 import { useRouter } from "expo-router";
 
 const RegisterFarmer = () => {
@@ -28,7 +27,7 @@ const RegisterFarmer = () => {
   const router = useRouter();
 
   //input fields
-  //const { farmerId, setFarmerId, setProfileUpdate } = useContext(AuthContext);
+  
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [state, setState] = useState("");
