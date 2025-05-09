@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#e8f5e4",
   },
   header: {
     marginTop: 10,
@@ -73,7 +73,10 @@ const styles = StyleSheet.create({
   },
 
   formSection: {
-    paddingHorizontal: 20,
+    padding: 20,
+    margin: 10,
+    backgroundColor: "#fff",
+    borderRadius: 10,
   },
 
   formLabel: {
@@ -100,8 +103,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
-  buttonText:{
-    textAlign:"center",
-    color:"#fff"
-  }
+  buttonText: {
+    textAlign: "center",
+    color: "#fff",
+  },
 });

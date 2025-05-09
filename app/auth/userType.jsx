@@ -66,7 +66,7 @@ export default UserType;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e8f5e4",
     justifyContent: "center",
   },
   content: {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginVertical: 20,
-    backgroundColor: "#0a990b",
+    backgroundColor: "#508060",
     borderRadius: 10,
     padding: 10,
   },

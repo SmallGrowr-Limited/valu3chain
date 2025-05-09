@@ -10,6 +10,7 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import {useRouter} from "expo-router";
+import {useDispatch, useSelector} from "react-redux";
 
 
 const Signup = () => {

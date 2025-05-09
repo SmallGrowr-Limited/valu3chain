@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f8f8",
   },
   headerText: {
-    fontSize: 20,
-    fontWeight: 700,
+    fontSize: 18,
+    // fontWeight: 700,
     color: "#0a990b",
   },
   toggleContainer: {

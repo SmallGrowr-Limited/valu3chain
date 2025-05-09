@@ -78,9 +78,9 @@ export default function Investments() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.brandSection}>
+      {/* <View style={styles.brandSection}>
         <Image source={valu3chain} alt="" style={styles.image} />
-      </View>
+      </View> */}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.contentWrapper}>
           <View style={[styles.formSection, styles.shadowProp]}>

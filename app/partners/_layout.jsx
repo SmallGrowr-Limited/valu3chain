@@ -7,7 +7,10 @@ export default function Partners(params) {
           name="index"
           options={{ headerShown: false, title: "" }}
         />
-        <Stack.Screen name="investments" options={{headerShown:false, title:""}} />
+        <Stack.Screen
+          name="investments"
+          options={{ headerShown: true, title: "" }}
+        />
         <Stack.Screen
           name="transactions"
           options={{ headerShown: true, title: "" }}

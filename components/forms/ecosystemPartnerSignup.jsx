@@ -10,11 +10,16 @@ import {
 import React, { useState } from "react";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from "../../redux/slices/authSlice";
 
 export default function EcosystemPartnerSignup() {
   const router = useRouter();
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch()
+
+  const {loading, error} = useSelector(state=>state.auth)
 
   const [partnerData, setPartnerData] = useState({
     businessName: "",
@@ -36,9 +41,13 @@ export default function EcosystemPartnerSignup() {
     setPartnerData((prev)=>({...prev, [name]: value}))
   }
 
-   const submitForm = (name, value) => {
-     console.log("partnerData", partnerData);
+   const submitForm = () => {
+     //  console.log("partnerData", partnerData);
+     //  router.navigate("/auth/signupPartner2");
+     dispatch(signup(partnerData));
      router.navigate("/auth/signupPartner2");
+
+     console.log(loading);
    };
 
   return (
@@ -174,7 +183,7 @@ const styles = StyleSheet.create({
   buttonSection: { flex: 1 },
   button: {
     marginVertical: 20,
-    backgroundColor: "#0a990b",
+    backgroundColor: "#508060",
     borderRadius: 10,
     padding: 10,
   },

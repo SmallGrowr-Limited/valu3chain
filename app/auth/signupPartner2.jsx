@@ -7,32 +7,29 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
 import { SelectList } from "react-native-dropdown-select-list";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from "../../redux/slices/authSlice";
 
 export default function UpdatePartnerSignup() {
   const router = useRouter();
-  // const [businessAddress, setBusinessAddress] = useState("");
-  // const [userObjective, setUserObjective] = useState("");
-  // const [businessPermit, setbusinessPermit] = useState("");
-  // const [statesOfOperation, setStatesOfOperation] = useState("");
-  // const [businessRegistrationNumber, setBusinessRegistrationNumber] = useState("");
-  // const [haveFarmersDirectory, setHaveFarmersDirectory] = useState("");
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth);
 
-   const [data, setData] = useState({
-     businessAddress: "",
-     userObjective: "",
-     businessPermit: "",
-     statesOfOperation: "",
-     businessRegistrationNumber: "",
-     haveFarmersDirectory: "",
-   }) 
-
+  const [data, setData] = useState({
+    businessAddress: "",
+    userObjective: "",
+    businessPermit: "",
+    statesOfOperation: "",
+    businessRegistrationNumber: "",
+    haveFarmersDirectory: "",
+  });
 
   const userValue = [
-    { key: "1", value: "" },
-    { key: "2", value: "" },
+    { key: "1", value: "Value 1" },
+    { key: "2", value: "Value 2" },
   ];
 
   const permit = [
@@ -40,15 +37,20 @@ export default function UpdatePartnerSignup() {
     { key: "2", value: "No" },
   ];
 
-  const handleChange = (name, value)=>{
-    setData((prev)=>({...prev, [name]: value}))
-    
-  }
- 
-  const handleSubmit = () => {
-    console.log("Data:", data);
-    router.navigate("/auth/signupPartner3");
+  const handleChange = (name, value) => {
+    setData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleSubmit = () => {
+    // console.log("Data:", data);
+    // router.navigate("/auth/signupPartner3");
+    dispatch(signup(data))
+  };
+
+  useEffect(()=>{
+    console.log(user);
+    
+  },[user])
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -136,9 +138,14 @@ export default function UpdatePartnerSignup() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e8f5e4",
   },
-  content: { flex: 1, padding: 20, marginTop: 20 },
+  content: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+    marginHorizontal: 10,
+  },
   formSection: { flex: 3 },
   formInput: { marginBottom: 15 },
 
@@ -153,7 +160,7 @@ const styles = StyleSheet.create({
   buttonSection: { flex: 1 },
   button: {
     marginVertical: 20,
-    backgroundColor: "#0a990b",
+    backgroundColor: "#508060",
     borderRadius: 10,
     padding: 10,
   },

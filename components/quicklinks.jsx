@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   headerText: {
-    fontSize: 20,
-    fontWeight: 700,
+    fontSize: 18,
+    // fontWeight: 700,
     color: "#0a990b",
   },
   quickLinks: {

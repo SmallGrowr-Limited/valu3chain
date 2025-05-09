@@ -53,17 +53,16 @@ export const {
 
 export default authSlice.reducer;
 
-
 // Simulate an API call
-const fakeApiCall = (email, password) => {
+const fakeApiCall = (partnerData) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (email === 'test@example.com' && password === 'password') {
-        resolve({ email, token: 'fake-token' });
+      if (partnerData.email === 'test@example.com' && partnerData.password === 'password') {
+        resolve(partnerData, { token: "fake-token" });
       } else {
         reject(new Error('Invalid credentials'));
       }
-    }, 1000);
+    }, 5000);
   });
 };
 
@@ -82,11 +81,11 @@ export const login = createAsyncThunk(
 
 export const signup = createAsyncThunk(
   "auth/signupAgent",
-  async ({ email, password }, { dispatch }) => {
+  async (partnerData, { dispatch }) => {
     dispatch(signupRequest());
     try {
-      const user = await fakeApiCall(email, password);
-      dispatch(signupSuccess(user));
+      //const user = await fakeApiCall(partnerData);
+      dispatch(signupSuccess(partnerData));
     } catch (error) {
       dispatch(signupFailure(error.message));
     }

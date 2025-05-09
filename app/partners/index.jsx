@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
@@ -21,17 +21,23 @@ import Animated, {
   configureReanimatedLogger,
   ReanimatedLogLevel,
 } from "react-native-reanimated";
+import { useSelector, useDispatch } from "react-redux";
+//import {signup} from "../../redux/slices/authSlice"
 
 // Disable Reanimate strict mode
-  configureReanimatedLogger({
-    level: ReanimatedLogLevel.warn,
-    strict: false,
-  });
-  const { height } = Dimensions.get("window");
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false,
+});
+const { height } = Dimensions.get("window");
 
 const Index = () => {
+  const router = useRouter();
+  const { user } = useSelector((state) => state.auth);
 
-  const router = useRouter()
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const [modalVisible, setModalVisible] = useState(false);
   // Shared values for animation
@@ -137,7 +143,7 @@ const Index = () => {
 export default Index;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
+  container: { flex: 1, backgroundColor: "#e8f5e4" },
   contentWrapper: { flex: 1, padding: 10 },
   notifications: {
     padding: 20,
@@ -146,7 +152,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   userName: { fontSize: 18, fontWeight: 500, color: "#0a990b" },
-  title: { fontSize: 18, fontWeight: 500,  },
+  title: { fontSize: 18, fontWeight: 500 },
   rowItem: {
     flexDirection: "row",
     justifyContent: "space-between",

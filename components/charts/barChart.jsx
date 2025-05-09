@@ -18,7 +18,7 @@ const BarChartComponent = () => {
    
    const handleCropSelection = (val)=>{
     setCrop(val)
-    console.log(crop)
+    //console.log(crop)
    }
 
    const dd = [45000, 44000, 43000, 42000];
@@ -33,15 +33,31 @@ const BarChartComponent = () => {
     
   };
 
+  // const config = {
+  //   backgroundColor: "#e26a00",
+  //   backgroundGradientFrom: "#508060",
+  //   backgroundGradientTo: "#508010",
+  //   decimalPlaces: 0,
+  //   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+  //   labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+  //   style: { borderRadius: 12 },
+  //   propsForBackgroundLines: { strokeDasharray: "" },
+  //   propsForDots: {
+  //     r: "6",
+  //     strokeWidth: "2",
+  //     stroke: "#ffa726",
+  //   },
+  // };
+
   const config = {
-    backgroundColor: "#e26a00",
-    backgroundGradientFrom: "#e26a00",
-    backgroundGradientTo: "#e26a00",
+    backgroundColor: "#508060",
+    backgroundGradientFrom: "#508060",
+    backgroundGradientTo: "#508060",
     decimalPlaces: 0,
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    style: { borderRadius: 12 },
-    propsForBackgroundLines: { strokeDasharray: "" },
+    color: () => `#e8f5e4`,
+    labelColor: () => `#e8f5e4`,
+    style: { borderRadius: 10 },
+    //propsForBackgroundLines: { strokeDasharray: "" },
     propsForDots: {
       r: "6",
       strokeWidth: "2",

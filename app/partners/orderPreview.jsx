@@ -178,7 +178,7 @@ export default function PreviewOrder() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
+  container: { flex: 1, backgroundColor: "#e8f5e4" },
   content: { flex: 1, padding: 10 },
   header: { marginVertical: 10 },
   headerText: { fontSize: 20, fontWeight: 500, textAlign: "center" },
@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "#ccc",
     marginVertical: 5,
+    backgroundColor: "#fff",
   },
   fields: {
     flexDirection: "row",
