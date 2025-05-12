@@ -98,6 +98,7 @@ export default function ProductListingForm() {
         <TextInput
           style={styles.formControl}
           placeholder="e.g., 10 tons, 50 crates, etc."
+          placeholderTextColor="#ccc"
           keyboardType="text"
           onChangeText={(val) => setAvailableQuantity(val)}
         />

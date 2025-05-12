@@ -76,6 +76,11 @@ export default function Investments() {
     setShow(true);
   };
 
+  const handleSubmit = () => {
+    
+  };
+
+
   return (
     <SafeAreaView style={styles.container}>
       {/* <View style={styles.brandSection}>
