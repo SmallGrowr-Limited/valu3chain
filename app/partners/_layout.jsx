@@ -23,6 +23,14 @@ export default function Partners(params) {
           name="fundAllocation"
           options={{ headerShown: true, title: "" }}
         />
+        <Stack.Screen
+          name="profileForm1"
+          options={{ headerShown: true, title: "Business Profile" }}
+        />
+        <Stack.Screen
+          name="profileForm2"
+          options={{ headerShown: true, title: "Business Profile" }}
+        />
       </Stack>
     );
 }

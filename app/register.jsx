@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
+import { SelectList } from "react-native-dropdown-select-list";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useMutation } from "@apollo/client";
@@ -29,6 +30,11 @@ const SignupPartner = () => {
     password: "",
     
   });
+
+  const userValue = [
+    { key: "1", value: "Extention Agent" },
+    { key: "2", value: "Ecosystem Partner" },
+  ];
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -55,22 +61,18 @@ const SignupPartner = () => {
         email: data.signUp.email,
         role: data.signUp.role,
       };
-
       dispatch(loggedInUser(credentials));
 
-      if (data.signUp.role === "Agent") {
-        router.navigate("/agent");
+      if (data.signUp.role === "Extention Agent") {
+        router.navigate("/agent/");
       }
 
-      if (data.signUp.role === "Partner") {
-        router.navigate("/partners");
+      if (data.signUp.role === "Ecosystem Partner") {
+        router.navigate("/partners/profileForm1");
       }
 
-      // alert("Success", "Logged in!");
     } catch (error) {
       console.log("Error:", error.message);
-      
-      // alert("signup Failed", error.message);
     }
   };
 
@@ -82,8 +84,14 @@ const SignupPartner = () => {
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.formSection}>
-            
-            
+            <View style={styles.formInput}>
+              <Text style={styles.formLabel}>Register As</Text>
+              <SelectList
+                setSelected={(val) => handleChange("role", val)}
+                data={userValue}
+                save="value"
+              />
+            </View>
             <View style={styles.formInput}>
               <Text style={styles.formLabel}>Email Address</Text>
               <TextInput
@@ -95,17 +103,7 @@ const SignupPartner = () => {
                 onChangeText={(val) => handleChange("email", val)}
               />
             </View>
-            <View style={styles.formInput}>
-              <Text style={styles.formLabel}>Role</Text>
-              <TextInput
-                style={styles.formControl}
-                value={userData.role}
-                placeholder="role"
-                placeholderTextColor="#aaa"
-                keyboardType="text"
-                onChangeText={(val) => handleChange("role", val)}
-              />
-            </View>
+
             <Text style={styles.formLabel}>Enter Your Password</Text>
             <View style={styles.passwordContainer}>
               <TextInput
@@ -124,12 +122,20 @@ const SignupPartner = () => {
                 onPress={toggleShowPassword}
               />
             </View>
-            
+            <View style={styles.formInput}>
+              <Text style={styles.formLabel}>Confirm Password</Text>
+              <TextInput
+                style={styles.formControl}
+                value={confirmPassword}
+                placeholder="Confirm Password"
+                placeholderTextColor="#aaa"
+                keyboardType="text"
+                onChangeText={(val) => setConfirmPassword(val)}
+              />
+            </View>
+
             <View style={styles.buttonSection}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={handleSignup}
-              >
+              <TouchableOpacity style={styles.button} onPress={handleSignup}>
                 <Text style={styles.buttonText}>Proceed</Text>
               </TouchableOpacity>
               <View style={styles.signIn}>
