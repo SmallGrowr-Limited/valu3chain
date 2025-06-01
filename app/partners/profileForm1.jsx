@@ -41,7 +41,6 @@ const PartnerProfileForm1 = () => {
     email: "",
     phoneNumber: "",
     businessAddress: "",
-    userObjective: "",
     businessPermit: "",
     statesOfOperation: "",
     businessRegistrationNumber: "",
@@ -57,32 +56,29 @@ const PartnerProfileForm1 = () => {
     setPartnerData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const submitForm = () => {
-    //dispatch(signup(partnerData));
-    router.navigate("/auth/signupPartner2");
-  };
-
   const handleSignup = async () => {
     try {
-      const { data } = await signup({
-        variables: {
-          businessName,
-          contactPersonName,
-          email,
-          phoneNumber,
-          businessAddress,
-          userObjective,
-          businessPermit,
-          statesOfOperation,
-          businessRegistrationNumber,
-          haveFarmersDirectory,
-          termsOfServiceAgreement
-        },
-      });
+      console.log(partnerData);
+      
+      // const { data } = await signup({
+      //   variables: {
+      //     businessName,
+      //     contactPersonName,
+      //     email,
+      //     phoneNumber,
+      //     businessAddress,
+      //     userObjective,
+      //     businessPermit,
+      //     statesOfOperation,
+      //     businessRegistrationNumber,
+      //     haveFarmersDirectory,
+      //     termsOfServiceAgreement
+      //   },
+      // });
 
-      dispatch(setAuth(data.signup));
-
-      Alert.alert("Success", "Logged in!");
+      // dispatch(setAuth(data.signup));
+      // Alert.alert("Success", "Logged in!");
+      router.navigate("/partners/profileForm2")
     } catch (error) {
       Alert.alert("signup Failed", error.message);
     }
@@ -141,13 +137,24 @@ const PartnerProfileForm1 = () => {
               />
             </View>
             <View style={styles.formInput}>
+              <Text style={styles.formLabel}>Head Office Address</Text>
+              <TextInput
+                style={styles.formControl}
+                value={partnerData.businessAddress}
+                placeholder="Head Office Address"
+                placeholderTextColor="#aaa"
+                keyboardType="text"
+                onChangeText={(val) => handleChange("businessAddress", val)}
+              />
+            </View>
+            {/* <View style={styles.formInput}>
               <Text style={styles.formLabel}>Your Objective on Valu3Chain</Text>
               <SelectList
                 setSelected={(val) => handleChange("userObjective", val)}
                 data={userValue}
                 save="value"
               />
-            </View>
+            </View> */}
             <View style={styles.formInput}>
               <Text style={styles.formLabel}>
                 Permitted to Do Business in Nigeria?
@@ -169,7 +176,7 @@ const PartnerProfileForm1 = () => {
                 onChangeText={(val) => handleChange("statesOfOperation", val)}
               />
             </View>
-           
+
             <View style={styles.buttonSection}>
               <TouchableOpacity style={styles.button} onPress={handleSignup}>
                 <Text style={styles.buttonText}>Proceed</Text>

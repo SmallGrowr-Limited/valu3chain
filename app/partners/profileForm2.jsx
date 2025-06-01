@@ -22,7 +22,6 @@ export default function TermsOfService() {
     phoneNumber: "",
     password: "",
     businessAddress: "",
-    userObjective: "",
     businessPermit: "",
     statesOfOperation: "",
     businessRegistrationNumber: "",
@@ -34,6 +33,40 @@ export default function TermsOfService() {
     { key: "1", value: "Yes" },
     { key: "2", value: "No" },
   ];
+
+  const handleChange = (name, value) => {
+    setPartnerData((prev) => ({ ...prev, [name]: value }));
+    
+  };
+
+  const handleSignup = async () => {
+    try {
+      console.log(partnerData);
+
+      // const { data } = await signup({
+      //   variables: {
+      //     businessName,
+      //     contactPersonName,
+      //     email,
+      //     phoneNumber,
+      //     businessAddress,
+      //     userObjective,
+      //     businessPermit,
+      //     statesOfOperation,
+      //     businessRegistrationNumber,
+      //     haveFarmersDirectory,
+      //     termsOfServiceAgreement
+      //   },
+      // });
+
+      // dispatch(setAuth(data.signup));
+      // Alert.alert("Success", "Logged in!");
+      router.navigate("/partners");
+    } catch (error) {
+      alert("signup Failed", error.message);
+    }
+  };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -89,7 +122,7 @@ export default function TermsOfService() {
         <View style={styles.buttonSection}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => router.navigate("/partners")}
+            onPress={handleSignup}
           >
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
