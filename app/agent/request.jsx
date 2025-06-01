@@ -10,19 +10,51 @@ import {
 import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import DemandForm from "../../components/forms/farmerDemand";
+import { farmers } from "../../components/data";
 
 export default function FarmerDemand() {
-  const [farmerId, setFarmerId] = useState("");
-  const [farmerName, setFarmerName] = useState("");
-  const [requestType, setRequestType] = useState("");
-  const [termOfDemand, setTermOfDemand] = useState("");
-  const [equity, setEquity] = useState("");
-  const [itemType, setItemType] = useState("");
-  const [description, setDescription] = useState("");
-  const [metric, setMetric] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [amount, setAmount] = useState("");
-  const [requiredInput, setRequiredInput] = useState("");
+  // const [farmerId, setFarmerId] = useState("");
+  // const [farmerName, setFarmerName] = useState("");
+  // const [requestType, setRequestType] = useState("");
+  // const [termOfDemand, setTermOfDemand] = useState("");
+  // const [equity, setEquity] = useState("");
+  // const [itemType, setItemType] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [metric, setMetric] = useState("");
+  // const [quantity, setQuantity] = useState("");
+  // const [amount, setAmount] = useState("");
+  // const [requiredInput, setRequiredInput] = useState("");
+
+  const [requestData, setRequestData] = useState({
+    farmerId: "",
+    farmerName: "",
+    requestType: "",
+    termOfDemand: "",
+    equity: "",
+    category: "",
+    description: "",
+    metric: "",
+    quantity: "",
+    requiredInput: "",
+  });
+
+  const [selectedFarmer, setSelectedFarmer] = useState("");
+  const farmersNameList = farmers.map((item) => {
+    return item.name;
+  });
+
+  const handleSelectFarmer = (value) => setSelectedFarmer(value);
+  //filter farmer details selected from the dropdown input
+  let farmerDetail = farmers.filter((farmer) => farmer.name == selectedFarmer);
+
+  const handleChange = (name, value) => {
+    setRequestData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = ()=>{
+    console.log(requestData);
+    
+  }
 
   const demandValue = [
     { key: "1", value: "Purchase" },
@@ -60,19 +92,14 @@ export default function FarmerDemand() {
     { key: "4", value: "2%" },
   ];
 
-  const farmersList = [
-    { key: "1", value: "" },
-    { key: "2", value: "" },
-    { key: "3", value: "" },
-    { key: "4", value: "" },
-  ];
-
   const minimumSize = [
     { key: "1", value: "0.5" },
     { key: "2", value: "1" },
     { key: "3", value: "Above 1" },
     { key: "4", value: "Not Applicable" },
   ];
+
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -82,100 +109,98 @@ export default function FarmerDemand() {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.formSection}>
           <View style={styles.formInput}>
-        <Text style={styles.formLabel}>Farmer Name</Text>
-        <SelectList
-          setSelected={(val) => setFarmerName(val)}
-          data={farmersList}
-          save="value"
-          style={styles.formInput}
-        />
-      </View>
-      <View style={styles.formInput}>
-        <Text style={styles.formLabel}>Request Status</Text>
-        <SelectList
-          setSelected={(val) => setRequestType(val)}
-          data={demandtype}
-          save="value"
-          style={styles.formInput}
-        />
-      </View>
-      {
-        requestType === "Equity" ? (<View style={styles.formInput}>
-        <Text style={styles.formLabel}>Equity</Text>
-        <SelectList
-          setSelected={(val) => setEquity(val)}
-          data={equitydata}
-          save="value"
-          style={styles.formInput}
-        />
-      </View>): null
-      }
-
-      <View style={styles.formInput}>
-        <Text style={styles.formLabel}>Category</Text>
-        <SelectList
-          setSelected={(val) => setItemType(val)}
-          data={itemtype}
-          save="value"
-          style={styles.formInput}
-        />
-      </View>
-
-      {
-        itemType === "Fund" ? (
-        <>
-        <View style={styles.formInput}>
-        <Text style={styles.formLabel}>Amount</Text>
-        <TextInput
-          style={styles.formControl}
-          placeholder=""
-          keyboardType="text"
-          onChangeText={(val) => setAmount(val)}
-        />
-      </View>
-      <View style={styles.formInput}>
-        <Text style={styles.formLabel}>Purpose of Funds</Text>
-        <TextInput
-          style={styles.formControl}
-          placeholder=""
-          keyboardType="text"
-          multiline={4}
-          onChangeText={(val) => setDescription(val)}
-        />
-      </View>
-      <View style={styles.formInput}>
-        <Text style={styles.formLabel}>Farm Size</Text>
-        <SelectList
-          setSelected={(val) => setInvestmentType(val)}
-          data={minimumSize}
-          save="value"
-        />
-      </View>
-        </>
-      ) : itemType === "Farm Inputs" ? (
-        <>
-          <View style={styles.formInput}>
-            <Text style={styles.formLabel}>Required Inputs</Text>
+            <Text style={styles.formLabel}>Farmer Name</Text>
             <SelectList
-              setSelected={(val) => setRequiredInput(val)}
-              data={input}
+              setSelected={(val) => handleChange("farmerName", val)}
+              data={farmersNameList}
               save="value"
+              style={styles.formInput}
             />
           </View>
           <View style={styles.formInput}>
-            <Text style={styles.formLabel}>Quantity</Text>
+            <Text style={styles.formLabel}>Request Status</Text>
             <SelectList
-              setSelected={(val) => setQuantity(val)}
-              data={minimumSize}
+              setSelected={(val) => handleChange("requestType", val)}
+              data={demandtype}
               save="value"
+              style={styles.formInput}
             />
           </View>
-        </>
-      ) : null
-      }
+          {requestData.requestType === "Equity" ? (
+            <View style={styles.formInput}>
+              <Text style={styles.formLabel}>Equity</Text>
+              <SelectList
+                setSelected={(val) => handleChange("equity", val)}
+                data={equitydata}
+                save="value"
+                style={styles.formInput}
+              />
+            </View>
+          ) : null}
+
+          <View style={styles.formInput}>
+            <Text style={styles.formLabel}>Category</Text>
+            <SelectList
+              setSelected={(val) => handleChange("category", val)}
+              data={itemtype}
+              save="value"
+              style={styles.formInput}
+            />
+          </View>
+
+          {requestData.category === "Fund" ? (
+            <>
+              <View style={styles.formInput}>
+                <Text style={styles.formLabel}>Amount</Text>
+                <TextInput
+                  style={styles.formControl}
+                  placeholder=""
+                  keyboardType="text"
+                  onChangeText={(val) => handleChange("amount", val)}
+                />
+              </View>
+              <View style={styles.formInput}>
+                <Text style={styles.formLabel}>Purpose of Funds</Text>
+                <TextInput
+                  style={styles.formControl}
+                  placeholder=""
+                  keyboardType="text"
+                  multiline={4}
+                  onChangeText={(val) => handleChange("description", val)}
+                />
+              </View>
+              <View style={styles.formInput}>
+                <Text style={styles.formLabel}>Farm Size</Text>
+                <SelectList
+                  setSelected={(val) => handleChange("metric", val)}
+                  data={minimumSize}
+                  save="value"
+                />
+              </View>
+            </>
+          ) : requestData.category === "Farm Inputs" ? (
+            <>
+              <View style={styles.formInput}>
+                <Text style={styles.formLabel}>Required Inputs</Text>
+                <SelectList
+                  setSelected={(val) => handleChange("requiredInput", val)}
+                  data={input}
+                  save="value"
+                />
+              </View>
+              <View style={styles.formInput}>
+                <Text style={styles.formLabel}>Quantity</Text>
+                <SelectList
+                  setSelected={(val) => handleChange("quantity", val)}
+                  data={minimumSize}
+                  save="value"
+                />
+              </View>
+            </>
+          ) : null}
         </View>
         <View style={styles.buttonSection}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Submit Request</Text>
           </TouchableOpacity>
         </View>
@@ -203,6 +228,7 @@ const styles = StyleSheet.create({
 
   formSection: {
     paddingHorizontal: 20,
+    //backgroundColor: "#fff",
   },
 
   formLabel: {
@@ -225,7 +251,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#0a990b",
+    backgroundColor: "#508060",
     borderRadius: 10,
     padding: 10,
   },

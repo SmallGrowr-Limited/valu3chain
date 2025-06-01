@@ -75,20 +75,20 @@ export default function AgentDashboard() {
             <Text style={styles.sectionTitle}>Statistics</Text>
             <View style={styles.columns}>
               <TouchableOpacity
-                style={[styles.stats, styles.shadowPro, styles.bgColor2]}
+                style={[styles.stats, styles.shadowPro, styles.bgColor]}
                 onPress={() => router.navigate("/agent")}
               >
                 <Text style={styles.statsValue}>{assignedFarmers}</Text>
                 <Text style={styles.statsCaption}> Total Farmers </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.stats, styles.shadowPro, styles.bgColor2]}
+                style={[styles.stats, styles.shadowPro, styles.bgColor]}
               >
                 <Text style={styles.statsValue}>{task}</Text>
                 <Text style={styles.statsCaption}>Pending Task</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.stats, styles.shadowPro, styles.bgColor2]}
+                style={[styles.stats, styles.shadowPro, styles.bgColor]}
               >
                 <Text style={styles.statsValue}>{auditedFarms}</Text>
                 <Text style={styles.statsCaption}>Audited Farms</Text>
@@ -130,7 +130,7 @@ export default function AgentDashboard() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#FBF4F7" },
+  container: { flex: 1, backgroundColor: "#e8f5e4" },
   contentWrapper: { flex: 1, padding: 10 },
   notifications: {
     padding: 20,
@@ -150,13 +150,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     padding: 5,
-    marginBottom:10
-    // backgroundColor: "#fff",
+    marginBottom: 10,
   },
 
   stats: {
     width: "30%",
-    backgroundColor: "#fff",
+    backgroundColor: "#508060",
     padding: 15,
     margin: 5,
     borderRadius: 8,
@@ -167,14 +166,12 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 14,
     textAlign: "center",
-    // fontWeight: "bold",
   },
 
   statsValue: {
     color: "#fff",
     textAlign: "center",
     fontSize: 22,
-    // fontWeight: "bold",
   },
 
   statsIcon: {

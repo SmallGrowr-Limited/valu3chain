@@ -8,11 +8,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
+import { useRouter } from "expo-router";
 import { SelectList } from "react-native-dropdown-select-list";
-import { farmers } from "../components/data";
+import { farmers } from "../../components/data";
 import Checkbox from "expo-checkbox";
 
 export default function FarmAudit() {
+  const router = useRouter()
   const [isChecked1, setChecked1] = useState(false);
   const [isChecked2, setChecked2] = useState(false);
   const [isChecked3, setChecked3] = useState(false);
@@ -34,7 +36,6 @@ const [selectedFarmer, setSelectedFarmer] = useState("");
   //filter farmer details selected from the dropdown input
   let farmerDetail = farmers.filter((farmer) => farmer.name == selectedFarmer);
   
-  //console.log(farmerDetail);
   
   return (
     <SafeAreaView style={styles.container}>
@@ -52,9 +53,9 @@ const [selectedFarmer, setSelectedFarmer] = useState("");
           </View>
           <View style={styles.section}>
             <Text style={styles.title}>General Information</Text>
-            {farmerDetail.map((item) => {
+            {farmerDetail.map((item, index) => {
               return (
-                <>
+                <View key={index}>
                   <View style={styles.rowDirection}>
                     <Text>Gender: {item.gender}</Text>
                     <Text>Phone N0: {item.phoneNumber}</Text>
@@ -70,7 +71,7 @@ const [selectedFarmer, setSelectedFarmer] = useState("");
                     <Text>Nationality: {item.Nationality}</Text>
                     <Text>State: {item.stateofOrigin}</Text>
                   </View>
-                </>
+                </View>
               );
             })}
           </View>
@@ -257,12 +258,14 @@ const [selectedFarmer, setSelectedFarmer] = useState("");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e8f5e4",
   },
   content: {
     flex: 1,
     paddingHorizontal: 15,
-    marginTop: 20,
+    margin: 10,
+    borderRadius: 10,
+    backgroundColor: "#ffffff",
   },
   formLabel: {
     marginBottom: 5,
@@ -310,12 +313,9 @@ const styles = StyleSheet.create({
   },
   checkboxSection: {
     flexDirection: "row",
-    // alignItems: "center",
-    // marginTop: 10,
   },
   check: {
     flexDirection: "row",
-    // marginTop: 10,
   },
   paragraph: {
     fontSize: 18,

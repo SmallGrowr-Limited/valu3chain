@@ -3,7 +3,7 @@ import authReducer from "./slices/authSlice";
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer, //this stores data about users authentication
+    auth: authReducer, //this stores users authentication 
     // city: getCityReducer,
   },
 });

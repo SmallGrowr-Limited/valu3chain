@@ -73,7 +73,7 @@ export const quickAccess = [
     icon: (
       <MaterialCommunityIcons name="archive-lock-open" size={34} color="#fff" />
     ),
-    path: "/farmAudit",
+    path: "/agent/farmAudit",
   },
   {
     title: "Aggregation",

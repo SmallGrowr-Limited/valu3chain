@@ -44,12 +44,7 @@ export default function MakeDemand() {
             <ProductListingForm />
           ) : null}
         </View>
-        <View style={styles.buttonSection} >
-          <TouchableOpacity style={styles.button} 
-            onPress={()=>router.navigate("/partners/orderPreview")}>
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
+        
       </ScrollView>
     </SafeAreaView>
   );
@@ -93,18 +88,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     // height: 45,
   },
-  buttonSection: {
-    marginVertical: 20,
-    paddingHorizontal: 20,
-  },
-  button: {
-    marginTop: 20,
-    backgroundColor: "#508060",
-    borderRadius: 10,
-    padding: 10,
-  },
-  buttonText: {
-    textAlign: "center",
-    color: "#fff",
-  },
+  
 });

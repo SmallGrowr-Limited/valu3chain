@@ -1,94 +1,47 @@
-// store/slices/authSlice.js
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
+  token: null,
   loading: false,
   error: null,
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
-    loginRequest: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    loginSuccess: (state, action) => {
-      state.loading = false;
+    loggedInUser: (state, action) => {
       state.user = action.payload;
     },
-    loginFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    signupRequest: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    signupSuccess: (state, action) => {
-      state.loading = false;
+    setCredentials: (state, action) => {
       state.user = action.payload;
-    },
-    signupFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+      //state.token = action.payload.token;
     },
     logout: (state) => {
       state.user = null;
+      state.token = null;
+      state.role = null;
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+    clearError: (state) => {
+      state.error = null;
     },
   },
 });
 
 export const {
-  loginRequest,
-  loginSuccess,
-  loginFailure,
-  signupRequest,
-  signupSuccess,
-  signupFailure,
+  loggedInUser,
+  setCredentials,
   logout,
+  setLoading,
+  setError,
+  clearError,
 } = authSlice.actions;
 
 export default authSlice.reducer;
-
-// Simulate an API call
-const fakeApiCall = (partnerData) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (partnerData.email === 'test@example.com' && partnerData.password === 'password') {
-        resolve(partnerData, { token: "fake-token" });
-      } else {
-        reject(new Error('Invalid credentials'));
-      }
-    }, 5000);
-  });
-};
-
-export const login = createAsyncThunk(
-  'auth/login',
-  async ({ email, password }, { dispatch }) => {
-    dispatch(loginRequest());
-    try {
-      const user = await fakeApiCall(email, password);
-      dispatch(loginSuccess(user));
-    } catch (error) {
-      dispatch(loginFailure(console.log(error)));
-    }
-  }
-);
-
-export const signup = createAsyncThunk(
-  "auth/signupAgent",
-  async (partnerData, { dispatch }) => {
-    dispatch(signupRequest());
-    try {
-      //const user = await fakeApiCall(partnerData);
-      dispatch(signupSuccess(partnerData));
-    } catch (error) {
-      dispatch(signupFailure(error.message));
-    }
-  }
-);
-

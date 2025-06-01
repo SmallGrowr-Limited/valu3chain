@@ -12,37 +12,36 @@ import {
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-
+import { REGISTER_FARMER } from "../../graphql/mutations/registerFarmerMutation";
+import {useMutation} from "@apollo/client"
 
 export default function SignUpEmail({ navigation }) {
-  const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("Farmer");
+  const [formData, setFormData] = useState({
+    fullName: "",
+    gender: "",
+    dateOfBirth: "",
+    email: "",
+    role: "",
+    phoneNumber: "",
+    address: "",
+    state: "",
+    nationality: "",
+    identification: "",
+    profileImage: "",
+    farmAddress: "",
+    farmSize: "",
+    cropType: "",
+    bankName: "",
+    accountNumber: "",
+    agentId:"123"
+  });
+
+  const [registerFarmer] = useMutation(REGISTER_FARMER);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [state, setState] = useState("");
-  const [nationality, setNationality] = useState("");
-  const [identification, setIdentification] = useState("");
   const [idNumber, setIdNumber] = useState("");
-  const [profileImage, setProfileImage] = useState("");
-
-  //Farm details
-  const [farmAddress, setfarmAddress] = useState("");
-  const [farmSize, setFarmSize] = useState("");
-  const [cropType, setCropType] = useState("");
-  const [docId, setDocId] = useState("");
-  const [showID, setShowID] = useState(false);
-  const [bankName, setBankName] = useState("");
-  const [accountNumber, setAccountNumber] = useState("");
 
   //Date picker
   const [date, setDate] = useState(new Date());
@@ -74,6 +73,43 @@ export default function SignUpEmail({ navigation }) {
     setShow(true);
   };
 
+  const handleChange = (name, value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async () => {
+    console.log("farmers:", formData);
+    try {
+      const { data } = await registerFarmer({
+        variables: {
+          input: {
+            fullName:formData.fullName,
+            gender:formData.gender,
+            dateOfBirth:formData.dateOfBirth,
+            email:formData.email,
+            phoneNumber:formData.phoneNumber,
+            address:formData.address,
+            state:formData.state,
+            nationality:formData.nationality,
+            identification:formData.identification,
+            profileImage:formData.profileImage,
+            farmAddress:formData.farmAddress,
+            farmSize:formData.farmSize,
+            cropType:formData.cropType,
+            bankName:formData.bankName,
+            accountNumber:formData.accountNumber,
+            agentId:formData.agentId,
+          },
+        },
+      });
+
+      console.log("farmers2:", data);
+    } catch (error) {
+      console.log(error.message);
+      
+    }
+  };
+
   //Dropdown menu item
   const genderValue = [
     { key: "1", value: "Male" },
@@ -92,24 +128,26 @@ export default function SignUpEmail({ navigation }) {
               <Text style={styles.formLabel}>Full Name</Text>
               <TextInput
                 style={styles.formControl}
+                value={formData.fullName}
                 placeholder=""
                 keyboardType="text"
-                onChangeText={(val) => setName(val)}
+                onChangeText={(val) => handleChange("fullName", val)}
               />
             </View>
             <View style={styles.formInput}>
               <Text style={styles.formLabel}>Phone Number</Text>
               <TextInput
                 style={styles.formControl}
+                value={formData.phoneNumber}
                 placeholder=""
                 keyboardType="text"
-                onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+                onChangeText={(val) => handleChange("phoneNumber", val)}
               />
             </View>
             <View style={styles.formInput}>
               <Text style={styles.formLabel}>Gender</Text>
               <SelectList
-                setSelected={(val) => setGender(val)}
+                setSelected={(val) => handleChange("gender", val)}
                 data={genderValue}
                 save="value"
                 style={styles.formInput}
@@ -120,23 +158,25 @@ export default function SignUpEmail({ navigation }) {
               <Text style={styles.formLabel}>Email</Text>
               <TextInput
                 style={styles.formControl}
+                value={formData.email}
                 placeholder=""
                 keyboardType="text"
                 placeholder="Enter email if any"
                 placeholderTextColor="#aaa"
-                onChangeText={(val) => setEmail(val)}
+                onChangeText={(val) => handleChange("email", val)}
               />
             </View>
 
-            <View style={styles.formInput}>
+            {/* <View style={styles.formInput}>
               <Text style={styles.formLabel}>Password</Text>
-            </View>
+            </View> */}
 
-            <View style={styles.passwordContainer}>
+            {/* <View style={styles.passwordContainer}>
               <TextInput
                 secureTextEntry={!showPassword}
-                value={password}
-                onChangeText={(val) => setPassword(val)}
+                value={formData.password}
+                value={formData.password}
+                onChangeText={(val) => handleChange("password", val)}
                 style={styles.input}
                 placeholder="Enter Password"
                 placeholderTextColor="#aaa"
@@ -148,10 +188,10 @@ export default function SignUpEmail({ navigation }) {
                 style={styles.icon}
                 onPress={toggleShowPassword}
               />
-            </View>
+            </View> */}
 
             <View style={styles.formInput}>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 {loading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (

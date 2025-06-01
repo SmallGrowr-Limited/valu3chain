@@ -1,51 +1,138 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
+import { useMutation, gql } from "@apollo/client";
+import { useRouter } from "expo-router";
+import { CREATE_PRODUCT_ORDER } from "../../graphql/orderMutation";
 
 export default function ProductOrderForm() {
-  const [productName, setProductName] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [unit, setUnit] = useState("");
-  const [unitPrice, setUnitPrice] = useState("");
-  const [totalPrice, setTotalPrice] = useState("");
-  const [variety, setVariety] = useState("");
-  const [brand, setBrand] = useState("");
-  const [moisture, setMoisture] = useState("");
-  const [purchaseType, setPurchaseType] = useState("");
-  const [deliveryAddress, setDeliveryAddress] = useState("");
-  const [deliverMethod, setDeliveryMethod] = useState("");
-  const [paymentTerm, setPaymentTerm] = useState("");
-  const [paymentMode, setPaymentMode] = useState("");
+  const router = useRouter()
+  // Form state consolidated into a single object
+  const [formData, setFormData] = useState({
+    productName: "",
+    quantity: "",
+    unit: "kg", // Default value
+    unitPrice: "",
+    totalPrice: "",
+    variety: "",
+    brand: "",
+    moisture: "",
+    purchaseType: "",
+    deliveryAddress: "",
+    deliverMethod: "",
+    paymentTerm: "",
+    paymentMode: "",
+  });
 
-  verietyType = [
-    { key: "1", value: "Type 1" },
-    { key: "2", value: "Type 2" },
-  ];
+  // Dropdown options (moved outside component if reused elsewhere)
+  const dropdownOptions = {
+    varietyType: [
+      { key: "1", value: "Type 1" },
+      { key: "2", value: "Type 2" },
+    ],
+    purchaseType: [
+      { key: "1", value: "Outright" },
+      { key: "2", value: "Storage" },
+    ],
+    units: [
+      { key: "1", value: "kg" },
+      { key: "2", value: "tons" },
+    ],
+    deliveryMethods: [
+      { key: "1", value: "Company Truck" },
+      { key: "2", value: "Supplier Delivery" },
+      { key: "3", value: "Third-Party Logistics" },
+    ],
+    paymentModes: [
+      { key: "1", value: "Bank Transfer" },
+      { key: "2", value: "Cheque" },
+      { key: "3", value: "Cash" }, // Fixed duplicate key
+    ],
+    paymentTerms: [
+      { key: "1", value: "On Delivery" },
+      { key: "2", value: "50% Advance" },
+    ],
+    moistureOpt: [
+      { key: "1", value: "Type 1" },
+      { key: "2", value: "Type 2" },
+    ],
+  };
 
-  const purchase = [
-    { key: "1", value: "Outright" },
-    { key: "2", value: "Storage" },
-  ];
-  const units = [
-    { key: "1", value: "kg" },
-    { key: "2", value: "tons" },
-  ];
-  const deliveryMethods = [
-    { key: "1", value: "Company Truck" },
-    { key: "2", value: "Supplier Delivery" },
-    { key: "3", value: "Third-Party Logistics" },
-  ];
-  const paymentModes = [
-    { key: "1", value: "Bank Transfer" },
-    { key: "2", value: "Cheque" },
-    { key: "2", value: "Cash" },
-  ];
-  const paymentTerms = [
-    { key: "1", value: "On Delivery" },
-    { key: "2", value: "50% Advance" },
-  ];
+  const [createProductOrder, { loading }] = useMutation(CREATE_PRODUCT_ORDER, {
+    onCompleted: () => {
+      
+      // Reset form after successful submission
+      setFormData({
+        productName: "",
+        quantity: "",
+        unit: "kg",
+        unitPrice: "",
+        totalPrice: "",
+        variety: "",
+        brand: "",
+        moisture: "",
+        purchaseType: "",
+        deliveryAddress: "",
+        deliverMethod: "",
+        paymentTerm: "",
+        paymentMode: "",
+      });
+    },
+  });
+  
+
+  const handleSubmit = async () => {
+    // Basic validation
+    if (
+      !formData.productName ||
+      !formData.quantity ||
+      !formData.deliveryAddress
+    ) {
+      alert("Validation Error", "Please fill in all required fields");
+      return;
+    }
+
+    try {
+      const { data } = await createProductOrder({
+        variables: {
+          input: {
+            productName: formData.productName,
+            quantity: formData.quantity,
+            unit: formData.unit,
+            unitPrice: formData.unitPrice,
+            totalPrice: formData.totalPrice,
+            variety: formData.variety,
+            brand: formData.brand,
+            moisture: formData.moisture,
+            purchaseType: formData.purchaseType,
+            deliveryAddress: formData.deliveryAddress,
+            deliverMethod: formData.deliverMethod,
+            paymentTerm: formData.paymentTerm,
+            paymentMode: formData.paymentMode,
+          },
+        },
+      });
+      
+      router.navigate("/partners")
+    } catch (error) {
+      console.log("Mutation response:", error);
+    }
+  };
+
+  // Helper function to update form data
+  const updateFormData = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
   return (
-    <>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Order Details</Text>
       </View>
@@ -55,38 +142,40 @@ export default function ProductOrderForm() {
           style={styles.formControl}
           placeholder=""
           keyboardType="text"
-          onChangeText={(val) => setProductName(val)}
+          value={formData.productName}
+          onChangeText={(val) => updateFormData("productName", val)}
         />
       </View>
-      <View style={styles.quantity}>
+      <View style={styles.row}>
         <View style={{ width: "46%" }}>
           <Text style={styles.formLabel}>Quantity</Text>
           <TextInput
             style={styles.formControl}
             placeholder=""
-            keyboardType="text"
-            onChangeText={(val) => setQuantity(val)}
+            value={formData.quantity}
+            keyboardType="numeric"
+            onChangeText={(val) => updateFormData("quantity", val)}
           />
         </View>
         <View style={{ width: "46%" }}>
           <Text style={styles.formLabel}>Unit</Text>
           <SelectList
-            setSelected={(val) => setUnit(val)}
-            data={units}
+            setSelected={(val) => updateFormData("unit", val)}
+            data={dropdownOptions.units}
             save="value"
-            defaultOption={{key:"1", value:"kg"}}
-            style={styles.formInput}
+            defaultOption={{ key: "1", value: "kg" }}
           />
         </View>
       </View>
-      <View style={styles.quantity}>
+      <View style={styles.row}>
         <View style={{ width: "46%" }}>
           <Text style={styles.formLabel}>Unit Price (₦)</Text>
           <TextInput
             style={styles.formControl}
             placeholder=""
             keyboardType="text"
-            onChangeText={(val) => setUnitPrice(val)}
+            value={formData.unitPrice}
+            onChangeText={(val) => updateFormData("unitPrice", val)}
           />
         </View>
         <View style={{ width: "46%" }}>
@@ -94,8 +183,9 @@ export default function ProductOrderForm() {
           <TextInput
             style={styles.formControl}
             placeholder=""
-            keyboardType="text"
-            onChangeText={(val) => setTotalPrice(val)}
+            keyboardType="numeric"
+            value={formData.totalPrice}
+            onChangeText={(val) => updateFormData("totalPrice", val)}
           />
         </View>
       </View>
@@ -103,17 +193,27 @@ export default function ProductOrderForm() {
       <View style={styles.formInput}>
         <Text style={styles.formLabel}>Preferred Variety</Text>
         <SelectList
-          setSelected={(val) => setVariety(val)}
-          data={verietyType}
+          setSelected={(val) => updateFormData("variety", val)}
+          data={dropdownOptions.varietyType}
           save="value"
           style={styles.formInput}
         />
       </View>
       <View style={styles.formInput}>
+        <Text style={styles.formLabel}>Brand</Text>
+        <TextInput
+          style={styles.formControl}
+          placeholder=""
+          keyboardType="text"
+          value={formData.brand}
+          onChangeText={(val) => updateFormData("brand", val)}
+        />
+      </View>
+      <View style={styles.formInput}>
         <Text style={styles.formLabel}>Acceptable moisture level</Text>
         <SelectList
-          setSelected={(val) => setMoisture(val)}
-          data={verietyType}
+          setSelected={(val) => updateFormData("moisture", val)}
+          data={dropdownOptions.moistureOpt}
           save="value"
           style={styles.formInput}
         />
@@ -121,8 +221,8 @@ export default function ProductOrderForm() {
       <View style={styles.formInput}>
         <Text style={styles.formLabel}>Type of Purchase</Text>
         <SelectList
-          setSelected={(val) => setPurchaseType(val)}
-          data={purchase}
+          setSelected={(val) => updateFormData("purchaseType", val)}
+          data={dropdownOptions.purchaseType}
           save="value"
           style={styles.formInput}
         />
@@ -136,14 +236,15 @@ export default function ProductOrderForm() {
           style={styles.formControl}
           placeholder=""
           keyboardType="text"
-          onChangeText={(val) => setDeliveryAddress(val)}
+          value={formData.deliveryAddress}
+          onChangeText={(val) => updateFormData("deliveryAddress", val)}
         />
       </View>
       <View style={styles.formInput}>
         <Text style={styles.formLabel}>Delivery Method</Text>
         <SelectList
-          setSelected={(val) => setDeliveryMethod(val)}
-          data={deliveryMethods}
+          setSelected={(val) => updateFormData("deliverMethod", val)}
+          data={dropdownOptions.deliveryMethods}
           save="value"
           style={styles.formInput}
         />
@@ -151,8 +252,8 @@ export default function ProductOrderForm() {
       <View style={styles.formInput}>
         <Text style={styles.formLabel}>Payment Terms</Text>
         <SelectList
-          setSelected={(val) => setPaymentTerm(val)}
-          data={paymentTerms}
+          setSelected={(val) => updateFormData("paymentTerm", val)}
+          data={dropdownOptions.paymentTerms}
           save="value"
           style={styles.formInput}
         />
@@ -160,36 +261,164 @@ export default function ProductOrderForm() {
       <View style={styles.formInput}>
         <Text style={styles.formLabel}>Payment Mode</Text>
         <SelectList
-          setSelected={(val) => setPaymentMode(val)}
-          data={paymentModes}
+          setSelected={(val) => updateFormData("paymentMode", val)}
+          data={dropdownOptions.paymentModes}
           save="value"
           style={styles.formInput}
         />
       </View>
-    </>
+      <View style={styles.buttonSection}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit}
+          disabled={loading}
+          // onPress={() => router.navigate("/partners/orderPreview")}
+        >
+          <Text style={styles.buttonText}>
+            {loading ? "Submitting..." : "Submit Order"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
-  header:{marginTop:15},
-  headerText:{fontSize:18, fontWeight:500},
+  container: {
+    padding: 5,
+  },
+  header: {
+    marginTop: 20,
+    marginBottom: 5,
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: "500",
+  },
   formLabel: {
     marginBottom: 5,
     marginTop: 15,
     color: "#333",
   },
-
-  quantity:{
-    flexDirection:"row",
-    justifyContent:"space-between"
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 15,
   },
-
+  column: {
+    width: "48%",
+  },
   formControl: {
     borderColor: "#333",
     borderWidth: 1,
     borderRadius: 8,
     padding: 10,
     backgroundColor: "#ffffff",
-    // height: 45,
+    marginBottom: 15,
   },
+  buttonSection: {
+    marginVertical: 20,
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: "#508060",
+    borderRadius: 10,
+    padding: 10,
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "#fff",
+  },
+  // submitButton: {
+  //   backgroundColor: "#007bff",
+  //   padding: 15,
+  //   borderRadius: 8,
+  //   alignItems: "center",
+  //   marginTop: 20,
+  // },
+  // submitButtonText: {
+  //   color: "white",
+  //   fontWeight: "bold",
+  // },
 });
+
+// import { StyleSheet, Text, View, TextInput } from "react-native";
+// import React, { useState } from "react";
+// import { SelectList } from "react-native-dropdown-select-list";
+
+// export default function ProductOrderForm() {
+//   const [productName, setProductName] = useState("");
+//   const [quantity, setQuantity] = useState("");
+//   const [unit, setUnit] = useState("");
+//   const [unitPrice, setUnitPrice] = useState("");
+//   const [totalPrice, setTotalPrice] = useState("");
+//   const [variety, setVariety] = useState("");
+//   const [brand, setBrand] = useState("");
+//   const [moisture, setMoisture] = useState("");
+//   const [purchaseType, setPurchaseType] = useState("");
+//   const [deliveryAddress, setDeliveryAddress] = useState("");
+//   const [deliverMethod, setDeliveryMethod] = useState("");
+//   const [paymentTerm, setPaymentTerm] = useState("");
+//   const [paymentMode, setPaymentMode] = useState("");
+
+//   verietyType = [
+//     { key: "1", value: "Type 1" },
+//     { key: "2", value: "Type 2" },
+//   ];
+
+//   const purchase = [
+//     { key: "1", value: "Outright" },
+//     { key: "2", value: "Storage" },
+//   ];
+//   const units = [
+//     { key: "1", value: "kg" },
+//     { key: "2", value: "tons" },
+//   ];
+//   const deliveryMethods = [
+//     { key: "1", value: "Company Truck" },
+//     { key: "2", value: "Supplier Delivery" },
+//     { key: "3", value: "Third-Party Logistics" },
+//   ];
+//   const paymentModes = [
+//     { key: "1", value: "Bank Transfer" },
+//     { key: "2", value: "Cheque" },
+//     { key: "2", value: "Cash" },
+//   ];
+//   const paymentTerms = [
+//     { key: "1", value: "On Delivery" },
+//     { key: "2", value: "50% Advance" },
+//   ];
+
+//   const handleSubmit = ()=>{
+//     console.log("Hello worldb");
+
+//   }
+//   return (
+
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   header:{marginTop:15},
+//   headerText:{fontSize:18, fontWeight:500},
+//   formLabel: {
+//     marginBottom: 5,
+//     marginTop: 15,
+//     color: "#333",
+//   },
+
+//   quantity:{
+//     flexDirection:"row",
+//     justifyContent:"space-between"
+//   },
+
+//   formControl: {
+//     borderColor: "#333",
+//     borderWidth: 1,
+//     borderRadius: 8,
+//     padding: 10,
+//     backgroundColor: "#ffffff",
+//     // height: 45,
+//   },
+// });

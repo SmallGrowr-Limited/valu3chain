@@ -6,72 +6,71 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
-  Alert
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useDispatch, useSelector } from "react-redux";
-import { signup } from "../../redux/slices/authSlice";
-import { SIGNUP_MUTATION } from "../../graphql/mutations";
 import { useMutation } from "@apollo/client";
+import { SIGN_UP } from "../graphql/mutations/userMutation";
+import { useDispatch, useSelector } from "react-redux";
+import { loggedInUser } from "../redux/slices/authSlice";
+
 
 const SignupPartner = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
-
-  //const { loading, error } = useSelector((state) => state.auth);
-  const [signup, { loading }] = useMutation(SIGNUP_MUTATION);
-
-  const [partnerData, setPartnerData] = useState({
-    businessName: "",
-    contactPersonName: "",
+  const [signup, {loading, error}] = useMutation(SIGN_UP)
+  const [userData, setUserData] = useState({
     email: "",
-    phoneNumber: "",
+    role: "",
     password: "",
-    businessAddress: "",
-    userObjective: "",
-    businessPermit: "",
-    statesOfOperation: "",
-    businessRegistrationNumber: "",
-    haveFarmersDirectory: "",
+    
   });
-
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
   const handleChange = (name, value) => {
-    setPartnerData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const submitForm = () => {
-    //dispatch(signup(partnerData));
-    router.navigate("/auth/signupPartner2");
+    setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSignup = async () => {
+    
     try {
-      const { data } = await signup({ variables: { businessName,
-        contactPersonName,
-        email,
-        phoneNumber,
-        password,
-        businessAddress,
-        userObjective,
-        businessPermit,
-        statesOfOperation,
-        businessRegistrationNumber,
-        haveFarmersDirectory } });
+      const { data } = await signup({
+        variables: {
+          input: {
+            email: userData.email,
+            role: userData.role,
+            password: userData.password,
+          },
+        },
+      });
 
-      dispatch(setAuth(data.signup));
+      const credentials = {
+        email: data.signUp.email,
+        role: data.signUp.role,
+      };
 
-      Alert.alert("Success", "Logged in!");
+      dispatch(loggedInUser(credentials));
+
+      if (data.signUp.role === "Agent") {
+        router.navigate("/agent");
+      }
+
+      if (data.signUp.role === "Partner") {
+        router.navigate("/partners");
+      }
+
+      // alert("Success", "Logged in!");
     } catch (error) {
-      Alert.alert("signup Failed", error.message);
+      console.log("Error:", error.message);
+      
+      // alert("signup Failed", error.message);
     }
   };
 
@@ -83,33 +82,13 @@ const SignupPartner = () => {
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.formSection}>
-            <View style={styles.formInput}>
-              <Text style={styles.formLabel}>Name of Business</Text>
-              <TextInput
-                style={styles.formControl}
-                value={partnerData.businessName}
-                placeholder="Name of Business"
-                placeholderTextColor="#aaa"
-                keyboardType="text"
-                onChangeText={(val) => handleChange("businessName", val)}
-              />
-            </View>
-            <View style={styles.formInput}>
-              <Text style={styles.formLabel}>Name of Contact Person</Text>
-              <TextInput
-                style={styles.formControl}
-                value={partnerData.contactPersonName}
-                placeholder="Name of Contact Person"
-                placeholderTextColor="#aaa"
-                keyboardType="text"
-                onChangeText={(val) => handleChange("contactPersonName", val)}
-              />
-            </View>
+            
+            
             <View style={styles.formInput}>
               <Text style={styles.formLabel}>Email Address</Text>
               <TextInput
                 style={styles.formControl}
-                value={partnerData.email}
+                value={userData.email}
                 placeholder="Email Address"
                 placeholderTextColor="#aaa"
                 keyboardType="text"
@@ -117,21 +96,21 @@ const SignupPartner = () => {
               />
             </View>
             <View style={styles.formInput}>
-              <Text style={styles.formLabel}>PhoneNumber</Text>
+              <Text style={styles.formLabel}>Role</Text>
               <TextInput
                 style={styles.formControl}
-                value={partnerData.phoneNumber}
-                placeholder="phoneNumber"
+                value={userData.role}
+                placeholder="role"
                 placeholderTextColor="#aaa"
                 keyboardType="text"
-                onChangeText={(val) => handleChange("phoneNumber", val)}
+                onChangeText={(val) => handleChange("role", val)}
               />
             </View>
             <Text style={styles.formLabel}>Enter Your Password</Text>
             <View style={styles.passwordContainer}>
               <TextInput
                 secureTextEntry={!showPassword}
-                value={partnerData.password}
+                value={userData.password}
                 onChangeText={(val) => handleChange("password", val)}
                 style={styles.input}
                 placeholder="Enter Your Password"
@@ -145,21 +124,10 @@ const SignupPartner = () => {
                 onPress={toggleShowPassword}
               />
             </View>
-            <View style={styles.formInput}>
-              <Text style={styles.formLabel}>Confirm Password</Text>
-              <TextInput
-                style={styles.formControl}
-                value={confirmPassword}
-                placeholder="Confirm Password"
-                placeholderTextColor="#aaa"
-                keyboardType="text"
-                onChangeText={(val) => setConfirmPassword(val)}
-              />
-            </View>
+            
             <View style={styles.buttonSection}>
               <TouchableOpacity
                 style={styles.button}
-                // onPress={() => router.navigate("/auth/signupPartner2")}
                 onPress={handleSignup}
               >
                 <Text style={styles.buttonText}>Proceed</Text>
