@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useMutation, gql } from "@apollo/client";
 import { useRouter } from "expo-router";
-import { CREATE_PRODUCT_ORDER } from "../../graphql/orderMutation";
+import { CREATE_PRODUCT_ORDER } from "../../graphql/mutations/orderMutation";
 
 export default function ProductOrderForm() {
   const router = useRouter()
@@ -22,7 +22,6 @@ export default function ProductOrderForm() {
     unitPrice: "",
     totalPrice: "",
     variety: "",
-    brand: "",
     moisture: "",
     purchaseType: "",
     deliveryAddress: "",
@@ -65,7 +64,7 @@ export default function ProductOrderForm() {
     ],
   };
 
-  const [createProductOrder, { loading }] = useMutation(CREATE_PRODUCT_ORDER, {
+  const [productOrder, { loading }] = useMutation(CREATE_PRODUCT_ORDER, {
     onCompleted: () => {
       
       // Reset form after successful submission
@@ -76,7 +75,6 @@ export default function ProductOrderForm() {
         unitPrice: "",
         totalPrice: "",
         variety: "",
-        brand: "",
         moisture: "",
         purchaseType: "",
         deliveryAddress: "",
@@ -100,7 +98,7 @@ export default function ProductOrderForm() {
     }
 
     try {
-      const { data } = await createProductOrder({
+      const { data } = await productOrder({
         variables: {
           input: {
             productName: formData.productName,
@@ -109,7 +107,6 @@ export default function ProductOrderForm() {
             unitPrice: formData.unitPrice,
             totalPrice: formData.totalPrice,
             variety: formData.variety,
-            brand: formData.brand,
             moisture: formData.moisture,
             purchaseType: formData.purchaseType,
             deliveryAddress: formData.deliveryAddress,
@@ -119,6 +116,8 @@ export default function ProductOrderForm() {
           },
         },
       });
+      
+      console.log(data);
       
       router.navigate("/partners")
     } catch (error) {
@@ -200,16 +199,6 @@ export default function ProductOrderForm() {
         />
       </View>
       <View style={styles.formInput}>
-        <Text style={styles.formLabel}>Brand</Text>
-        <TextInput
-          style={styles.formControl}
-          placeholder=""
-          keyboardType="text"
-          value={formData.brand}
-          onChangeText={(val) => updateFormData("brand", val)}
-        />
-      </View>
-      <View style={styles.formInput}>
         <Text style={styles.formLabel}>Acceptable moisture level</Text>
         <SelectList
           setSelected={(val) => updateFormData("moisture", val)}
@@ -272,7 +261,6 @@ export default function ProductOrderForm() {
           style={styles.button}
           onPress={handleSubmit}
           disabled={loading}
-          // onPress={() => router.navigate("/partners/orderPreview")}
         >
           <Text style={styles.buttonText}>
             {loading ? "Submitting..." : "Submit Order"}
@@ -330,95 +318,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#fff",
   },
-  // submitButton: {
-  //   backgroundColor: "#007bff",
-  //   padding: 15,
-  //   borderRadius: 8,
-  //   alignItems: "center",
-  //   marginTop: 20,
-  // },
-  // submitButtonText: {
-  //   color: "white",
-  //   fontWeight: "bold",
-  // },
 });
 
-// import { StyleSheet, Text, View, TextInput } from "react-native";
-// import React, { useState } from "react";
-// import { SelectList } from "react-native-dropdown-select-list";
-
-// export default function ProductOrderForm() {
-//   const [productName, setProductName] = useState("");
-//   const [quantity, setQuantity] = useState("");
-//   const [unit, setUnit] = useState("");
-//   const [unitPrice, setUnitPrice] = useState("");
-//   const [totalPrice, setTotalPrice] = useState("");
-//   const [variety, setVariety] = useState("");
-//   const [brand, setBrand] = useState("");
-//   const [moisture, setMoisture] = useState("");
-//   const [purchaseType, setPurchaseType] = useState("");
-//   const [deliveryAddress, setDeliveryAddress] = useState("");
-//   const [deliverMethod, setDeliveryMethod] = useState("");
-//   const [paymentTerm, setPaymentTerm] = useState("");
-//   const [paymentMode, setPaymentMode] = useState("");
-
-//   verietyType = [
-//     { key: "1", value: "Type 1" },
-//     { key: "2", value: "Type 2" },
-//   ];
-
-//   const purchase = [
-//     { key: "1", value: "Outright" },
-//     { key: "2", value: "Storage" },
-//   ];
-//   const units = [
-//     { key: "1", value: "kg" },
-//     { key: "2", value: "tons" },
-//   ];
-//   const deliveryMethods = [
-//     { key: "1", value: "Company Truck" },
-//     { key: "2", value: "Supplier Delivery" },
-//     { key: "3", value: "Third-Party Logistics" },
-//   ];
-//   const paymentModes = [
-//     { key: "1", value: "Bank Transfer" },
-//     { key: "2", value: "Cheque" },
-//     { key: "2", value: "Cash" },
-//   ];
-//   const paymentTerms = [
-//     { key: "1", value: "On Delivery" },
-//     { key: "2", value: "50% Advance" },
-//   ];
-
-//   const handleSubmit = ()=>{
-//     console.log("Hello worldb");
-
-//   }
-//   return (
-
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   header:{marginTop:15},
-//   headerText:{fontSize:18, fontWeight:500},
-//   formLabel: {
-//     marginBottom: 5,
-//     marginTop: 15,
-//     color: "#333",
-//   },
-
-//   quantity:{
-//     flexDirection:"row",
-//     justifyContent:"space-between"
-//   },
-
-//   formControl: {
-//     borderColor: "#333",
-//     borderWidth: 1,
-//     borderRadius: 8,
-//     padding: 10,
-//     backgroundColor: "#ffffff",
-//     // height: 45,
-//   },
-// });

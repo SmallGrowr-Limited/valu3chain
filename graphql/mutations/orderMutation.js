@@ -2,7 +2,7 @@ import {gql} from "@apollo/client"
 
 export const CREATE_PRODUCT_ORDER = gql`
   mutation CreateProductOrder($input: Product_OrderInput!) {
-    createProductOrder(input: $input) {
+    productOrder(input: $input) {
       id
       productName
       quantity
@@ -10,7 +10,6 @@ export const CREATE_PRODUCT_ORDER = gql`
       unitPrice
       totalPrice
       variety
-      brand
       moisture
       purchaseType
       deliveryAddress
