@@ -67,7 +67,6 @@ export default function TermsOfService() {
     }
   };
 
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>

@@ -13,8 +13,7 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
-import { signup } from "../../redux/slices/authSlice";
-import { SIGNUP_MUTATION } from "../../graphql/mutations";
+import { PARTNER_PROFILE } from "../../graphql/mutations/partnerMutation.js";
 import { useMutation } from "@apollo/client";
 
 const PartnerProfileForm1 = () => {
@@ -33,7 +32,7 @@ const PartnerProfileForm1 = () => {
   ];
 
   //const { loading, error } = useSelector((state) => state.auth);
-  const [signup, { loading }] = useMutation(SIGNUP_MUTATION);
+  const [registerPartner] = useMutation(PARTNER_PROFILE);
 
   const [partnerData, setPartnerData] = useState({
     businessName: "",
@@ -57,30 +56,31 @@ const PartnerProfileForm1 = () => {
   };
 
   const handleSignup = async () => {
+    
     try {
-      console.log(partnerData);
-      
-      // const { data } = await signup({
-      //   variables: {
-      //     businessName,
-      //     contactPersonName,
-      //     email,
-      //     phoneNumber,
-      //     businessAddress,
-      //     userObjective,
-      //     businessPermit,
-      //     statesOfOperation,
-      //     businessRegistrationNumber,
-      //     haveFarmersDirectory,
-      //     termsOfServiceAgreement
-      //   },
-      // });
-
-      // dispatch(setAuth(data.signup));
+     
+      const { data } = await registerPartner({
+        variables: {
+          input: {
+            businessName: partnerData.businessName,
+            contactPersonName: partnerData.contactPersonName,
+            email: partnerData.email,
+            phoneNumber: partnerData.phoneNumber,
+            businessAddress: partnerData.businessAddress,
+            businessPermit: partnerData.businessPermit,
+            statesOfOperation: partnerData.statesOfOperation,
+            businessRegistrationNumber: partnerData.businessRegistrationNumber,
+            haveFarmersDirectory: partnerData.haveFarmersDirectory,
+            termsOfServiceAgreement: partnerData.termsOfServiceAgreement,
+          },
+        },
+      });
+    
       // Alert.alert("Success", "Logged in!");
-      router.navigate("/partners/profileForm2")
+      router.navigate("/partners/profileForm2");
     } catch (error) {
-      Alert.alert("signup Failed", error.message);
+      console.log(error.message);
+      // Alert.alert("signup Failed", error.message);
     }
   };
 
@@ -147,14 +147,6 @@ const PartnerProfileForm1 = () => {
                 onChangeText={(val) => handleChange("businessAddress", val)}
               />
             </View>
-            {/* <View style={styles.formInput}>
-              <Text style={styles.formLabel}>Your Objective on Valu3Chain</Text>
-              <SelectList
-                setSelected={(val) => handleChange("userObjective", val)}
-                data={userValue}
-                save="value"
-              />
-            </View> */}
             <View style={styles.formInput}>
               <Text style={styles.formLabel}>
                 Permitted to Do Business in Nigeria?
