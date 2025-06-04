@@ -15,8 +15,8 @@ export default function AgentLayout() {
         options={{ headerShown: true, title: "Farmer Onboarding" }}
       />
       <Stack.Screen
-        name="updatefarmer"
-        options={{ headerShown: true, title: "Farmer Onboarding" }}
+        name="agentProfileForm"
+        options={{ headerShown: true, title: "Agent Profile" }}
       />
       <Stack.Screen name="request" options={{ headerShown: true, title: "Request" }} />
       <Stack.Screen
