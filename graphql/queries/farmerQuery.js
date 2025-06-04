@@ -4,6 +4,7 @@ export const GET_FARMERS = gql`
     query getFarmers {
         onboardedFarmers{
             _id
+            userId
             fullName
             gender
             dateOfBirth

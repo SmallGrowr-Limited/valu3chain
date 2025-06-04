@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  Image,
 } from "react-native";
 import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
@@ -16,7 +17,7 @@ import { useMutation } from "@apollo/client";
 import { SIGN_UP } from "../graphql/mutations/userMutation";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedInUser } from "../redux/slices/authSlice";
-
+import valu3chain from "../assets/images/resources/valu3chain.png";
 
 const SignupPartner = () => {
   const router = useRouter();
@@ -39,17 +40,21 @@ const SignupPartner = () => {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
   const handleChange = (name, value) => {
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSignup = async () => {
     
+    // generate userId using random number function
+    let randomNumber = Math.floor(Math.random() * 1000) + 1;
+    id = "ABC" + "-" + randomNumber
+
     try {
       const { data } = await signup({
         variables: {
           input: {
+            userId:id,
             email: userData.email,
             role: userData.role,
             password: userData.password,
@@ -58,6 +63,7 @@ const SignupPartner = () => {
       });
 
       const credentials = {
+        userId: data.signUp.userId,
         email: data.signUp.email,
         role: data.signUp.role,
       };
@@ -79,8 +85,8 @@ const SignupPartner = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.headerTex}>Create Account</Text>
+        <View style={styles.brandSection}>
+          <Image source={valu3chain} alt="" style={styles.image} />
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.formSection}>
@@ -142,7 +148,7 @@ const SignupPartner = () => {
                 <Text style={styles.signInText}>
                   Already have an account?{" "}
                   <TouchableOpacity
-                    onPress={() => router.navigate("/auth/login")}
+                    onPress={() => router.navigate("/login")}
                   >
                     <Text style={[styles.linkText, { marginBottom: -5 }]}>
                       Sign in
@@ -151,7 +157,6 @@ const SignupPartner = () => {
                 </Text>
               </View>
             </View>
-            {/* <EcosystemPartnerSignup /> */}
           </View>
         </ScrollView>
       </View>
@@ -180,7 +185,18 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   headerTex: { fontSize: 18, fontWeight: 700 },
-  formSection: { flex: 3 },
+  brandSection: {
+    flex: 1,
+    justifyContent: "center",
+    marginBottom: 20,
+    //borderWidth: 1,
+  },
+  image: {
+    width: 280,
+    height: 90,
+    marginTop: 20,
+  },
+  formSection: { flex: 3, marginTop: 20 },
   formInput: { marginBottom: 15 },
 
   formControl: {

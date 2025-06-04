@@ -49,7 +49,7 @@ const LandingPage = () => {
             }}
           >
             <Text style={{ color: "grey" }}>Don't have an account?</Text>
-            <TouchableOpacity onPress={() => router.navigate("/auth/userType")}>
+            <TouchableOpacity onPress={() => router.navigate("/register")}>
               <Text style={{ color: "#16B116" }}>Sign Up</Text>
             </TouchableOpacity>
           </View>
