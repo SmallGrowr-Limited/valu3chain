@@ -15,10 +15,12 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchBar from "../../components/searchbar";
 import { quickAccess, farmers } from "../../components/data";
+import {useDispatch, useSelector} from "react-redux";
 
 export default function AgentDashboard() {
   const [loading, setLoading] = useState(false);
-  const [fullName, setFullName] = useState("Fatima Aliyu");
+  const [fullName, setFullName] = useState("");
+  const [agentId, setAgentId] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
   const [assignedFarmers, setAssignedFarmers] = useState(25);
   const [task, setTask] = useState(4);
@@ -26,7 +28,17 @@ export default function AgentDashboard() {
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const agentData = useSelector(state=>state.agent.agentData)
+
   const router = useRouter();
+
+  useEffect(()=>{
+   
+    if(agentData){
+      setFullName(agentData.fullName);
+      setAgentId(agentData.agentId);
+    }
+  },[])
 
   const renderItem = ({ item }) => (
     <View style={styles.rowItem}>
@@ -59,6 +71,7 @@ export default function AgentDashboard() {
       <View style={styles.notifications}>
         <View>
           <Text style={styles.userName}>{fullName}</Text>
+          <Text style={styles.userName}>ID: {agentId}</Text>
         </View>
 
         <Ionicons name="notifications-circle" size={30} color="#000" />

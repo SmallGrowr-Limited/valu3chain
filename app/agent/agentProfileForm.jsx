@@ -1,24 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  Image,
-  TextInput,
-  ScrollView,
-  Button,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
-
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { SelectList } from "react-native-dropdown-select-list";
-
-import { stateslist } from "../../states";
-import image1 from "../../assets/images/p1.webp";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRouter } from "expo-router";
+import { SafeAreaView, StyleSheet } from "react-native";
 
 import ProfileForm1 from "../../components/forms/agent/profileForm1";
 import ProfileForm2 from "../../components/forms/agent/profileForm2";
