@@ -4,11 +4,6 @@ export default function AgentLayout() {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false, title: "" }} />
-
-      {/* <Stack.Screen
-        name="updateAgent"
-        options={{ headerShown: true, title: "" }}
-      /> */}
       <Stack.Screen name="profile" options={{ headerShown: true, title: "" }} />
       <Stack.Screen
         name="onboardfarmer"

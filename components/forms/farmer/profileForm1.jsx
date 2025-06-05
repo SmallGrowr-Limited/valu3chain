@@ -34,6 +34,7 @@ export default function ProfileForm1({setToggleForm}) {
 
   const handleSubmit = (val) => {
     //Update agent state in redux store and navigate to next page
+    console.log(formData)
     setToggleForm(true);
   };
 
