@@ -13,15 +13,18 @@ import {
 } from "react-native";
 
 import { SelectList } from "react-native-dropdown-select-list";
-import { stateslist } from "../../../states";
+import { banks } from "../../../banks";
 import { useRouter } from "expo-router";
 import { useSelector, useDispatch } from "react-redux";
+import { useMutation} from "@apollo/client";
+import {EXTENSION_AGENT} from "../../../graphql/mutations/agentMutation";
 
 const ProfileForm2 = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const agentData = useSelector((state) => state.agent.agentData);
+  const [registerAgent] = useMutation(EXTENSION_AGENT)
 
   //input fields
 
@@ -63,9 +66,39 @@ const ProfileForm2 = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
-    //Submit to graphql mutation
-    console.log("Agent Data:", agentData);
+  const handleSubmit = async () => {
+    // generate userId using random number function
+    let randomNumber = Math.floor(Math.random() * 1000) + 1;
+    id = "ABC" + "-" + randomNumber;
+    try {
+      const {data} = await registerAgent({
+        variables:{
+          input:{
+            agentId:id,
+            fullName:agentData.fullName,
+            gender:agentData.gender,
+            dateOfBirth:agentData.dateOfBirth,
+            phoneNumber:agentData.phoneNumber,
+            nationality:agentData.nationality,
+            state:agentData.state,
+            address:agentData.address,
+            idNumber:agentData.idNumber,
+            imageUrl:agentData.imageUrl,
+            disability:formData.disability,
+            bankName:formData.bankName,
+            accountNumber:formData.accountNumber,
+            businessOutlet:formData.businessOutlet,
+            businessName:formData.businessName,
+            businessType:formData.businessType,
+            registrationCategory:formData.registrationCategory,
+          }
+        }
+      })
+      
+      router.navigate("/agent")
+    } catch (error) {
+      console.log(error.message)
+    }
   };
 
   return (
@@ -85,8 +118,8 @@ const ProfileForm2 = () => {
           <View style={styles.formInput}>
             <Text style={styles.formLabel}>Bank Name</Text>
             <SelectList
-              setSelected={(val) => handleChange("state", val)}
-              data={stateslist}
+              setSelected={(val) => handleChange("bankName", val)}
+              data={banks}
               save="value"
               style={styles.formInput}
             />
@@ -116,7 +149,19 @@ const ProfileForm2 = () => {
           </View>
 
           {formData.businessOutlet === "Yes" ? (
-            <>
+            <View>
+              <View style={styles.formInput}>
+                <Text style={styles.formLabel}>Business Name</Text>
+                <TextInput
+                  style={styles.formControl}
+                  value={formData.businessName}
+                  placeholder=""
+                  keyboardType="text"
+                  onChangeText={(val) =>
+                    handleChange("businessName", val)
+                  }
+                />
+              </View>
               <View style={styles.formInput}>
                 <Text style={styles.formLabel}>Type of Outlet</Text>
                 <SelectList
@@ -149,7 +194,7 @@ const ProfileForm2 = () => {
                   }
                 />
               </View>
-            </>
+            </View>
           ) : (
             ""
           )}

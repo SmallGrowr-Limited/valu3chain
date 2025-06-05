@@ -17,7 +17,7 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { stateslist } from "../../../states";
 import image1 from "../../../assets/images/p1.webp";
 import { useRouter } from "expo-router";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {createAgentProfile, setLoading, setError} from "../../../redux/slices/agentSlice"
 
 const ProfileForm1 = ({setToggleForm}) => {
@@ -25,10 +25,12 @@ const ProfileForm1 = ({setToggleForm}) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
+  const id = useSelector(state=>state.auth.user.userId)
+
 
   //input fields
   const [formData, setFormData] = useState({
-    agentId: "",
+    agentId: id,
     fullName: "",
     gender: "",
     dateOfBirth: "",

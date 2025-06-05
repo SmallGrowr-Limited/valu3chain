@@ -1,8 +1,8 @@
 import { gql} from "@apollo/client";
 
-export const EXTENTION_AGENT = gql`
+export const EXTENSION_AGENT = gql`
   mutation registerAgent($input: AgentInputData) {
-    register(input: $input) {
+    registerAgent(input: $input) {
       _id
       agentId
       fullName
