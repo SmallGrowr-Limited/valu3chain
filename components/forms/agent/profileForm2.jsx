@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,17 +12,16 @@ import {
   ActivityIndicator,
 } from "react-native";
 
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { SelectList } from "react-native-dropdown-select-list";
 import { stateslist } from "../../../states";
-import image1 from "../../../assets/images/p1.webp";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { useSelector, useDispatch } from "react-redux";
 
 const ProfileForm2 = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const agentData = useSelector((state) => state.agent.agentData);
 
   //input fields
 
@@ -65,8 +64,8 @@ const ProfileForm2 = () => {
   };
 
   const handleSubmit = () => {
-    //Update agent state in redux store and navigate to next page
-    console.log("Agent Data:", formData);
+    //Submit to graphql mutation
+    console.log("Agent Data:", agentData);
   };
 
   return (
@@ -118,16 +117,6 @@ const ProfileForm2 = () => {
 
           {formData.businessOutlet === "Yes" ? (
             <>
-              {/* <View style={styles.formInput}>
-                <Text style={styles.formLabel}>Bank Name</Text>
-                <TextInput
-                  style={styles.formControl}
-                  value={formData.bankName}
-                  placeholder=""
-                  keyboardType="text"
-                  onChangeText={(val) => handleChange("bankName", val)}
-                />
-              </View> */}
               <View style={styles.formInput}>
                 <Text style={styles.formLabel}>Type of Outlet</Text>
                 <SelectList

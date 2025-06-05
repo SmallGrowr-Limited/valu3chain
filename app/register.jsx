@@ -70,7 +70,7 @@ const SignupPartner = () => {
       dispatch(loggedInUser(credentials));
 
       if (data.signUp.role === "Extention Agent") {
-        router.navigate("/agent/");
+        router.navigate("/agent/agentProfileForm");
       }
 
       if (data.signUp.role === "Ecosystem Partner") {

@@ -16,24 +16,24 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { SelectList } from "react-native-dropdown-select-list";
 import { stateslist } from "../../../states";
 import image1 from "../../../assets/images/p1.webp";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import {useDispatch} from "react-redux";
+import {createAgentProfile, setLoading, setError} from "../../../redux/slices/agentSlice"
 
 const ProfileForm1 = ({setToggleForm}) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   //input fields
-
   const [formData, setFormData] = useState({
-    agentId: "1234",
+    agentId: "",
     fullName: "",
     gender: "",
     dateOfBirth: "",
     phoneNumber: "",
     nationality: "",
-    phoneNumber: "",
     state: "",
     address: "",
     idNumber: "",
@@ -56,6 +56,7 @@ const ProfileForm1 = ({setToggleForm}) => {
   const handleSubmit = (val) => {
     //Update agent state in redux store and navigate to next page
     console.log("Agent Data:", formData);
+    dispatch(createAgentProfile(formData))
     setToggleForm(true);
   };
 
