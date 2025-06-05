@@ -29,7 +29,6 @@ export default function AgentDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const agentData = useSelector(state=>state.agent.agentData)
-
   const router = useRouter();
 
   useEffect(()=>{
@@ -89,7 +88,7 @@ export default function AgentDashboard() {
             <View style={styles.columns}>
               <TouchableOpacity
                 style={[styles.stats, styles.shadowPro, styles.bgColor]}
-                onPress={() => router.navigate("/agent")}
+                onPress={() => router.navigate("/agent/onboardfarmer")}
               >
                 <Text style={styles.statsValue}>{assignedFarmers}</Text>
                 <Text style={styles.statsCaption}> Total Farmers </Text>

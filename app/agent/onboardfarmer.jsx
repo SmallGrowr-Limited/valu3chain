@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,12 +7,18 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import {useSelector} from "react-redux"
 
 import ProfileForm1 from "../../components/forms/farmer/profileForm1";
 import ProfileForm2 from "../../components/forms/farmer/profileForm2";
 
 export default function FarmerOnboarding() {
   const [toggleForm, setToggleForm] = useState(false);
+  const agent = useSelector(state=>state.auth.user)
+
+  useEffect(()=>{
+    console.log("from onboarding:", agent)
+  },)
 
   // const handleSubmit = async () => {
 

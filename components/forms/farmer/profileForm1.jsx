@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { stateslist } from "../../../states";
 
+
 export default function ProfileForm1({setToggleForm}) {
   const [loading, setLoading] = useState();
   const [formData, setFormData] = useState({
