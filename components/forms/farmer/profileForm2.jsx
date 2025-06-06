@@ -10,31 +10,28 @@ import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { banks } from "../../../banks";
 import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
+import { useMutation } from "@apollo/client";
+import { REGISTER_FARMER } from "../../../graphql/mutations/farmerMutation";
 
 export default function ProfileForm2() {
   const [loading, setLoading] = useState(false);
   const [showID, setShowID] = useState(false);
-  const [idedntification, setIdentification] = useState("")
+  const [idedntification, setIdentification] = useState("");
+  const farmer = useSelector((state) => state.farmer.farmerData);
+  const userId = useSelector((state) => state.auth.user.userId);
+  const [registerFarmer] = useMutation(REGISTER_FARMER);
+
   const router = useRouter();
   const [formData, setFormData] = useState({
-    fullName: "",
-    gender: "",
-    dateOfBirth: "",
-    email: "",
-    role: "",
-    phoneNumber: "",
-    address: "",
-    state: "",
-    nationality: "",
-    identificationType: "",
-    identificationNumber:"",
-    profileImage: "",
+    identification: "",
+    profileImage: "url",
     farmAddress: "",
     farmSize: "",
     cropType: "",
     bankName: "",
     accountNumber: "",
-    agentId: "123",
+    agentId: userId,
   });
 
   const idcard = [
@@ -53,7 +50,40 @@ export default function ProfileForm2() {
   };
 
   const handleSubmit = async () => {
-    console.log(formData);
+    
+    try {
+      console.log(farmer);
+      console.log(userId)
+      console.log(formData);
+
+      const { data } = await registerFarmer({
+        variables: {
+          input: {
+            fullName: farmer.fullName,
+            gender: farmer.gender,
+            dateOfBirth: farmer.dateOfBirth,
+            email: farmer.email,
+            phoneNumber: farmer.phoneNumber,
+            address: farmer.address,
+            state: farmer.state,
+            nationality: farmer.nationality,
+            identification: formData.identification,
+            profileImage: formData.profileImage,
+            farmAddress: formData.farmAddress,
+            farmSize: formData.farmSize,
+            cropType: formData.cropType,
+            bankName: formData.bankName,
+            accountNumber: formData.accountNumber,
+            agentId: formData.agentId,
+          },
+        },
+      });
+
+      //console.log("farmers2:", data);
+      if(data) router.navigate("/agent")
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -76,7 +106,7 @@ export default function ProfileForm2() {
             placeholder=""
             keyboardType="text"
             onChangeText={(value) =>
-              handleChange("identificationNumber", value)
+              handleChange("identification", value)
             }
           />
         </View>
@@ -121,7 +151,7 @@ export default function ProfileForm2() {
       <View style={styles.formInput}>
         <Text style={styles.formLabel}>Bank Name</Text>
         <SelectList
-          setSelected={(val) => handleChange("bankName",val)}
+          setSelected={(val) => handleChange("bankName", val)}
           data={banks}
           save="value"
           style={styles.formInput}

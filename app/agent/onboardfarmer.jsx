@@ -7,53 +7,14 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 
 import ProfileForm1 from "../../components/forms/farmer/profileForm1";
 import ProfileForm2 from "../../components/forms/farmer/profileForm2";
 
 export default function FarmerOnboarding() {
   const [toggleForm, setToggleForm] = useState(false);
-  const agent = useSelector(state=>state.auth.user)
-
-  useEffect(()=>{
-    console.log("from onboarding:", agent)
-  },)
-
-  // const handleSubmit = async () => {
-
-  //   try {
-  //     const { data } = await registerFarmer({
-  //       variables: {
-  //         input: {
-  //           fullName:formData.fullName,
-  //           gender:formData.gender,
-  //           dateOfBirth:formData.dateOfBirth,
-  //           email:formData.email,
-  //           phoneNumber:formData.phoneNumber,
-  //           address:formData.address,
-  //           state:formData.state,
-  //           nationality:formData.nationality,
-  //           identification:formData.identification,
-  //           profileImage:formData.profileImage,
-  //           farmAddress:formData.farmAddress,
-  //           farmSize:formData.farmSize,
-  //           cropType:formData.cropType,
-  //           bankName:formData.bankName,
-  //           accountNumber:formData.accountNumber,
-  //           agentId:formData.agentId,
-  //         },
-  //       },
-  //     });
-
-  //     console.log("farmers2:", data);
-  //   } catch (error) {
-  //     console.log(error.message);
-
-  //   }
-  // };
-
-  //Dropdown menu item
+  const agent = useSelector((state) => state.auth.user);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,7 +22,11 @@ export default function FarmerOnboarding() {
         <Text style={styles.headerText}>New Farmer</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={true}>
-        {!toggleForm ? <ProfileForm1 setToggleForm={setToggleForm}/> : <ProfileForm2 />}
+        {!toggleForm ? (
+          <ProfileForm1 setToggleForm={setToggleForm} />
+        ) : (
+          <ProfileForm2 />
+        )}
       </ScrollView>
     </SafeAreaView>
   );

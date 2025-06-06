@@ -9,14 +9,21 @@ import {
 import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { stateslist } from "../../../states";
-
+import {useDispatch} from "react-redux"
+import {
+  createFarmerProfile,
+  setLoading,
+  setError,
+} from "../../../redux/slices/farmerSlice";
 
 export default function ProfileForm1({setToggleForm}) {
   const [loading, setLoading] = useState();
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
     gender: "",
+    dateOfBirth:"",
     email: "",
     nationality: "",
     state: "",
@@ -35,7 +42,8 @@ export default function ProfileForm1({setToggleForm}) {
 
   const handleSubmit = (val) => {
     //Update agent state in redux store and navigate to next page
-    console.log(formData)
+    
+    dispatch(createFarmerProfile(formData))
     setToggleForm(true);
   };
 
@@ -68,6 +76,17 @@ export default function ProfileForm1({setToggleForm}) {
           data={genderValue}
           save="value"
           style={styles.formInput}
+        />
+      </View>
+
+      <View style={styles.formInput}>
+        <Text style={styles.formLabel}>Date of Birth</Text>
+        <TextInput
+          style={styles.formControl}
+          value={formData.dateOfBirth}
+          placeholder=""
+          keyboardType="text"
+          onChangeText={(val) => handleChange("dateOfBirth", val)}
         />
       </View>
 

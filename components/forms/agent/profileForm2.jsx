@@ -24,6 +24,7 @@ const ProfileForm2 = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const agentData = useSelector((state) => state.agent.agentData);
+  const id = useSelector((state)=>state.auth.user.userId)
   const [registerAgent] = useMutation(EXTENSION_AGENT)
 
   //input fields
@@ -67,9 +68,7 @@ const ProfileForm2 = () => {
   };
 
   const handleSubmit = async () => {
-    // generate userId using random number function
-    let randomNumber = Math.floor(Math.random() * 1000) + 1;
-    id = "ABC" + "-" + randomNumber;
+   
     try {
       const {data} = await registerAgent({
         variables:{
@@ -147,7 +146,6 @@ const ProfileForm2 = () => {
               style={styles.formInput}
             />
           </View>
-
           {formData.businessOutlet === "Yes" ? (
             <View>
               <View style={styles.formInput}>
@@ -196,7 +194,7 @@ const ProfileForm2 = () => {
               </View>
             </View>
           ) : (
-            ""
+            null
           )}
 
           <View style={styles.formInput}>

@@ -18,7 +18,7 @@ import { stateslist } from "../../../states";
 import image1 from "../../../assets/images/p1.webp";
 import { useRouter } from "expo-router";
 import {useDispatch, useSelector} from "react-redux";
-import {createAgentProfile, setLoading, setError} from "../../../redux/slices/agentSlice"
+import {createAgentProfile, setLoading, setError} from "../../../redux/slices/agentSlice";
 
 const ProfileForm1 = ({setToggleForm}) => {
   const [selectedImage, setSelectedImage] = useState(null);
