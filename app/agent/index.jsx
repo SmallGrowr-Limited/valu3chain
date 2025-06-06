@@ -16,6 +16,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchBar from "../../components/searchbar";
 import { quickAccess, farmers } from "../../components/data";
 import {useDispatch, useSelector} from "react-redux";
+import {useQuery} from "@apollo/client";
+import {GET_FARMERS} from "../../graphql/queries/farmerQuery"
 
 export default function AgentDashboard() {
   const [loading, setLoading] = useState(false);
@@ -28,7 +30,8 @@ export default function AgentDashboard() {
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const agentData = useSelector(state=>state.agent.agentData)
+  const agentData = useSelector(state=>state.agent.agentData);
+  const { data } = useQuery(GET_FARMERS);
   const router = useRouter();
 
   useEffect(()=>{
@@ -37,6 +40,8 @@ export default function AgentDashboard() {
       setFullName(agentData.fullName);
       setAgentId(agentData.agentId);
     }
+
+    // console.log(data)
   },[])
 
   const renderItem = ({ item }) => (

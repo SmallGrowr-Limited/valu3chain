@@ -79,7 +79,6 @@ export default function ProfileForm2() {
         },
       });
 
-      //console.log("farmers2:", data);
       if(data) router.navigate("/agent")
     } catch (error) {
       console.log(error.message);
