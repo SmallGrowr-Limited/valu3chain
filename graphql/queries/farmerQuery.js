@@ -4,23 +4,48 @@ export const GET_FARMERS = gql`
     query getFarmers {
         farmers{
             _id
-            userId
             fullName
-            gender
-            dateOfBirth
-            email
-            phoneNumber
+            #gender
+            #dateOfBirth
+            # email
+            #phoneNumber
             address,
-            state
-            nationality
-            identification
-            profileImage
+            # state
+            # nationality
+            # identification
+            # profileImage
             farmAddress
-            farmSize
+            # farmSize
             cropType
-            bankName
-            accountNumber
-            agentId
+            # bankName
+            # accountNumber
+            # agentId
         }
     }
+    
+`;
+
+// GET SINGLE FARMER
+export const GET_FARMER = gql`
+  query GetFarmer($farmerId: ID) {
+    farmer(farmerId: $farmerId) {
+      _id
+      fullName
+      gender
+      dateOfBirth
+      email
+      phoneNumber
+      address
+      state
+      nationality
+      identification
+      profileImage
+      farmAddress
+      farmSize
+      cropType
+      bankName
+      accountNumber
+      agentId
+    }
+  }
 `;

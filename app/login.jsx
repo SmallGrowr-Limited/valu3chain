@@ -14,58 +14,47 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useMutation } from "@apollo/client";
-import { SIGN_UP } from "../graphql/mutations/userMutation";
+import { LOGIN_USER } from "../graphql/mutations/userMutation";
 import { useDispatch, useSelector } from "react-redux";
-import { loggedInUser } from "../redux/slices/authSlice";
+import { loginSuccess } from "../redux/slices/authSlice";
 import valu3chain from "../assets/images/resources/valu3chain.png";
 
-const SignupPartner = () => {
+const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [signup, { loading, error }] = useMutation(SIGN_UP);
+  const [login, { data, loading, error }] = useMutation(LOGIN_USER);
   const [userData, setUserData] = useState({
     email: "",
-    role: "",
     password: "",
   });
-
-  const [userId, setUserId] = useState("")
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   const handleChange = (name, value) => {
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSignup = async () => {
-    let id = Math.floor(Math.random() * 10) + 1;
-    setUserId(id)
+  const handleLogin = async () => {
     try {
-      const { data } = await signup({
+      const { data } = await login({
         variables: {
           input: {
-            userId:userId,
             email: userData.email,
-            role: userData.role,
             password: userData.password,
           },
         },
       });
 
-      const credentials = {
-        email: data.signUp.email,
-        role: data.signUp.role,
-      };
-      dispatch(loggedInUser(credentials));
+      dispatch(loginSuccess(data.login));
 
-      if (data.signUp.role === "Extention Agent") {
+      if (data.login.user.role === "Extention Agent") {
         router.navigate("/agent/");
       }
 
-      if (data.signUp.role === "Ecosystem Partner") {
+      if (data.login.user.role === "Ecosystem Partner") {
         router.navigate("/partners/profileForm1");
       }
     } catch (error) {
@@ -81,7 +70,6 @@ const SignupPartner = () => {
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.formSection}>
-            
             <View style={styles.formInput}>
               <Text style={styles.formLabel}>Email Address</Text>
               <TextInput
@@ -114,12 +102,12 @@ const SignupPartner = () => {
             </View>
 
             <View style={styles.buttonSection}>
-              <TouchableOpacity style={styles.button} onPress={handleSignup}>
-                <Text style={styles.buttonText}>Proceed</Text>
+              <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
               <View style={styles.signIn}>
                 <Text style={styles.signInText}>
-                  Already have an account?{" "}
+                  Don't have an account?
                   <TouchableOpacity
                     onPress={() => router.navigate("/register")}
                   >
@@ -137,7 +125,7 @@ const SignupPartner = () => {
   );
 };
 
-export default SignupPartner;
+export default Login;
 
 const styles = StyleSheet.create({
   container: {

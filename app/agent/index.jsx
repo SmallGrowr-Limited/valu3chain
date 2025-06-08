@@ -15,12 +15,12 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchBar from "../../components/searchbar";
 import { quickAccess, farmers } from "../../components/data";
-import {useDispatch, useSelector} from "react-redux";
-import {useQuery} from "@apollo/client";
-import {GET_FARMERS} from "../../graphql/queries/farmerQuery"
+import { useDispatch, useSelector } from "react-redux";
+import { useQuery } from "@apollo/client";
+import { GET_FARMERS, GET_FARMER } from "../../graphql/queries/farmerQuery";
 
 export default function AgentDashboard() {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [fullName, setFullName] = useState("");
   const [agentId, setAgentId] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
@@ -29,29 +29,32 @@ export default function AgentDashboard() {
   const [auditedFarms, setAuditedFarms] = useState(18);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [farmers, setFarmers] = useState([]);
 
-  const agentData = useSelector(state=>state.agent.agentData);
-  const { data } = useQuery(GET_FARMERS);
+  const user = useSelector((state) => state.auth.user);
+  const { data, loading, error } = useQuery(GET_FARMERS);
   const router = useRouter();
 
-  useEffect(()=>{
-   
-    if(agentData){
-      setFullName(agentData.fullName);
-      setAgentId(agentData.agentId);
+  useEffect(() => {
+    if (user) {
+      setFullName(user.email);
+      setAgentId(user.userId);
     }
 
-    // console.log(data)
-  },[])
+    if (data) {
+      console.log("farmers:", data.farmers);
+      setFarmers(data.farmers);
+    }
+  }, [data]);
 
   const renderItem = ({ item }) => (
     <View style={styles.rowItem}>
       <View style={styles.nameFieldWrap}>
-        <Text style={styles.field}>{item.name}</Text>
-        <Text style={styles.location}>Location: {item.community}</Text>
+        <Text style={styles.field}>{item.fullName}</Text>
+        <Text style={styles.location}>Location: {item.address}</Text>
       </View>
       <View style={styles.cropFieldWrap}>
-        <Text style={styles.field}>{item.crop}</Text>
+        <Text style={styles.field}>{item.cropType}</Text>
         <Text
           style={[
             item.season == "Rainfed"

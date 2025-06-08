@@ -36,7 +36,7 @@ const LandingPage = () => {
         <View style={styles.buttonSection}>
           <TouchableOpacity
             style={styles.authButton}
-            onPress={() => router.navigate("/auth/login")}
+            onPress={() => router.navigate("/login")}
           >
             <Text style={styles.authButtonText}>Login</Text>
           </TouchableOpacity>

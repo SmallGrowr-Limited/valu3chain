@@ -6,6 +6,7 @@ import { store } from "../redux/store";
 // import client from "../apollo/client";
 
 import { ApolloClient, InMemoryCache, ApolloProvider,  } from '@apollo/client';
+import AuthLoader from "../components/authLoader"
 
 const client = new ApolloClient({
   //TODO: update uri on production
@@ -15,9 +16,11 @@ const client = new ApolloClient({
 });
 
 export default function RootLayout() {
+
   return (
     <Provider store={store}>
       <ApolloProvider client={client}>
+        <AuthLoader />
         <StatusBar style="auto" />
         <Slot />
       </ApolloProvider>
