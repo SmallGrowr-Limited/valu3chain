@@ -143,7 +143,7 @@ const Index = () => {
 export default Index;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#e8f5e4" },
+  container: { flex: 1, backgroundColor: "#ffffff" },
   contentWrapper: { flex: 1, padding: 10 },
   notifications: {
     padding: 20,

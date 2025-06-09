@@ -57,11 +57,11 @@ export const demand = [
 
 export const quickAccess = [
   {
-    title: "Farmers",
+    title: "Add Farmer",
     icon: (
       <MaterialCommunityIcons name="account-group" size={34} color="#fff" />
     ),
-    path: "/agent",
+    path: "/agent/onboardfarmer",
   },
   {
     title: "Request",

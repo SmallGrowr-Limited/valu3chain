@@ -10,30 +10,53 @@ import {
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import SearchBar from "../../components/searchbar";
+
 import { quickAccess, farmers } from "../../components/data";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
-import { GET_FARMERS, GET_FARMER } from "../../graphql/queries/farmerQuery";
+import client from "../../apollo/client";
+import {
+  GET_FARMERS,
+  GET_FARMER,
+  GET_FARMERS_BY_AGENT,
+} from "../../graphql/queries/farmerQuery";
+import { getAllFarmers } from "../../redux/slices/farmerSlice";
 
 export default function AgentDashboard() {
   // const [loading, setLoading] = useState(false);
   const [fullName, setFullName] = useState("");
   const [agentId, setAgentId] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
-  const [assignedFarmers, setAssignedFarmers] = useState(25);
+  const [assignedFarmers, setAssignedFarmers] = useState(0);
   const [task, setTask] = useState(4);
   const [auditedFarms, setAuditedFarms] = useState(18);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [farmers, setFarmers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const user = useSelector((state) => state.auth.user);
-  const { data, loading, error } = useQuery(GET_FARMERS);
+  // const { data, loading, error } = useQuery(GET_FARMERS_BY_AGENT);
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const fetchFarmers = async () => {
+    try {
+      setLoading(true);
+      const { data } = await client.query({
+        query: GET_FARMERS_BY_AGENT,
+        variables: { agentId },
+      });
+      setFarmers(data.farmersByAgent);
+      setAssignedFarmers(data.farmersByAgent.length);
+      dispatch(getAllFarmers(data.farmersByAgent)); //save all farmers to farmer slice
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -41,11 +64,10 @@ export default function AgentDashboard() {
       setAgentId(user.userId);
     }
 
-    if (data) {
-      console.log("farmers:", data.farmers);
-      setFarmers(data.farmers);
+    if (agentId) {
+      fetchFarmers();
     }
-  }, [data]);
+  }, [agentId]);
 
   const renderItem = ({ item }) => (
     <View style={styles.rowItem}>
@@ -85,18 +107,12 @@ export default function AgentDashboard() {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.contentWrapper}>
-          {/* <View style={{ width: "100%", color: "#0a990b" }}>
-          <SearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
-        </View> */}
           <View>
             <Text style={styles.sectionTitle}>Statistics</Text>
             <View style={styles.columns}>
               <TouchableOpacity
                 style={[styles.stats, styles.shadowPro, styles.bgColor]}
-                onPress={() => router.navigate("/agent/onboardfarmer")}
+                onPress={() => router.navigate("/agent/farmers")}
               >
                 <Text style={styles.statsValue}>{assignedFarmers}</Text>
                 <Text style={styles.statsCaption}> Total Farmers </Text>
@@ -120,12 +136,12 @@ export default function AgentDashboard() {
             <Text style={styles.sectionTitle}>Quick Access</Text>
             <View style={styles.columns}>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {quickAccess.map((item, index) => {
+                {quickAccess.map((item, i) => {
                   return (
                     <TouchableOpacity
                       style={styles.quickAccessItem}
                       onPress={() => router.navigate(`${item.path}`)}
-                      key={index}
+                      key={i}
                     >
                       <View style={styles.quickAccessIcon}>{item.icon}</View>
                       <Text style={styles.quickAccessText}> {item.title} </Text>
@@ -135,7 +151,6 @@ export default function AgentDashboard() {
               </ScrollView>
             </View>
           </View>
-
           <View style={styles.listItem}>
             <FlatList
               data={farmers}
@@ -150,7 +165,7 @@ export default function AgentDashboard() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#e8f5e4" },
+  container: { flex: 1, backgroundColor: "#ffffff" },
   contentWrapper: { flex: 1, padding: 10 },
   notifications: {
     padding: 20,

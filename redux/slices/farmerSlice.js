@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     farmerData: null,
     loading:false,
-    error:null
+    error:null,
+    allFarmers:[],
 }
 
 const farmerSlice = createSlice({
@@ -19,9 +20,12 @@ const farmerSlice = createSlice({
         },
         setError:(state, action)=>{
             state.error = action.payload
+        },
+        getAllFarmers:(state, action)=>{
+            state.allFarmers = action.payload
         }
     }
 })
 
-export const {createFarmerProfile, setLoading, setError} = farmerSlice.actions;
+export const {createFarmerProfile, setLoading, setError, getAllFarmers} = farmerSlice.actions;
 export default farmerSlice.reducer;

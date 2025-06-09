@@ -13,10 +13,17 @@ export default function AgentLayout() {
         name="agentProfileForm"
         options={{ headerShown: true, title: "Agent Profile" }}
       />
-      <Stack.Screen name="request" options={{ headerShown: true, title: "Request" }} />
+      <Stack.Screen
+        name="request"
+        options={{ headerShown: true, title: "Request" }}
+      />
       <Stack.Screen
         name="farmAudit"
         options={{ headerShown: true, title: "Farm Audit" }}
+      />
+      <Stack.Screen
+        name="farmers"
+        options={{ headerShown: true, title: "Farmers" }}
       />
     </Stack>
   );
