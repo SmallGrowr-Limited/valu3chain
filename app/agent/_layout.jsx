@@ -25,6 +25,10 @@ export default function AgentLayout() {
         name="farmers"
         options={{ headerShown: true, title: "Farmers" }}
       />
+      <Stack.Screen
+        name="aggregation"
+        options={{ headerShown: true, title: "" }}
+      />
     </Stack>
   );
 }

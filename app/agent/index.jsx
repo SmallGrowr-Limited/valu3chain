@@ -37,7 +37,6 @@ export default function AgentDashboard() {
   const [loading, setLoading] = useState(false);
 
   const user = useSelector((state) => state.auth.user);
-  // const { data, loading, error } = useQuery(GET_FARMERS_BY_AGENT);
   const router = useRouter();
   const dispatch = useDispatch();
 

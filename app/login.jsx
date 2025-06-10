@@ -23,7 +23,7 @@ const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
-  const [login, { data, loading, error }] = useMutation(LOGIN_USER);
+  const [login, { data, loading, error }] = useMutation(LOGIN_USER); 
   const [userData, setUserData] = useState({
     email: "",
     password: "",

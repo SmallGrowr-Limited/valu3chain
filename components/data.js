@@ -78,7 +78,7 @@ export const quickAccess = [
   {
     title: "Aggregation",
     icon: <Entypo name="500px-with-circle" size={34} color="#fff" />,
-    path: "/agent",
+    path: "/agent/aggregation",
   },
   {
     title: "Market Price",

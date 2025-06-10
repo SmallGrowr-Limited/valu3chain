@@ -62,18 +62,21 @@ const SignupPartner = () => {
         },
       });
 
-      const credentials = {
-        userId: data.signUp.userId,
-        email: data.signUp.email,
-        role: data.signUp.role,
-      };
-      dispatch(loggedInUser(credentials));
+      //console.log(data);
+      
 
-      if (data.signUp.role === "Extention Agent") {
+      // const credentials = {
+      //   userId: data.signUp.userId,
+      //   email: data.signUp.email,
+      //   role: data.signUp.role,
+      // };
+      dispatch(loggedInUser(data.signUp));
+
+      if (data.signUp.user.role === "Extention Agent") {
         router.navigate("/agent/agentProfileForm");
       }
 
-      if (data.signUp.role === "Ecosystem Partner") {
+      if (data.signUp.user.role === "Ecosystem Partner") {
         router.navigate("/partners/profileForm1");
       }
 
