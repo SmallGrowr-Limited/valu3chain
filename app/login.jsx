@@ -51,11 +51,11 @@ const Login = () => {
       dispatch(loginSuccess(data.login));
 
       if (data.login.user.role === "Extention Agent") {
-        router.navigate("/agent/");
+        router.navigate("/agent");
       }
 
       if (data.login.user.role === "Ecosystem Partner") {
-        router.navigate("/partners/profileForm1");
+        router.navigate("/partners");
       }
     } catch (error) {
       console.log("Error:", error.message);

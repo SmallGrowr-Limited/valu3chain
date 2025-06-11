@@ -6,28 +6,26 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import Checkbox from "expo-checkbox";
 import { useRouter } from "expo-router";
+import { PARTNER_PROFILE } from "../../../graphql/mutations/partnerMutation.js";
+import { useMutation } from "@apollo/client";
+import { useSelector } from "react-redux";
 
 export default function TermsOfService() {
   const router = useRouter();
   const [isChecked1, setChecked1] = useState(false);
   const [isChecked2, setChecked2] = useState(false);
-  const [partnerData, setPartnerData] = useState({
-    businessName: "",
-    contactPersonName: "",
-    email: "",
-    phoneNumber: "",
-    password: "",
-    businessAddress: "",
-    businessPermit: "",
-    statesOfOperation: "",
+  const [formData, setFormData] = useState({
     businessRegistrationNumber: "",
     haveFarmersDirectory: "",
-    termsOfServiceAgreement:""
+    termsOfServiceAgreement: "",
   });
+  const id = useSelector((state) => state.auth.user.userId);
+  const partnerData = useSelector((state) => state.partner.partnerData);
+  const [registerPartner] = useMutation(PARTNER_PROFILE);
 
   const permit = [
     { key: "1", value: "Yes" },
@@ -35,35 +33,32 @@ export default function TermsOfService() {
   ];
 
   const handleChange = (name, value) => {
-    setPartnerData((prev) => ({ ...prev, [name]: value }));
-    
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSignup = async () => {
     try {
-      console.log(partnerData);
+      const { data } = await registerPartner({
+        variables: {
+          input: {
+            partnerId: id,
+            businessName: partnerData.businessName,
+            contactPersonName: partnerData.contactPersonName,
+            email: partnerData.email,
+            phoneNumber: partnerData.phoneNumber,
+            businessAddress: partnerData.businessAddress,
+            businessPermit: partnerData.businessPermit,
+            statesOfOperation: partnerData.statesOfOperation,
+            businessRegistrationNumber: formData.businessRegistrationNumber,
+            haveFarmersDirectory: formData.haveFarmersDirectory,
+            termsOfServiceAgreement: formData.termsOfServiceAgreement,
+          },
+        },
+      });
 
-      // const { data } = await signup({
-      //   variables: {
-      //     businessName,
-      //     contactPersonName,
-      //     email,
-      //     phoneNumber,
-      //     businessAddress,
-      //     userObjective,
-      //     businessPermit,
-      //     statesOfOperation,
-      //     businessRegistrationNumber,
-      //     haveFarmersDirectory,
-      //     termsOfServiceAgreement
-      //   },
-      // });
-
-      // dispatch(setAuth(data.signup));
-      // Alert.alert("Success", "Logged in!");
       router.navigate("/partners");
     } catch (error) {
-      alert("signup Failed", error.message);
+      console.log("signup Failed:", error.message);
     }
   };
 
@@ -75,7 +70,7 @@ export default function TermsOfService() {
             <Text style={styles.formLabel}>Business Registration Number</Text>
             <TextInput
               style={styles.formControl}
-              value={partnerData.businessRegistrationNumber}
+              value={formData.businessRegistrationNumber}
               placeholder=""
               placeholderTextColor="#aaa"
               keyboardType="text"
@@ -119,10 +114,7 @@ export default function TermsOfService() {
           </View>
         </View>
         <View style={styles.buttonSection}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleSignup}
-          >
+          <TouchableOpacity style={styles.button} onPress={handleSignup}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
@@ -136,7 +128,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#e8f5e4",
   },
-  content: { flex: 1, padding: 10, margin: 15, backgroundColor: "#fff", borderRadius:8 },
+  content: {
+    flex: 1,
+    padding: 10,
+    margin: 15,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+  },
   service: { flex: 3, padding: 20 },
   section: {
     flexDirection: "row",
@@ -152,7 +150,6 @@ const styles = StyleSheet.create({
   },
   buttonSection: { flex: 1 },
   button: {
-    
     marginTop: 30,
     backgroundColor: "#508060",
     borderRadius: 10,

@@ -62,7 +62,7 @@ const SignupPartner = () => {
         },
       });
 
-      //console.log(data);
+      console.log(data.signUp);
       
 
       // const credentials = {
@@ -77,7 +77,7 @@ const SignupPartner = () => {
       }
 
       if (data.signUp.user.role === "Ecosystem Partner") {
-        router.navigate("/partners/profileForm1");
+        router.navigate("/partners/partnerProfileForm");
       }
 
     } catch (error) {

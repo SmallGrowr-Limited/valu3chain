@@ -35,9 +35,9 @@ const Index = () => {
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
 
   const [modalVisible, setModalVisible] = useState(false);
   // Shared values for animation

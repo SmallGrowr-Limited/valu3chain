@@ -24,13 +24,10 @@ export default function Partners(params) {
           options={{ headerShown: true, title: "" }}
         />
         <Stack.Screen
-          name="profileForm1"
+          name="partnerProfileForm"
           options={{ headerShown: true, title: "Business Profile" }}
         />
-        <Stack.Screen
-          name="profileForm2"
-          options={{ headerShown: true, title: "Business Profile" }}
-        />
+       
       </Stack>
     );
 }
