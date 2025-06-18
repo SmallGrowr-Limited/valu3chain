@@ -27,7 +27,11 @@ export default function Partners(params) {
           name="partnerProfileForm"
           options={{ headerShown: true, title: "Business Profile" }}
         />
-       
+
+        <Stack.Screen
+          name="dashboard"
+          options={{ headerShown: true, title: "Home" }}
+        />
       </Stack>
     );
 }

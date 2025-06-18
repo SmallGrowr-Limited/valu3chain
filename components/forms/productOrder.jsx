@@ -9,11 +9,14 @@ import {
 import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useMutation, gql } from "@apollo/client";
+import {useDispatch} from "react-redux";
 import { useRouter } from "expo-router";
 import { CREATE_PRODUCT_ORDER } from "../../graphql/mutations/orderMutation";
+import { createProductOrder } from "../../redux/slices/partnerSlice";
 
 export default function ProductOrderForm() {
-  const router = useRouter()
+  const router = useRouter();
+  const dispatch = useDispatch()
   // Form state consolidated into a single object
   const [formData, setFormData] = useState({
     productName: "",
@@ -97,32 +100,41 @@ export default function ProductOrderForm() {
       return;
     }
 
+   
     try {
-      const { data } = await productOrder({
-        variables: {
-          input: {
-            productName: formData.productName,
-            quantity: formData.quantity,
-            unit: formData.unit,
-            unitPrice: formData.unitPrice,
-            totalPrice: formData.totalPrice,
-            variety: formData.variety,
-            moisture: formData.moisture,
-            purchaseType: formData.purchaseType,
-            deliveryAddress: formData.deliveryAddress,
-            deliverMethod: formData.deliverMethod,
-            paymentTerm: formData.paymentTerm,
-            paymentMode: formData.paymentMode,
-          },
-        },
-      });
-      
-      console.log(data);
-      
-      router.navigate("/partners")
+      dispatch(createProductOrder(formData));
+      router.navigate("/partners/orderPreview");
     } catch (error) {
-      console.log("Mutation response:", error);
+      console.log(error.message);
+      
     }
+
+    // try {
+    //   const { data } = await productOrder({
+    //     variables: {
+    //       input: {
+    //         productName: formData.productName,
+    //         quantity: formData.quantity,
+    //         unit: formData.unit,
+    //         unitPrice: formData.unitPrice,
+    //         totalPrice: formData.totalPrice,
+    //         variety: formData.variety,
+    //         moisture: formData.moisture,
+    //         purchaseType: formData.purchaseType,
+    //         deliveryAddress: formData.deliveryAddress,
+    //         deliverMethod: formData.deliverMethod,
+    //         paymentTerm: formData.paymentTerm,
+    //         paymentMode: formData.paymentMode,
+    //       },
+    //     },
+    //   });
+      
+    //   console.log(data);
+      
+    //   router.navigate("/partners")
+    // } catch (error) {
+    //   console.log("Mutation response:", error);
+    // }
   };
 
   // Helper function to update form data
@@ -154,6 +166,7 @@ export default function ProductOrderForm() {
             value={formData.quantity}
             keyboardType="numeric"
             onChangeText={(val) => updateFormData("quantity", val)}
+
           />
         </View>
         <View style={{ width: "46%" }}>

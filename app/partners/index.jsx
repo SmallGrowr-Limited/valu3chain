@@ -34,10 +34,11 @@ const { height } = Dimensions.get("window");
 const Index = () => {
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
-
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    // console.log(user);
+    if (user) setEmail(user.email);
+  }, [user]);
 
   const [modalVisible, setModalVisible] = useState(false);
   // Shared values for animation
@@ -94,9 +95,8 @@ const Index = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.notifications}>
         <View>
-          <Text style={styles.userName}>Hello, Admin</Text>
+          <Text style={styles.userName}> {email}</Text>
         </View>
-        {/* <MenuComponent /> */}
         <Ionicons name="notifications-circle" size={30} color="#000" />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>

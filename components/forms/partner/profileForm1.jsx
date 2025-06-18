@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   createPartnerProfile,
   setLoading,

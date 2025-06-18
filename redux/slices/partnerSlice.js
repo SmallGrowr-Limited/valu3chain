@@ -4,6 +4,7 @@ const initialState = {
   partnerData: null,
   loading: false,
   error: null,
+  productOrder: null,
 };
 
 const partnerSlice = createSlice({
@@ -12,6 +13,9 @@ const partnerSlice = createSlice({
   reducers: {
     createPartnerProfile: (state, action) => {
       state.partnerData = action.payload;
+    },
+    createProductOrder: (state, action) => {
+      state.productOrder = action.payload;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -22,5 +26,5 @@ const partnerSlice = createSlice({
   },
 });
 
-export const { createPartnerProfile, setLoading, setError } = partnerSlice.actions;
+export const { createPartnerProfile, createProductOrder, setLoading, setError } = partnerSlice.actions;
 export default partnerSlice.reducer;

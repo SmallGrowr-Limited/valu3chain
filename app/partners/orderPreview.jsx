@@ -1,10 +1,23 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
 
 export default function PreviewOrder() {
   const router = useRouter();
+  const order = useSelector((state) => state.partner.productOrder);
+
+  const handleSubmit = async ()=>{
+    console.log(order)
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -13,7 +26,7 @@ export default function PreviewOrder() {
             <Text style={styles.headerText}>Transaction Summary</Text>
           </View>
           <View style={styles.buyerDetails}>
-            <Text style={{ fontSize: 16, fontWeight: 600, marginBottom: 10 }}>
+            <Text style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>
               Buyer Information
             </Text>
             <View style={styles.fields}>
@@ -58,7 +71,7 @@ export default function PreviewOrder() {
             </View>
           </View>
           <View style={styles.buyerDetails}>
-            <Text style={{ fontSize: 16, fontWeight: 600, marginBottom: 10 }}>
+            <Text style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>
               Order Details
             </Text>
             <View style={styles.fields}>
@@ -66,7 +79,7 @@ export default function PreviewOrder() {
                 <Text>Product Name</Text>
               </View>
               <View style={{ width: "48%" }}>
-                <Text>Soya Beans</Text>
+                <Text>{order.productName}</Text>
               </View>
             </View>
             <View style={styles.fields}>
@@ -74,7 +87,10 @@ export default function PreviewOrder() {
                 <Text>Quantity</Text>
               </View>
               <View style={{ width: "48%" }}>
-                <Text>50tons</Text>
+                <Text>
+                  {order.quantity}
+                  {order.unit}
+                </Text>
               </View>
             </View>
             <View style={styles.fields}>
@@ -82,20 +98,47 @@ export default function PreviewOrder() {
                 <Text>Unit Price </Text>
               </View>
               <View style={{ width: "48%" }}>
-                <Text>₦1000</Text>
+                <Text>{order.unitPrice}</Text>
               </View>
-            </View>
+            </View> 
             <View style={styles.fields}>
               <View style={{ width: "48%" }}>
                 <Text>Total Price </Text>
               </View>
               <View style={{ width: "48%" }}>
-                <Text>₦50000</Text>
+                <Text>{order.totalPrice}</Text>
+              </View>
+            </View>
+
+            <View style={styles.fields}>
+              <View style={{ width: "48%" }}>
+                <Text>Preferred Variety </Text>
+              </View>
+              <View style={{ width: "48%" }}>
+                <Text>{order.variety}</Text>
+              </View>
+            </View>
+
+            <View style={styles.fields}>
+              <View style={{ width: "48%" }}>
+                <Text>Moisture Level </Text>
+              </View>
+              <View style={{ width: "48%" }}>
+                <Text>{order.moisture}</Text>
+              </View>
+            </View>
+
+            <View style={styles.fields}>
+              <View style={{ width: "48%" }}>
+                <Text>Type of Purchase </Text>
+              </View>
+              <View style={{ width: "48%" }}>
+                <Text>{order.purchaseType}</Text>
               </View>
             </View>
           </View>
           <View style={styles.buyerDetails}>
-            <Text style={{ fontSize: 16, fontWeight: 600, marginBottom: 10 }}>
+            <Text style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>
               Supplier Information
             </Text>
             <View style={styles.fields}>
@@ -135,7 +178,7 @@ export default function PreviewOrder() {
             </View>
           </View>
           <View style={styles.buyerDetails}>
-            <Text style={{ fontSize: 16, fontWeight: 600, marginBottom: 10 }}>
+            <Text style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>
               Delivery & Payment
             </Text>
             <View style={styles.fields}>
@@ -164,6 +207,9 @@ export default function PreviewOrder() {
             </View>
           </View>
           <View style={styles.buttonSection}>
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+              <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
               onPress={() => router.navigate("/partners")}
@@ -199,12 +245,15 @@ const styles = StyleSheet.create({
   buttonSection: {
     marginVertical: 20,
     paddingHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#0a990b",
+    backgroundColor: "#508060",
     borderRadius: 10,
     padding: 10,
+    width: "48%",
   },
   buttonText: {
     textAlign: "center",
