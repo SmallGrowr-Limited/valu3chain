@@ -28,19 +28,30 @@ export default function Dashboard() {
     recentOpportunities: [
       {
         id: 1,
-        category: "Dairy",
-        location: "Nakuru",
+        category: "Cabbages",
+        location: "Zaria",
         amount: 75000,
         farmers: 12,
         genderRatio: { male: 0.4, female: 0.6 },
+        status: "Active",
       },
       {
         id: 2,
         category: "Maize",
-        location: "Trans-Nzoia",
+        location: "Kafanchan",
         amount: 120000,
         farmers: 24,
         genderRatio: { male: 0.6, female: 0.4 },
+        status: "Active",
+      },
+      {
+        id: 3,
+        category: "Rice",
+        location: "Saminaka",
+        amount: 250000,
+        farmers: 24,
+        genderRatio: { male: 0.6, female: 0.4 },
+        status: "Active",
       },
     ],
   };
@@ -66,7 +77,7 @@ export default function Dashboard() {
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
             <Text style={styles.statValue}>
-              ${(portfolioData.totalInvested / 1000).toFixed(0)}K
+              ₦{(portfolioData.totalInvested / 1000).toFixed(0)}K
             </Text>
             <Text style={styles.statLabel}>Total Invested</Text>
           </View>
@@ -83,7 +94,46 @@ export default function Dashboard() {
         </View>
       </View>
 
-      {/* Market Opportunities */}
+      {/* Quick Actions */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Quick Actions</Text>
+        <View style={styles.actionsContainer}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => router.push("/ecosystem/purchaseOrder")}
+          >
+            <Text style={styles.actionText}>Create  Order</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => router.push("/ecosystem/fundAllocation")}
+          >
+            <Text style={styles.actionText}>Allocate Funds</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.actionsContainer}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => router.push("/ecosystem/returns")}
+          >
+            <Text style={styles.actionText}>Returns</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => router.push("/ecosystem/returns")}
+          >
+            <Text style={styles.actionText}>Payments</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Analytics Preview */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Market Performance</Text>
+        <AnalyticsChart height={200} />
+      </View>
+
+      {/* Market Opportunities represent recent farmers demand */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           {/* <Text style={styles.sectionTitle}>Market Opportunities</Text> */}
@@ -99,31 +149,6 @@ export default function Dashboard() {
             }
           />
         ))}
-      </View>
-
-      {/* Analytics Preview */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Market Performance</Text>
-        <AnalyticsChart height={200} />
-      </View>
-
-      {/* Quick Actions */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Quick Actions</Text>
-        <View style={styles.actionsContainer}>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => router.push("/ecosystem/purchaseOrder")}
-          >
-            <Text style={styles.actionText}>Create Purchase Order</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => router.push("/ecosystem/fundAllocation")}
-          >
-            <Text style={styles.actionText}>Allocate Funds</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     </ScrollView>
   );
@@ -206,6 +231,7 @@ const styles = StyleSheet.create({
   actionsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom:10,
   },
   actionButton: {
     backgroundColor: Colors.secondary,

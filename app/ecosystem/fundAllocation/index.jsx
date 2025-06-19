@@ -15,31 +15,29 @@ import {useRouter} from "expo-router";
 const FundAllocation = ({ route, navigation }) => {
   const investment = {
     id: 1,
-    category: "Dairy",
-    location: "Nakuru",
-    totalAmount: 500000,
-    allocatedAmount: 250000,
-    remainingAmount: 250000,
+    category: "Rice",
+    location: "Zaria",
+    totalAmount: 5000000,
+    allocatedAmount: 4000000,
+    remainingAmount: 4000000,
   };
 
   const router = useRouter()
 
   // Allocation categories specific to agricultural investments
   const [allocations, setAllocations] = useState([
-    { id: 1, name: "Seeds/Seedlings", percentage: 30, amount: 0 },
-    { id: 2, name: "Fertilizers", percentage: 20, amount: 0 },
-    { id: 3, name: "Equipment", percentage: 15, amount: 0 },
-    { id: 4, name: "Labor", percentage: 20, amount: 0 },
-    { id: 5, name: "Training", percentage: 10, amount: 0 },
-    // { id: 6, name: "Miscellaneous", percentage: 5, amount: 0 },
+    { id: 1, name: "Seeds/Seedlings", percentage: 33, amount: 0 },
+    { id: 2, name: "Fertilizers", percentage: 42, amount: 0 },
+    // { id: 3, name: "Equipment", percentage: 15, amount: 0 },
+    // { id: 4, name: "Labor", percentage: 20, amount: 0 },
+    { id: 5, name: "Training", percentage: 15, amount: 0 },
+    { id: 6, name: "Miscellaneous", percentage: 5, amount: 0 },
   ]);
 
   const [collaborators, setCollaborators] = useState([]);
   const [newCollaborator, setNewCollaborator] = useState("");
   const [notes, setNotes] = useState("");
-  const [availableAmount, setAvailableAmount] = useState(
-    investment.remainingAmount
-  );
+  const [availableAmount, setAvailableAmount] = useState(0);
 
   useEffect(() => {
     // Calculate amounts based on percentages
@@ -116,7 +114,7 @@ const FundAllocation = ({ route, navigation }) => {
       date: new Date().toISOString(),
     };
     console.log("Fund Allocation Submitted:", allocationPlan);
-    // navigation.goBack();
+    router.navigate("/ecosystem/dashboard");
     // Here you would typically send the allocation to your backend
   };
 
@@ -125,7 +123,9 @@ const FundAllocation = ({ route, navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => router.navigate("/ecosystem/dashboard")}>
+          <TouchableOpacity
+            onPress={() => router.navigate("/ecosystem/dashboard")}
+          >
             <Ionicons name="arrow-back" size={24} color={Colors.primary} />
           </TouchableOpacity>
           <Text style={styles.title}>Fund Allocation</Text>
@@ -139,12 +139,19 @@ const FundAllocation = ({ route, navigation }) => {
 
         {/* Available Funds */}
         <View style={styles.fundsCard}>
-          <Text style={styles.fundsLabel}>Available Funds</Text>
-          <Text style={styles.fundsAmount}>
-            ₦ {availableAmount.toLocaleString()}
-          </Text>
           <Text style={styles.fundsNote}>
             Total project budget: ₦ {investment.totalAmount.toLocaleString()}
+          </Text>
+
+          <TextInput
+            style={styles.fundsInput}
+            placeholder="Add fund"
+            onChangeText={(val) => setAvailableAmount(val)}
+            placeholderTextColor={Colors.secondaryText}
+          />
+          <Text style={styles.fundsLabel}>Available Funds</Text>
+          <Text style={styles.fundsAmount}>
+            ₦{availableAmount.toLocaleString()}
           </Text>
         </View>
 
@@ -187,12 +194,12 @@ const FundAllocation = ({ route, navigation }) => {
         ))}
 
         {/* Collaborators */}
-        <Text style={styles.sectionTitle}>Collaborative Funding</Text>
+        {/* <Text style={styles.sectionTitle}>Collaborative Funding</Text>
         <Text style={styles.sectionDescription}>
           Invite other partners to co-fund this investment
-        </Text>
+        </Text> */}
 
-        {collaborators.map((collab) => (
+        {/* {collaborators.map((collab) => (
           <View key={collab.id} style={styles.collaboratorItem}>
             <View style={styles.collaboratorHeader}>
               <Ionicons name="person" size={18} color={Colors.primary} />
@@ -225,9 +232,9 @@ const FundAllocation = ({ route, navigation }) => {
               </View>
             </View>
           </View>
-        ))}
+        ))} */}
 
-        {collaborators.length < 5 && (
+        {/* {collaborators.length < 5 && (
           <View style={styles.addCollaboratorContainer}>
             <TextInput
               style={styles.collaboratorInput}
@@ -243,7 +250,7 @@ const FundAllocation = ({ route, navigation }) => {
               <Ionicons name="add" size={20} color={Colors.textOnPrimary} />
             </TouchableOpacity>
           </View>
-        )}
+        )} */}
 
         {/* Notes */}
         <Text style={styles.sectionTitle}>Allocation Notes</Text>
@@ -333,6 +340,17 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     alignItems: "center",
   },
+  fundsInput: {
+    // flex: 1,
+    backgroundColor: Colors.surface,
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    color: Colors.primaryText,
+    marginVertical: 15,
+    borderWidth: 1,
+    borderColor: Colors.secondaryText,
+  },
   fundsLabel: {
     fontSize: 16,
     color: Colors.secondaryText,
@@ -345,8 +363,9 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   fundsNote: {
-    fontSize: 14,
-    color: Colors.secondaryText,
+    fontSize: 16,
+    color: Colors.primaryText,
+    fontWeight: "600",
   },
   sectionTitle: {
     fontSize: 18,

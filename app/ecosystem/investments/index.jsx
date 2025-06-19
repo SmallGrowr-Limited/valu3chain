@@ -34,19 +34,18 @@ export default function Investments() {
           onPress={() => router.push(`/investments/details/${item.id}`)}
         />
       ))}
-
-      <View style={styles.buttonGroup}>
+      <View style={styles.actionsContainer}>
         <TouchableOpacity
-          style={[styles.button, styles.primaryButton]}
+          style={[styles.button, styles.actionButton]}
           onPress={() => router.push("/modal/purchase-order")}
         >
-          <Text style={styles.buttonText}>Make Purchase Order</Text>
+          <Text style={styles.actionText}>Make Purchase Order</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, styles.secondaryButton]}
+          style={[styles.button, styles.actionButton]}
           onPress={() => router.push("/modal/fund-allocation")}
         >
-          <Text style={styles.buttonText}>Allocate Funds</Text>
+          <Text style={styles.actionText}>Allocate Funds</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

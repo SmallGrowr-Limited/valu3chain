@@ -42,8 +42,8 @@ const TransactionItem = ({ transaction, onPress }) => {
 
       <View style={styles.amountContainer}>
         <Text style={[styles.amount, { color: amountColor }]}>
-          {transaction.type === "credit" ? "+" : "-"}$
-          {transaction.amount.toLocaleString()}
+          {transaction.type === "credit" ? "+" : "-"}₦
+          {transaction.amount}
         </Text>
         <Text style={styles.reference}>{transaction.reference}</Text>
       </View>

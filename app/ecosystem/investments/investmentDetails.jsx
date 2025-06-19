@@ -12,10 +12,10 @@ import AnalyticsChart from "../../../components/elements/AnalyticsChart";
 
 const InvestmentDetails = ({ route, navigation }) => {
   // Get investment data from navigation params
-  const investment = route.params?.investment || {
+  const investment = {
     id: 1,
     category: "Dairy",
-    location: "Nakuru",
+    location: "Zaria",
     amount: 75000,
     farmers: 12,
     genderRatio: { male: 0.4, female: 0.6 },
@@ -89,7 +89,7 @@ const InvestmentDetails = ({ route, navigation }) => {
         <View style={styles.metricCard}>
           <Text style={styles.metricLabel}>Amount Invested</Text>
           <Text style={styles.metricValue}>
-            ${investment.amount.toLocaleString()}
+            ₦{investment.amount.toLocaleString()}
           </Text>
         </View>
         <View style={styles.metricCard}>

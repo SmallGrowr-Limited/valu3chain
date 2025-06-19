@@ -34,7 +34,7 @@ export const Colors = {
   textOnSecondary: "#212121", // Dark text on secondary colored backgrounds
 
   // Backgrounds
-  background: "#FAFAFA", // Very light gray background
+  background: "#FAFAFA", // Very light gray background 
   surface: "#FFFFFF", // White surface for cards
 
   // Special Colors

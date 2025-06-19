@@ -25,7 +25,7 @@ export default function Returns() {
           <Text style={styles.projectName}>{project.name}</Text>
           <Text style={styles.projectRoi}>ROI: {project.roi}%</Text>
           <Text style={styles.projectAmount}>
-            Amount: ${project.amount.toLocaleString()}
+            Amount: ₦{project.amount.toLocaleString()}
           </Text>
 
           <View style={styles.reinvestmentButtons}>

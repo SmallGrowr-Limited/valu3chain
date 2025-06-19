@@ -4,17 +4,17 @@ import { BarChart, LineChart, ProgressChart } from "react-native-chart-kit";
 import { Colors } from "../constants/colors";
 
 const AnalyticsChart = ({
-  height = 200,
+  height = 250,
   type = "bar",
   title,
   data,
   labels,
 }) => {
-  const screenWidth = Dimensions.get("window").width - 32;
+  const screenWidth = Dimensions.get("window").width - 40;
 
   // Default empty data if none provided
-  const safeData = data || [0];
-  const safeLabels = labels || [""];
+  const safeData = data || [15, 18, 22, 19, 25, 28];
+  const safeLabels = labels || ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 
   const chartConfig = {
     backgroundColor: Colors.background,
@@ -29,7 +29,7 @@ const AnalyticsChart = ({
     propsForDots: {
       r: "4",
       strokeWidth: "2",
-      stroke: Colors.primary,
+      stroke: Colors.waterBlue,
     },
   };
 
@@ -95,7 +95,7 @@ const AnalyticsChart = ({
         }}
         width={screenWidth}
         height={height}
-        yAxisLabel="$"
+        yAxisLabel="₦"
         chartConfig={chartConfig}
         verticalLabelRotation={30}
         fromZero
@@ -105,3 +105,4 @@ const AnalyticsChart = ({
 };
 
 export default AnalyticsChart;
+

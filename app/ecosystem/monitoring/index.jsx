@@ -2,7 +2,7 @@ import { View, ScrollView, Text, StyleSheet } from "react-native";
 import FarmProgress from "../../../components/elements/FarmProgress";
 import AnalyticsChart from "../../../components/elements/AnalyticsChart";
 import { Colors } from "../../../components/constants/colors";
-import { monitoringData } from "../../../components/constants/data";
+import { monitoringData } from "../../../components/constants/data"; 
 
 export default function Monitoring() {
   return (

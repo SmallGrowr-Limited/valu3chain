@@ -121,17 +121,17 @@ FarmProgress.defaultProps = {
     delivered: 20,
     timeline: [
       {
-        event: "50 bags of fertilizer distributed to Nakuru",
+        event: "50 bags of fertilizer distributed to Zaria",
         date: "May 15, 2023",
         status: "distributed",
       },
       {
-        event: "20 irrigation kits delivered to Kisumu",
+        event: "20 irrigation kits delivered to Kasimu",
         date: "May 10, 2023",
         status: "delivered",
       },
       {
-        event: "30 seed packages in transit to Eldoret",
+        event: "30 seed packages in transit to Rukayya",
         date: "May 5, 2023",
         status: "inTransit",
       },

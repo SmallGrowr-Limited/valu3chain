@@ -2,7 +2,7 @@ export const investmentPortfolio = [
   {
     id: 1,
     category: "Dairy",
-    location: "Nakuru",
+    location: "Zaria",
     amount: 75000,
     farmers: 12,
     genderRatio: { male: 0.4, female: 0.6 },
@@ -47,7 +47,7 @@ export const paymentHistory = [
   {
     id: 1,
     date: "2023-06-15",
-    description: "Fertilizer purchase - Nakuru Co-op",
+    description: "Fertilizer purchase - Zaria Co-op",
     amount: 45000,
     status: "completed",
     type: "debit",
@@ -83,7 +83,7 @@ export const monitoringData = {
   },
   updates: [
     {
-      farm: "Nakuru Dairy Co-op",
+      farm: "Zaria Dairy Co-op",
       status: "Received all scheduled inputs",
       date: "2023-06-14",
       progress: 100,
@@ -119,18 +119,18 @@ export const returnsData = {
     totalReturns: 47500,
     averageROI: 12.5,
     bestPerforming: {
-      project: "Dairy - Nakuru",
+      project: "Dairy - Zaria",
       roi: 15.5,
     },
     worstPerforming: {
-      project: "Avocado - Murang'a",
+      project: "Avocado - Saminaka",
       roi: 5.8,
     },
   },
   projects: [
     {
       id: 1,
-      name: "Nakuru Dairy Expansion",
+      name: "Zaria Dairy Expansion",
       amount: 75000,
       roi: 15.5,
       duration: "9/12 months",
@@ -187,19 +187,19 @@ export const marketOpportunities = [
 export const timelineData = [
   {
     id: 1,
-    event: "50 bags of fertilizer distributed to Nakuru",
+    event: "50 bags of fertilizer distributed to Zaria",
     date: "May 15, 2023",
     status: "distributed",
   },
   {
     id: 2,
-    event: "20 irrigation kits delivered to Kisumu",
+    event: "20 irrigation kits delivered to Kasimu",
     date: "May 10, 2023",
     status: "delivered",
   },
   {
     id: 3,
-    event: "30 seed packages in transit to Eldoret",
+    event: "30 seed packages in transit to Rukayya",
     date: "May 5, 2023",
     status: "inTransit",
   },

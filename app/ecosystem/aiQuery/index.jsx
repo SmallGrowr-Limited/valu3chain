@@ -23,8 +23,8 @@ export default function AIQuery() {
       setResults({
         opportunities: [
           {
-            category: "Dairy",
-            location: "Central Region",
+            category: "Rice",
+            location: "Zaria",
             potential: "High",
             avgInvestment: 65000,
             farmersNeeded: 15,
@@ -32,7 +32,7 @@ export default function AIQuery() {
           },
           {
             category: "Maize",
-            location: "Rift Valley",
+            location: "Saminaka",
             potential: "Medium",
             avgInvestment: 45000,
             farmersNeeded: 25,
@@ -40,12 +40,12 @@ export default function AIQuery() {
           },
         ],
         insights: [
-          "High demand for dairy inputs among female farmers in Central Region",
-          "Maize farmers in Rift Valley showing increased productivity with improved seeds",
+          "High demand for Rice inputs among female farmers in Zaria",
+          "Maize farmers in Saminaka showing increased productivity with improved seeds",
         ],
       });
       setIsLoading(false);
-    }, 1500);
+    }, 2000);
   };
 
   return (
@@ -57,7 +57,7 @@ export default function AIQuery() {
 
       <TextInput
         style={styles.input}
-        placeholder="E.g. 'Dairy farmers in Central region needing feed'"
+        placeholder="E.g. 'Rice farmers in Zaria needing feed'"
         value={query}
         onChangeText={setQuery}
         multiline

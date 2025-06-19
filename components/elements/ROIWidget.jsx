@@ -43,7 +43,7 @@ const ROIWidget = ({ data, onReinvest, onDetails }) => {
         <View style={styles.metricContainer}>
           <Text style={styles.metricLabel}>Amount</Text>
           <Text style={styles.metricValue}>
-            ${data.amount.toLocaleString()}
+            ₦{data.amount}
           </Text>
         </View>
       </View>

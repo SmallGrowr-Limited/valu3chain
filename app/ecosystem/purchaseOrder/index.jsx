@@ -23,10 +23,10 @@ const PurchaseOrderModal = ({ route, navigation }) => {
   const [paymentTerms, setPaymentTerms] = useState("30 days after delivery");
   const router = useRouter();
 
-  const investment =  {
+  const investment = {
     id: 1,
     category: "Dairy",
-    location: "Nakuru",
+    location: "Zaria",
   };
 
   const handleAddItem = () => {
@@ -237,7 +237,7 @@ const PurchaseOrderModal = ({ route, navigation }) => {
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total Amount:</Text>
           <Text style={styles.totalAmount}>
-            ${calculateTotal().toLocaleString()}
+            ₦{calculateTotal().toLocaleString()}
           </Text>
         </View>
       </ScrollView>

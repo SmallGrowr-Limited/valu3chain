@@ -6,7 +6,7 @@ export default function InvestmentCard({ data, onPress }) {
     <TouchableOpacity onPress={onPress} style={styles.card}>
       <View style={styles.cardHeader}>
         <Text style={styles.category}>{data.category}</Text>
-        <Text style={styles.amount}>${data.amount.toLocaleString()}</Text>
+        <Text style={styles.amount}>₦{data.amount.toLocaleString()}</Text>
       </View>
       <View style={styles.cardBody}>
         <View style={styles.detailRow}>
@@ -26,7 +26,7 @@ export default function InvestmentCard({ data, onPress }) {
         </View>
       </View>
       <View style={styles.cardFooter}>
-        <Text style={styles.status}>Active</Text>
+        <Text style={styles.status}>{data.status}</Text>
       </View>
     </TouchableOpacity>
   );
