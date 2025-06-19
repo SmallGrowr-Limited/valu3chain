@@ -120,9 +120,9 @@ export default function Dashboard() {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => router.push("/ecosystem/returns")}
+            onPress={() => router.push("/ecosystem/productListing")}
           >
-            <Text style={styles.actionText}>Payments</Text>
+            <Text style={styles.actionText}>Product Listing</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -136,17 +136,14 @@ export default function Dashboard() {
       {/* Market Opportunities represent recent farmers demand */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          {/* <Text style={styles.sectionTitle}>Market Opportunities</Text> */}
-          <SearchFilter currentFilter={filter} onFilterChange={setFilter} />
+          <Text style={styles.sectionTitle}>Market Opportunities</Text>
+          {/* <SearchFilter currentFilter={filter} onFilterChange={setFilter} /> */}
         </View>
-
         {portfolioData.recentOpportunities.map((opportunity) => (
           <InvestmentCard
             key={opportunity.id}
             data={opportunity}
-            onPress={() =>
-              router.push(`/eosystem/investments/details/${opportunity.id}`)
-            }
+            
           />
         ))}
       </View>
@@ -198,7 +195,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: Colors.primaryText,
-    marginBottom: 12,
+    marginBottom: 5,
   },
   statsContainer: {
     flexDirection: "row",

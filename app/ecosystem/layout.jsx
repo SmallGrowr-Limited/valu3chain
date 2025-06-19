@@ -85,6 +85,16 @@ export default function TabLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="productListing"
+        options={{
+          title: "Product Listing",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="trending-up" size={24} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

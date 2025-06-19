@@ -166,7 +166,6 @@ export default function ProductOrderForm() {
             value={formData.quantity}
             keyboardType="numeric"
             onChangeText={(val) => updateFormData("quantity", val)}
-
           />
         </View>
         <View style={{ width: "46%" }}>

@@ -5,7 +5,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  SafeAreaView
 } from "react-native";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Colors } from "../../../components/constants/colors";
 import { useState } from "react";
@@ -49,76 +51,104 @@ export default function AIQuery() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>AI Market Opportunity Finder</Text>
-      <Text style={styles.subtitle}>
-        Discover investment opportunities without accessing personal farmer data
-      </Text>
+    <SafeAreaView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          onPress={() => router.navigate("/ecosystem/dashboard")}
+        >
+          <Ionicons name="arrow-back" size={24} color={Colors.primary} />
+        </TouchableOpacity>
+        <Text style={styles.title}>Fund Allocation</Text>
+        <View style={{ width: 24 }} />
+      </View>
+      <ScrollView>
+        <View style={styles.content}>
+          <Text style={styles.title}>AI Market Opportunity Finder</Text>
+          <Text style={styles.subtitle}>
+            Discover investment opportunities without accessing personal farmer
+            data
+          </Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="E.g. 'Rice farmers in Zaria needing feed'"
-        value={query}
-        onChangeText={setQuery}
-        multiline
-      />
+          <TextInput
+            style={styles.input}
+            placeholder="E.g. 'Rice farmers in Zaria needing feed'"
+            value={query}
+            onChangeText={setQuery}
+            multiline
+          />
 
-      <TouchableOpacity
-        style={styles.searchButton}
-        onPress={handleSearch}
-        disabled={isLoading}
-      >
-        <Text style={styles.searchButtonText}>
-          {isLoading ? "Analyzing..." : "Find Opportunities"}
-        </Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.searchButton}
+            onPress={handleSearch}
+            disabled={isLoading}
+          >
+            <Text style={styles.searchButtonText}>
+              {isLoading ? "Analyzing..." : "Find Opportunities"}
+            </Text>
+          </TouchableOpacity>
 
-      {results && (
-        <ScrollView style={styles.resultsContainer}>
-          <Text style={styles.resultsTitle}>Opportunities Found</Text>
+          {results && (
+            <View style={styles.resultsContainer}>
+              <Text style={styles.resultsTitle}>Opportunities Found</Text>
 
-          {results.opportunities.map((opp, index) => (
-            <View key={index} style={styles.opportunityCard}>
-              <Text style={styles.oppCategory}>
-                {opp.category} - {opp.location}
-              </Text>
-              <Text style={styles.oppPotential}>
-                Potential: {opp.potential}
-              </Text>
-              <View style={styles.oppDetails}>
-                <Text>Avg Investment: ${opp.avgInvestment}</Text>
-                <Text>Farmers Needed: {opp.farmersNeeded}</Text>
-                <Text>Projected ROI: {opp.projectedROI}</Text>
+              {results.opportunities.map((opp, index) => (
+                <View key={index} style={styles.opportunityCard}>
+                  <Text style={styles.oppCategory}>
+                    {opp.category} - {opp.location}
+                  </Text>
+                  <Text style={styles.oppPotential}>
+                    Potential: {opp.potential}
+                  </Text>
+                  <View style={styles.oppDetails}>
+                    <Text>Avg Investment: ${opp.avgInvestment}</Text>
+                    <Text>Farmers Needed: {opp.farmersNeeded}</Text>
+                    <Text>Projected ROI: {opp.projectedROI}</Text>
+                  </View>
+                </View>
+              ))}
+
+              <Text style={styles.resultsTitle}>Market Insights</Text>
+              <View style={styles.insightsContainer}>
+                {results.insights.map((insight, index) => (
+                  <Text key={index} style={styles.insight}>
+                    • {insight}
+                  </Text>
+                ))}
               </View>
             </View>
-          ))}
+          )}
 
-          <Text style={styles.resultsTitle}>Market Insights</Text>
-          <View style={styles.insightsContainer}>
-            {results.insights.map((insight, index) => (
-              <Text key={index} style={styles.insight}>
-                • {insight}
-              </Text>
-            ))}
-          </View>
-        </ScrollView>
-      )}
-
-      <TouchableOpacity
-        style={styles.closeButton}
-        onPress={() => router.back()}
-      >
-        <Text style={styles.closeButtonText}>Close</Text>
-      </TouchableOpacity>
-    </View>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => router.back()}
+          >
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  content: {
     backgroundColor: Colors.background,
     padding: 20,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: Colors.primaryText,
   },
   title: {
     fontSize: 22,

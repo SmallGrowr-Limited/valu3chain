@@ -7,13 +7,16 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
+import { SelectList } from "react-native-dropdown-select-list";
 import { Colors } from "../../../components/constants/colors";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
 
 const PurchaseOrderModal = ({ route, navigation }) => {
-  const [supplier, setSupplier] = useState("");
+  const [supplier, setSupplier] = useState("Smallgrowr Limited");
+  const [deliveryAddress, setDeliveryAddress] = useState("");
+  const [deliveryMethod, setDeliveryMethod] = useState("");
   const [deliveryDate, setDeliveryDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [items, setItems] = useState([
@@ -25,8 +28,42 @@ const PurchaseOrderModal = ({ route, navigation }) => {
 
   const investment = {
     id: 1,
-    category: "Dairy",
+    category: "Rice",
     location: "Zaria",
+  };
+
+  // Dropdown options (moved outside component if reused elsewhere)
+  const dropdownOptions = {
+    varietyType: [
+      { key: "1", value: "Type 1" },
+      { key: "2", value: "Type 2" },
+    ],
+    purchaseType: [
+      { key: "1", value: "Outright" },
+      { key: "2", value: "Storage" },
+    ],
+    units: [
+      { key: "1", value: "kg" },
+      { key: "2", value: "tons" },
+    ],
+    deliveryMethods: [
+      { key: "1", value: "Company Truck" },
+      { key: "2", value: "Supplier Delivery" },
+      { key: "3", value: "Third-Party Logistics" },
+    ],
+    paymentModes: [
+      { key: "1", value: "Bank Transfer" },
+      { key: "2", value: "Cheque" },
+      { key: "3", value: "Cash" }, // Fixed duplicate key
+    ],
+    paymentTerms: [
+      { key: "1", value: "On Delivery" },
+      { key: "2", value: "50% Advance" },
+    ],
+    moistureOpt: [
+      { key: "1", value: "Type 1" },
+      { key: "2", value: "Type 2" },
+    ],
   };
 
   const handleAddItem = () => {
@@ -73,11 +110,13 @@ const PurchaseOrderModal = ({ route, navigation }) => {
     const order = {
       investmentId: investment.id,
       supplier,
+      deliveryAddress,
       deliveryDate,
       items,
       total: calculateTotal(),
       notes,
       paymentTerms,
+      deliveryMethod,
       status: "pending",
       createdAt: new Date(),
     };
@@ -119,7 +158,7 @@ const PurchaseOrderModal = ({ route, navigation }) => {
 
         {/* Delivery Information */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Delivery Information</Text>
+          <Text style={styles.sectionTitle}>Date</Text>
           <TouchableOpacity
             style={styles.dateInput}
             onPress={() => setShowDatePicker(true)}
@@ -171,52 +210,109 @@ const PurchaseOrderModal = ({ route, navigation }) => {
                   </TouchableOpacity>
                 )}
               </View>
-
               <View style={styles.quantityRow}>
-                <TextInput
-                  style={[styles.input, styles.quantityInput]}
-                  placeholder="Quantity"
-                  value={item.quantity}
-                  onChangeText={(text) =>
-                    handleItemChange(item.id, "quantity", text)
-                  }
-                  keyboardType="numeric"
-                  placeholderTextColor={Colors.secondaryText}
-                />
-                <TextInput
-                  style={[styles.input, styles.unitInput]}
-                  placeholder="Unit"
-                  value={item.unit}
-                  onChangeText={(text) =>
-                    handleItemChange(item.id, "unit", text)
-                  }
-                  placeholderTextColor={Colors.secondaryText}
-                />
-                <TextInput
-                  style={[styles.input, styles.priceInput]}
-                  placeholder="Unit Price"
-                  value={item.unitPrice}
-                  onChangeText={(text) =>
-                    handleItemChange(item.id, "unitPrice", text)
-                  }
-                  keyboardType="numeric"
-                  placeholderTextColor={Colors.secondaryText}
-                />
+                <View style={{ width: "50%" }}>
+                  <TextInput
+                    style={[styles.input, styles.quantityInput]}
+                    placeholder="Quantity"
+                    value={item.quantity}
+                    onChangeText={(text) =>
+                      handleItemChange(item.id, "quantity", text)
+                    }
+                    keyboardType="numeric"
+                    placeholderTextColor={Colors.secondaryText}
+                  />
+                </View>
+                <View style={{ width: "46%" }}>
+                  <SelectList
+                    style={[styles.input, styles.unitInput]}
+                    setSelected={(text) =>
+                      handleItemChange(item.id, "unit", text)
+                    }
+                    data={dropdownOptions.units}
+                    save="value"
+                    defaultOption={{ key: "1", value: "kg" }}
+                  />
+                </View>
               </View>
+              <View style={styles.quantityRow}>
+                <View style={{ width: "100%" }}>
+                  <TextInput
+                    style={[styles.input, styles.priceInput]}
+                    placeholder="Unit Price"
+                    value={item.unitPrice}
+                    onChangeText={(text) =>
+                      handleItemChange(item.id, "unitPrice", text)
+                    }
+                    keyboardType="numeric"
+                    placeholderTextColor={Colors.secondaryText}
+                  />
+                </View>
+              </View>
+              {/* <View style={styles.quantityRow}>
+                <View style={{ width: "100%" }}>
+                  <SelectList
+                    setSelected={(text) =>
+                      handleItemChange(item.id, "unit", text)
+                    }
+                    data={dropdownOptions.varietyType}
+                    save="value"
+                    style={styles.input}
+                    defaultOption={{ key: "1", value: "Preferred Variety" }}
+                  />
+                </View>
+              </View> */}
+
+              {/* <View style={styles.quantityRow}>
+                <View style={{ width: "100%" }}>
+                  <SelectList
+                    setSelected={(text) =>
+                      handleItemChange(item.id, "unit", text)
+                    }
+                    data={dropdownOptions.varietyType}
+                    save="value"
+                    style={styles.input}
+                    defaultOption={{
+                      key: "1",
+                      value: "Acceptable moisture level",
+                    }}
+                  />
+                </View>
+              </View> */}
             </View>
           ))}
         </View>
 
         {/* Payment Terms */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Payment Terms</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Payment Terms"
-            value={paymentTerms}
-            onChangeText={setPaymentTerms}
-            placeholderTextColor={Colors.secondaryText}
-          />
+          <Text style={styles.sectionTitle}>Delivery and Payment</Text>
+          <View style={{ marginBottom: 10 }}>
+            <TextInput
+              style={styles.input}
+              placeholder="Delivery Address"
+              value={deliveryAddress}
+              onChangeText={(text) => setDeliveryAddress(text)}
+              placeholderTextColor={Colors.secondaryText}
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <SelectList
+              setSelected={(text) => setDeliveryMethod(text)}
+              data={dropdownOptions.deliveryMethods}
+              save="value"
+              style={styles.input}
+              defaultOption={{ key: "1", value: "Delivery Method" }}
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <SelectList
+              setSelected={(text) => setPaymentTerms(text)}
+              data={dropdownOptions.paymentTerms}
+              save="value"
+              style={styles.input}
+              defaultOption={{ key: "1", value: "Payment Terms" }}
+            />
+          </View>
         </View>
 
         {/* Notes */}
