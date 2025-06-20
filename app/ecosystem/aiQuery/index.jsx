@@ -7,12 +7,15 @@ import {
   ScrollView,
   SafeAreaView
 } from "react-native";
+import { useEffect } from "react";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Colors } from "../../../components/constants/colors";
+//import {data} from "../../../components/constants/data";
 import { useState } from "react";
 
 export default function AIQuery() {
+
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(null);
@@ -101,7 +104,7 @@ export default function AIQuery() {
                     Potential: {opp.potential}
                   </Text>
                   <View style={styles.oppDetails}>
-                    <Text>Avg Investment: ${opp.avgInvestment}</Text>
+                    <Text>Avg Investment: ₦{opp.avgInvestment}</Text>
                     <Text>Farmers Needed: {opp.farmersNeeded}</Text>
                     <Text>Projected ROI: {opp.projectedROI}</Text>
                   </View>

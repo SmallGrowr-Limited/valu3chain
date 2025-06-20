@@ -1,8 +1,9 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Colors } from "../constants/colors";
 
 const ROIWidget = ({ data, onReinvest, onDetails }) => {
+
   // Calculate percentage for the progress bar
   const progressPercentage = Math.min(
     Math.max((data.currentROI / data.targetROI) * 100, 0),
@@ -65,7 +66,7 @@ const ROIWidget = ({ data, onReinvest, onDetails }) => {
       {/* Performance indicator */}
       <View style={styles.performanceContainer}>
         <Text style={styles.performanceText}>
-          Performance:{" "}
+          Performance:
           <Text
             style={
               data.currentROI >= data.targetROI

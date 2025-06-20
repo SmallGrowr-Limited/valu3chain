@@ -11,6 +11,16 @@ import ROIWidget from "../../../components/elements/ROIWidget";
 import { Colors } from "../../../components/constants/colors";
 import { returnsData } from "../../../components/constants/data";
 
+// Helper function to calculate average time remaining
+const calculateAverageRemaining = (projects) => {
+  const totalMonths = projects.reduce((sum, project) => {
+    const [current, total] = project.duration.split('/').map(Number);
+    return sum + (total - current);
+  }, 0);
+  const average = totalMonths / projects.length;
+  return `${Math.round(average)} months avg`;
+};
+
 export default function Returns() {
   const router = useRouter();
   return (
@@ -22,13 +32,20 @@ export default function Returns() {
         >
           <Ionicons name="arrow-back" size={24} color={Colors.primary} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Returns Managemen</Text>
+        <Text style={styles.headerTitle}>Portfolio Management</Text>
         <View style={{ width: 24 }} />
       </View>
 
       <View style={styles.roiSummary}>
         <Text style={styles.sectionTitle}>Portfolio ROI Summary</Text>
-        <ROIWidget data={returnsData.summary} />
+        <ROIWidget
+          data={{
+            currentROI: returnsData.summary.averageROI,
+            targetROI: returnsData.summary.bestPerforming.roi,
+            amount: returnsData.summary.totalInvested,
+            timeRemaining: calculateAverageRemaining(returnsData.projects),
+          }}
+        />
       </View>
 
       <Text style={styles.sectionTitle}>Project Returns</Text>
@@ -61,14 +78,14 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 24,
   },
   headerTitle: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.primaryText,
   },
   filterButton: {
@@ -77,8 +94,8 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   summaryContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 20,
   },
   summaryCard: {
@@ -87,7 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 4,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -103,7 +120,7 @@ const styles = StyleSheet.create({
   },
   summaryValue: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.primaryText,
     marginBottom: 8,
   },
@@ -119,7 +136,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 20,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -127,13 +144,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
     color: Colors.primaryText,
     marginBottom: 16,
   },
   performanceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 20,
   },
   performanceCard: {
@@ -142,20 +159,20 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 4,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
   },
   performanceHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
   },
   performanceTitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     color: Colors.primaryText,
     marginLeft: 8,
   },
@@ -166,33 +183,33 @@ const styles = StyleSheet.create({
   },
   performanceROI: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   projectCard: {
     backgroundColor: Colors.surface,
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
   },
   projectHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 8,
   },
   projectName: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     color: Colors.primaryText,
     flex: 1,
   },
   projectROI: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 8,
   },
   positiveROI: {
@@ -202,9 +219,9 @@ const styles = StyleSheet.create({
     color: Colors.warning,
   },
   projectDetails: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   projectAmount: {
     fontSize: 14,
@@ -227,17 +244,17 @@ const styles = StyleSheet.create({
   },
   projectStatusText: {
     fontSize: 12,
-    fontWeight: '600',
-    textTransform: 'capitalize',
+    fontWeight: "600",
+    textTransform: "capitalize",
   },
   reinvestButton: {
     backgroundColor: Colors.secondary,
     borderRadius: 12,
     padding: 16,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 16,
     marginBottom: 32,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -246,7 +263,6 @@ const styles = StyleSheet.create({
   reinvestButtonText: {
     color: Colors.textOnSecondary,
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-
 });

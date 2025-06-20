@@ -249,7 +249,7 @@ const PurchaseOrderModal = ({ route, navigation }) => {
                   />
                 </View>
               </View>
-              {/* <View style={styles.quantityRow}>
+              <View style={styles.quantityRow}>
                 <View style={{ width: "100%" }}>
                   <SelectList
                     setSelected={(text) =>
@@ -261,9 +261,9 @@ const PurchaseOrderModal = ({ route, navigation }) => {
                     defaultOption={{ key: "1", value: "Preferred Variety" }}
                   />
                 </View>
-              </View> */}
+              </View>
 
-              {/* <View style={styles.quantityRow}>
+              <View style={styles.quantityRow}>
                 <View style={{ width: "100%" }}>
                   <SelectList
                     setSelected={(text) =>
@@ -278,12 +278,12 @@ const PurchaseOrderModal = ({ route, navigation }) => {
                     }}
                   />
                 </View>
-              </View> */}
+              </View>
             </View>
           ))}
         </View>
 
-        {/* Payment Terms */}
+        {/* Delivery and Payment */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Delivery and Payment</Text>
           <View style={{ marginBottom: 10 }}>
@@ -373,6 +373,7 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 24,
+    //backgroundColor: Colors.surface,
   },
   sectionHeader: {
     flexDirection: "row",

@@ -16,7 +16,7 @@ export const investmentPortfolio = [
   {
     id: 2,
     category: "Maize",
-    location: "Trans-Nzoia",
+    location: "Kwara",
     amount: 120000,
     farmers: 24,
     genderRatio: { male: 0.6, female: 0.4 },
@@ -29,8 +29,8 @@ export const investmentPortfolio = [
   },
   {
     id: 3,
-    category: "Avocado",
-    location: "Murang'a",
+    category: "Cassava",
+    location: "Kaduna",
     amount: 185000,
     farmers: 8,
     genderRatio: { male: 0.3, female: 0.7 },
@@ -89,13 +89,13 @@ export const monitoringData = {
       progress: 100,
     },
     {
-      farm: "Trans-Nzoia Maize Group",
+      farm: "Trans-Nozia Maize Group",
       status: "75% of inputs delivered",
       date: "2023-06-10",
       progress: 75,
     },
     {
-      farm: "Murang'a Avocado Farmers",
+      farm: "Kaduna Cassava Farmers",
       status: "Initial inputs distributed",
       date: "2023-06-05",
       progress: 30,
@@ -103,7 +103,7 @@ export const monitoringData = {
   ],
   analytics: {
     cropType: {
-      labels: ["Maize", "Dairy", "Avocado", "Vegetables", "Coffee"],
+      labels: ["Maize", "Dairy", "Cassava", "Vegetables", "Coffee"],
       data: [0.4, 0.3, 0.15, 0.1, 0.05],
     },
     location: {
@@ -138,7 +138,7 @@ export const returnsData = {
     },
     {
       id: 2,
-      name: "Trans-Nzoia Maize",
+      name: "Kwara Maize",
       amount: 120000,
       roi: 12.2,
       duration: "7/8 months",
@@ -146,7 +146,7 @@ export const returnsData = {
     },
     {
       id: 3,
-      name: "Murang'a Avocado",
+      name: "Kaduna Cassava",
       amount: 185000,
       roi: 5.8,
       duration: "1/18 months",
