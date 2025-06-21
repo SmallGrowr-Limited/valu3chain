@@ -47,3 +47,18 @@ export const ChartColors = {
   earthTones: ["#8D6E63", "#A1887F", "#BCAAA4", "#D7CCC8"],
   complementary: ["#4CAF50", "#FFC107", "#03A9F4", "#FF9800", "#9C27B0"],
 };
+
+// constants/colors.js
+// export default {
+//   primary: '#2E7D32',       // Green
+//   primaryLight: '#E8F5E9',  // Light green
+//   secondary: '#FF9800',     // Orange
+//   textPrimary: '#212121',   // Dark gray
+//   textSecondary: '#757575', // Medium gray
+//   border: '#E0E0E0',       // Light gray
+//   background: '#F5F5F5',   // Off-white
+//   white: '#FFFFFF',
+//   success: '#4CAF50',      // Green
+//   warning: '#FFC107',      // Amber
+//   error: '#F44336',        // Red
+// };

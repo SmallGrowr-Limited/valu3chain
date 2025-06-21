@@ -223,3 +223,188 @@ export const farmerDemographics = {
     coast: 3,
   },
 };
+
+// data/mockFarmers.js
+export const mockFarmers = [
+  {
+    id: 'farmer-001',
+    name: 'John Kamau',
+    phone: '+254712345678',
+    location: 'Kiambu County',
+    crops: ['Maize', 'Beans', 'Coffee'],
+    verified: true,
+    farmSize: 2.5,
+    farmLocation: { lat: -1.1618, lng: 36.8219 },
+    status: 'growing',
+    photo: 'https://randomuser.me/api/portraits/men/1.jpg',
+    registrationDate: '2023-01-15T10:30:00Z',
+    verificationDate: '2023-01-20T14:15:00Z',
+    lastUpdated: '2023-06-10T08:45:00Z'
+  },
+  {
+    id: 'farmer-002',
+    name: 'Mary Wanjiku',
+    phone: '+254723456789',
+    location: 'Murang\'a County',
+    crops: ['Tea', 'Avocado'],
+    verified: true,
+    farmSize: 1.8,
+    farmLocation: { lat: -0.7280, lng: 37.1527 },
+    status: 'harvesting',
+    photo: 'https://randomuser.me/api/portraits/women/1.jpg',
+    registrationDate: '2023-02-10T09:15:00Z',
+    verificationDate: '2023-02-15T11:20:00Z',
+    lastUpdated: '2023-06-12T10:30:00Z'
+  },
+  {
+    id: 'farmer-003',
+    name: 'James Mwangi',
+    phone: '+254734567890',
+    location: 'Nyeri County',
+    crops: ['Coffee', 'Macadamia', 'Bananas'],
+    verified: true,
+    farmSize: 4.2,
+    farmLocation: { lat: -0.4201, lng: 36.9476 },
+    status: 'planting',
+    photo: 'https://randomuser.me/api/portraits/men/2.jpg',
+    registrationDate: '2023-03-05T08:45:00Z',
+    verificationDate: '2023-03-10T10:10:00Z',
+    lastUpdated: '2023-06-15T07:20:00Z'
+  },
+  {
+    id: 'farmer-004',
+    name: 'Grace Akinyi',
+    phone: '+254745678901',
+    location: 'Kisumu County',
+    crops: ['Rice', 'Vegetables'],
+    verified: false,
+    farmSize: 3.0,
+    farmLocation: { lat: -0.0917, lng: 34.7680 },
+    status: 'fallow',
+    photo: 'https://randomuser.me/api/portraits/women/2.jpg',
+    registrationDate: '2023-04-20T11:20:00Z',
+    lastUpdated: '2023-06-08T09:10:00Z'
+  },
+  {
+    id: 'farmer-005',
+    name: 'Peter Kipchoge',
+    phone: '+254756789012',
+    location: 'Uasin Gishu County',
+    crops: ['Wheat', 'Barley'],
+    verified: true,
+    farmSize: 5.5,
+    farmLocation: { lat: 0.5143, lng: 35.2698 },
+    status: 'post-harvest',
+    photo: 'https://randomuser.me/api/portraits/men/3.jpg',
+    registrationDate: '2023-05-15T07:30:00Z',
+    verificationDate: '2023-05-20T13:45:00Z',
+    lastUpdated: '2023-06-14T16:20:00Z'
+  },
+  {
+    id: 'farmer-006',
+    name: 'Sarah Chebet',
+    phone: '+254767890123',
+    location: 'Nakuru County',
+    crops: ['Potatoes', 'Carrots', 'Cabbages'],
+    verified: true,
+    farmSize: 2.0,
+    farmLocation: { lat: -0.3031, lng: 36.0800 },
+    status: 'growing',
+    photo: 'https://randomuser.me/api/portraits/women/3.jpg',
+    registrationDate: '2023-01-30T14:10:00Z',
+    verificationDate: '2023-02-05T09:25:00Z',
+    lastUpdated: '2023-06-11T11:15:00Z'
+  },
+  {
+    id: 'farmer-007',
+    name: 'David Omondi',
+    phone: '+254778901234',
+    location: 'Machakos County',
+    crops: ['Mangoes', 'Oranges'],
+    verified: false,
+    farmSize: 1.5,
+    farmLocation: { lat: -1.5177, lng: 37.2634 },
+    status: 'harvesting',
+    photo: 'https://randomuser.me/api/portraits/men/4.jpg',
+    registrationDate: '2023-03-25T10:45:00Z',
+    lastUpdated: '2023-06-13T14:30:00Z'
+  },
+  {
+    id: 'farmer-008',
+    name: 'Esther Njeri',
+    phone: '+254789012345',
+    location: 'Meru County',
+    crops: ['Miraa', 'Bananas', 'Beans'],
+    verified: true,
+    farmSize: 3.8,
+    farmLocation: { lat: 0.0515, lng: 37.6456 },
+    status: 'growing',
+    photo: 'https://randomuser.me/api/portraits/women/4.jpg',
+    registrationDate: '2023-02-28T08:20:00Z',
+    verificationDate: '2023-03-05T11:30:00Z',
+    lastUpdated: '2023-06-09T10:45:00Z'
+  }
+];
+
+export const mockServiceRequests = [
+  {
+    id: 'req-001',
+    farmerId: 'farmer-001',
+    farmerName: 'John Kamau',
+    serviceType: 'input',
+    status: 'pending',
+    date: '2023-06-15',
+    priority: 'high',
+    description: 'Need fertilizer for maize planting season'
+  },
+  {
+    id: 'req-002',
+    farmerId: 'farmer-002',
+    farmerName: 'Mary Wanjiku',
+    serviceType: 'inspection',
+    status: 'approved',
+    date: '2023-06-18',
+    priority: 'medium',
+    description: 'Request for crop health inspection'
+  },
+  {
+    id: 'req-003',
+    farmerId: 'farmer-003',
+    farmerName: 'James Mwangi',
+    serviceType: 'harvest',
+    status: 'completed',
+    date: '2023-06-10',
+    priority: 'low',
+    description: 'Harvest assistance needed for coffee plantation'
+  },
+  {
+    id: 'req-004',
+    farmerId: 'farmer-004',
+    farmerName: 'Grace Akinyi',
+    serviceType: 'soil-test',
+    status: 'pending',
+    date: '2023-06-17',
+    priority: 'high',
+    description: 'Soil testing before next planting season'
+  },
+  {
+    id: 'req-005',
+    farmerId: 'farmer-005',
+    farmerName: 'Peter Kipchoge',
+    serviceType: 'other',
+    status: 'rejected',
+    date: '2023-06-12',
+    priority: 'medium',
+    description: 'Request for storage facilities'
+  },
+  {
+    id: 'req-006',
+    farmerId: 'farmer-006',
+    farmerName: 'Sarah Chebet',
+    serviceType: 'input',
+    status: 'pending',
+    date: '2023-06-19',
+    priority: 'high',
+    description: 'Urgent need for potato seeds'
+  }
+];
