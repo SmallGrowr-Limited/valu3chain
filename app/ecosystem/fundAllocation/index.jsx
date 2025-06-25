@@ -113,7 +113,7 @@ const FundAllocation = ({ route, navigation }) => {
       notes,
       date: new Date().toISOString(),
     };
-    console.log("Fund Allocation Submitted:", allocationPlan);
+    //console.log("Fund Allocation Submitted:", allocationPlan);
     router.navigate("/ecosystem/dashboard");
     // Here you would typically send the allocation to your backend
   };

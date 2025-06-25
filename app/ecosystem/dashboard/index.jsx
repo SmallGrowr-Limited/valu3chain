@@ -68,7 +68,7 @@ export default function Dashboard() {
         style={styles.aiButton}
         onPress={() => router.push("/ecosystem/aiQuery")}
       >
-        <Text style={styles.aiButtonText}>AI Market Opportunity Query</Text>
+        <Text style={styles.aiButtonText}>AI Market Analysis</Text>
       </TouchableOpacity>
 
       {/* Portfolio Summary */}

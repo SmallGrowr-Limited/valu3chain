@@ -56,7 +56,7 @@ export default function AIQuery() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <TouchableOpacity
           onPress={() => router.navigate("/ecosystem/dashboard")}
         >
@@ -64,10 +64,10 @@ export default function AIQuery() {
         </TouchableOpacity>
         <Text style={styles.title}>Fund Allocation</Text>
         <View style={{ width: 24 }} />
-      </View>
+      </View> */}
       <ScrollView>
         <View style={styles.content}>
-          <Text style={styles.title}>AI Market Opportunity Finder</Text>
+          {/* <Text style={styles.title}>AI Market</Text> */}
           <Text style={styles.subtitle}>
             Discover investment opportunities without accessing personal farmer
             data
@@ -78,7 +78,7 @@ export default function AIQuery() {
             placeholder="E.g. 'Rice farmers in Zaria needing feed'"
             value={query}
             onChangeText={setQuery}
-            multiline
+            // multiline
           />
 
           <TouchableOpacity
@@ -93,8 +93,16 @@ export default function AIQuery() {
 
           {results && (
             <View style={styles.resultsContainer}>
+              <Text style={styles.resultsTitle}>Market Insights</Text>
+              <View style={styles.insightsContainer}>
+                {results.insights.map((insight, index) => (
+                  <Text key={index} style={styles.insight}>
+                    • {insight}
+                  </Text>
+                ))}
+              </View>
+              
               <Text style={styles.resultsTitle}>Opportunities Found</Text>
-
               {results.opportunities.map((opp, index) => (
                 <View key={index} style={styles.opportunityCard}>
                   <Text style={styles.oppCategory}>
@@ -110,15 +118,6 @@ export default function AIQuery() {
                   </View>
                 </View>
               ))}
-
-              <Text style={styles.resultsTitle}>Market Insights</Text>
-              <View style={styles.insightsContainer}>
-                {results.insights.map((insight, index) => (
-                  <Text key={index} style={styles.insight}>
-                    • {insight}
-                  </Text>
-                ))}
-              </View>
             </View>
           )}
 
@@ -162,17 +161,17 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: Colors.secondaryText,
-    marginBottom: 24,
+    marginBottom: 10,
   },
   input: {
     backgroundColor: Colors.surface,
     borderRadius: 12,
     padding: 16,
-    minHeight: 120,
+    minHeight: 80,
     textAlignVertical: "top",
     fontSize: 16,
     color: Colors.primaryText,
-    marginBottom: 20,
+    marginBottom: 10,
     borderWidth: 1,
     borderColor: Colors.lightGray,
   },
@@ -226,7 +225,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
     borderRadius: 12,
     padding: 16,
-    marginTop: 16,
+    marginBottom: 24,
   },
   insight: {
     fontSize: 16,

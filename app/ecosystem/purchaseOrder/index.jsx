@@ -47,7 +47,7 @@ const PurchaseOrderModal = ({ route, navigation }) => {
       { key: "2", value: "tons" },
     ],
     deliveryMethods: [
-      { key: "1", value: "Company Truck" },
+      { key: "1", value: "Buyer Truck" },
       { key: "2", value: "Supplier Delivery" },
       { key: "3", value: "Third-Party Logistics" },
     ],
@@ -137,23 +137,20 @@ const PurchaseOrderModal = ({ route, navigation }) => {
             <Ionicons name="close" size={28} color={Colors.primaryText} />
           </TouchableOpacity>
           <Text style={styles.title}>New Purchase Order</Text>
-          <View style={{ width: 28 }} /> {/* Spacer for alignment */}
+          <View style={{ width: 28 }} />
         </View>
-
-        <Text style={styles.subtitle}>
-          For {investment.category} project in {investment.location}
-        </Text>
 
         {/* Supplier Information */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Supplier Details</Text>
-          <TextInput
+          <Text style={styles.supplierName}>Smallgrowr Limited</Text>
+          {/* <TextInput
             style={styles.input}
             placeholder="Supplier Name"
             value={supplier}
             onChangeText={setSupplier}
             placeholderTextColor={Colors.secondaryText}
-          />
+          /> */}
         </View>
 
         {/* Delivery Information */}
@@ -385,6 +382,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: Colors.primaryText,
+  },
+  supplierName: {
+    marginTop: 10,
+    color: Colors.secondaryText,
+    fontSize: 16,
   },
   input: {
     backgroundColor: Colors.surface,
