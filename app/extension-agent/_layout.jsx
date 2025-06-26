@@ -28,16 +28,16 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* <Tabs.Screen
-        name="home"
+      <Tabs.Screen
+        name="settings"
         options={{
           headerShown:false,
-          title: "Home",
+          title: "Settings",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="home" size={24} color={color} />
+            <Ionicons name="settings" size={24} color={color} />
           ),
         }}
-      /> */}
+      />
       {/* <Tabs.Screen
         name="farmers"
         options={{
