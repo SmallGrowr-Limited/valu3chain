@@ -73,36 +73,68 @@ export default function Dashboard() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.background, // Ensure this is a light neutral color for good contrast
   },
   scrollContainer: {
-    padding: 16,
-    paddingBottom: 32,
+    padding: 20, // Slightly increased padding for better spacing
+    paddingBottom: 40,
   },
   metricsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 24,
+    marginBottom: 28, // Increased margin for separation
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: "600",
+    fontSize: 20, // Slightly larger for better hierarchy
+    fontWeight: "700",
     color: colors.dark,
-    marginBottom: 12,
+    marginBottom: 16,
   },
   featuresContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    padding: 5,
-    marginBottom: 10,
-    // flexDirection: "row",
-    // flexWrap: "wrap",
-    // justifyContent: "space-between",
-    // marginBottom: 24,
-    // borderWidth:1
+    marginBottom: 24,
   },
   tasksContainer: {
-    marginBottom: 16,
+    marginBottom: 24,
   },
 });
+
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: colors.background,
+//   },
+//   scrollContainer: {
+//     padding: 16,
+//     paddingBottom: 32,
+//   },
+//   metricsContainer: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     marginBottom: 24,
+//   },
+//   sectionTitle: {
+//     fontSize: 18,
+//     fontWeight: "600",
+//     color: colors.dark,
+//     marginBottom: 12,
+//   },
+//   featuresContainer: {
+//     flexDirection: "row",
+//     flexWrap: "wrap",
+//     justifyContent: "space-between",
+//     padding: 5,
+//     marginBottom: 10,
+//     // flexDirection: "row",
+//     // flexWrap: "wrap",
+//     // justifyContent: "space-between",
+//     // marginBottom: 24,
+//     // borderWidth:1
+//   },
+//   tasksContainer: {
+//     marginBottom: 16,
+//   },
+// });

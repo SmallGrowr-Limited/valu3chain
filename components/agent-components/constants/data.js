@@ -118,7 +118,7 @@ export const features = [
     title: "Input Aggregation",
     icon: "stats-chart",
     color: "#9C27B0",
-    route: "/inputs/aggregate",
+    route: "/extension-agent/home/inputs/aggregate",
   },
   {
     title: "Market Prices",

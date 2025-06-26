@@ -26,27 +26,32 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
     backgroundColor: colors.white,
     borderBottomWidth: 1,
     borderBottomColor: colors.lightGray,
+    elevation: 3, // subtle shadow for depth
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     color: colors.dark,
   },
   iconsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 16,
+  },
+  iconButton: {
+    marginHorizontal: 10,
   },
   profileButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: colors.lightPrimary,
     justifyContent: "center",
     alignItems: "center",
   },
 });
+

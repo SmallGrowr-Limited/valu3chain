@@ -17,17 +17,21 @@ export default function FeatureCard({ title, icon, color, route }) {
 }
 
 const styles = StyleSheet.create({
-  
   container: {
-    width: "46%",
-    padding: 15,
-    margin: 5,
-    borderRadius: 8,
-    // alignItems: "center",
+    width: "48%", // slightly increased width for better balance
+    paddingVertical: 18,
+    paddingHorizontal: 12,
+    marginVertical: 8,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 4, // subtle shadow
   },
   title: {
     fontSize: 16,
     fontWeight: "600",
     color: colors.white,
+    marginTop: 8,
+    textAlign: "center",
   },
 });
