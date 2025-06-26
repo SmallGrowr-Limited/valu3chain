@@ -124,13 +124,13 @@ export const features = [
     title: "Market Prices",
     icon: "pricetag",
     color: "#F44336",
-    route: "/market",
+    route: "/extension-agent/home/market",
   },
   {
     title: "Support",
     icon: "help-circle",
     color: "#607D8B",
-    route: "/support",
+    route: "/extension-agent/home",
   },
 ];
 

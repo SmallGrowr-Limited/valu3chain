@@ -8,6 +8,7 @@ export default function HomeLayout() {
         <Stack.Screen name="farmers" options={{ headerShown: false }} />
         <Stack.Screen name="inputs" options={{ headerShown: false }} />
         <Stack.Screen name="audits" options={{ headerShown: false }} />
+        <Stack.Screen name="market" options={{ headerShown: false }} />
       </Stack>
     );
 }
