@@ -142,7 +142,16 @@ export default function NewAggregation() {
 
   return (
     <View style={styles.container}>
-      <Header title="New Input Aggregation" showBackButton />
+      <Header
+        title="New Aggregation"
+        rightAction={
+          <TouchableOpacity
+            onPress={() => router.push("/extension-agent/home/inputs/aggregate")}
+          >
+            <Ionicons name="arrow-back" size={24} color={colors.primary} />
+          </TouchableOpacity>
+        }
+      />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.sectionTitle}>1. Select Input Type</Text>

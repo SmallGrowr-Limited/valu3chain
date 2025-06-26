@@ -216,7 +216,7 @@ export default function InputAggregation() {
         title="Input Aggregation"
         rightAction={
           <TouchableOpacity
-            onPress={() => router.push("/inputs/aggregate-requests")}
+            onPress={() => router.push("/extension-agent/home/inputs/aggregate-requests")}
           >
             <Ionicons name="add" size={24} color={colors.primary} />
           </TouchableOpacity>
