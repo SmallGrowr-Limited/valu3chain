@@ -92,7 +92,18 @@ export default function ScheduleAudit() {
 
   return (
     <View style={styles.container}>
-      <Header title="Schedule New Audit" showBackButton />
+      <Header
+        title="Schedule New Audit"
+        rightAction={
+          <TouchableOpacity
+            onPress={() =>
+              router.push("/extension-agent/home/audits")
+            }
+          >
+            <Ionicons name="arrow-back" size={24} color={colors.primary} />
+          </TouchableOpacity>
+        }
+      />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.sectionTitle}>Farmer Information</Text>
@@ -198,78 +209,233 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   scrollContainer: {
-    padding: 16,
-    paddingBottom: 32,
+    paddingHorizontal: 24,
+    paddingTop: 16,
+    paddingBottom: 40,
+  },
+  header: {
+    marginBottom: 24,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.dark,
-    marginTop: 8,
-    marginBottom: 12,
+    fontSize: 18,
+    fontFamily: "Inter-SemiBold",
+    color: colors.textPrimary,
+    marginBottom: 16,
+    letterSpacing: -0.2,
   },
   inputContainer: {
-    marginBottom: 16,
+    marginBottom: 24,
+  },
+  labelContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
   },
   label: {
     fontSize: 14,
-    color: colors.gray,
-    marginBottom: 8,
+    fontFamily: "Inter-Medium",
+    color: colors.textSecondary,
+    marginRight: 4,
+  },
+  requiredIndicator: {
+    color: colors.error,
   },
   pickerContainer: {
     backgroundColor: colors.white,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.lightGray,
+    borderRadius: 12,
+    borderColor: colors.border,
     overflow: "hidden",
+    elevation: 1,
+    shadowColor: colors.textPrimary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
   },
   picker: {
     width: "100%",
+    color: colors.textPrimary,
+    fontSize:16,
+    // height:32
+    paddingVertical: 14,
+  },
+  inputWrapper: {
+    position: "relative",
+  },
+  inputIcon: {
+    position: "absolute",
+    left: 16,
+    top: 14,
+    zIndex: 2,
   },
   dateInput: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.white,
-    borderRadius: 8,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: colors.lightGray,
-    padding: 12,
-    gap: 8,
+    borderColor: colors.border,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    elevation: 1,
   },
   dateText: {
+    flex: 1,
     fontSize: 16,
-    color: colors.dark,
+    fontFamily: "Inter-Regular",
+    color: colors.textPrimary,
+    marginLeft: 12,
   },
   input: {
-    paddingVertical: 12,
+    backgroundColor: colors.white,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     fontSize: 16,
-    color: colors.dark,
+    fontFamily: "Inter-Regular",
+    color: colors.textPrimary,
+    elevation: 1,
   },
   multilineInput: {
-    minHeight: 100,
+    minHeight: 120,
     textAlignVertical: "top",
-    backgroundColor: colors.white,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.lightGray,
-    padding: 12,
+    paddingTop: 14,
   },
   submitButton: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.primary,
-    padding: 16,
-    borderRadius: 8,
-    marginTop: 24,
-    gap: 8,
-  },
-  disabledButton: {
-    opacity: 0.6,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    marginTop: 32,
+    elevation: 3,
+    shadowColor: colors.primaryDark,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
   },
   submitButtonText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "Inter-SemiBold",
+    marginLeft: 8,
+  },
+  disabledButton: {
+    backgroundColor: colors.disabled,
+    shadowOpacity: 0,
+  },
+  dropdownIcon: {
+    position: "absolute",
+    right: 16,
+    top: 16,
+  },
+  validationError: {
+    fontSize: 12,
+    fontFamily: "Inter-Regular",
+    color: colors.error,
+    marginTop: 4,
+    marginLeft: 4,
+  },
+  successMessage: {
+    backgroundColor: "#E6FFFA",
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 24,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  successIcon: {
+    marginRight: 8,
+  },
+  successText: {
+    fontSize: 14,
+    fontFamily: "Inter-Medium",
+    color: colors.success,
+    flex: 1,
   },
 });
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: colors.background,
+//   },
+//   scrollContainer: {
+//     padding: 16,
+//     paddingBottom: 32,
+//   },
+//   sectionTitle: {
+//     fontSize: 16,
+//     fontWeight: "600",
+//     color: colors.dark,
+//     marginTop: 8,
+//     marginBottom: 12,
+//   },
+//   inputContainer: {
+//     marginBottom: 16,
+//   },
+//   label: {
+//     fontSize: 14,
+//     color: colors.gray,
+//     marginBottom: 8,
+//   },
+//   pickerContainer: {
+//     backgroundColor: colors.white,
+//     borderRadius: 8,
+//     borderWidth: 1,
+//     borderColor: colors.lightGray,
+//     overflow: "hidden",
+//   },
+//   picker: {
+//     width: "100%",
+//   },
+//   dateInput: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//     backgroundColor: colors.white,
+//     borderRadius: 8,
+//     borderWidth: 1,
+//     borderColor: colors.lightGray,
+//     padding: 12,
+//     gap: 8,
+//   },
+//   dateText: {
+//     fontSize: 16,
+//     color: colors.dark,
+//   },
+//   input: {
+//     paddingVertical: 12,
+//     fontSize: 16,
+//     color: colors.dark,
+//   },
+//   multilineInput: {
+//     minHeight: 100,
+//     textAlignVertical: "top",
+//     backgroundColor: colors.white,
+//     borderRadius: 8,
+//     borderWidth: 1,
+//     borderColor: colors.lightGray,
+//     padding: 12,
+//   },
+//   submitButton: {
+//     flexDirection: "row",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     backgroundColor: colors.primary,
+//     padding: 16,
+//     borderRadius: 8,
+//     marginTop: 24,
+//     gap: 8,
+//   },
+//   disabledButton: {
+//     opacity: 0.6,
+//   },
+//   submitButtonText: {
+//     color: colors.white,
+//     fontSize: 16,
+//     fontWeight: "600",
+//   },
+// });

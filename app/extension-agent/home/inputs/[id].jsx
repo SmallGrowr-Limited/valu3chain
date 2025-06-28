@@ -83,7 +83,7 @@ export default function InputDetails() {
         showBackButton
         rightAction={
           <TouchableOpacity
-            // onPress={() => router.push(`/inputs/edit/${input.id}`)}
+            onPress={() => router.push("/extension-agent/home/inputs")}
           >
             <Ionicons name="arrow-back" size={24} color={colors.primary} />
           </TouchableOpacity>

@@ -7,6 +7,7 @@ export default function AuditsLayout() {
       <Stack.Screen name="[id]" options={{ headerShown: false }} />
       <Stack.Screen name="conduct" options={{ headerShown: false }} />
       <Stack.Screen name="conduct/[id]" options={{ headerShown: false }} />
+      <Stack.Screen name="schedule" options={{ headerShown: false }} />
     </Stack>
   );
 }

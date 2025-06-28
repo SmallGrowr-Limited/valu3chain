@@ -115,7 +115,18 @@ export default function ApproveAggregation() {
 
   return (
     <View style={styles.container}>
-      <Header title="Approve Aggregation" showBackButton />
+      <Header
+        title="Approve Aggregation"
+        rightAction={
+          <TouchableOpacity
+            onPress={() =>
+              router.push("/extension-agent/home/inputs")
+            }
+          >
+            <Ionicons name="add" size={24} color={colors.primary} />
+          </TouchableOpacity>
+        }
+      />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {/* Aggregation Header */}
@@ -230,96 +241,137 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   scrollContainer: {
-    padding: 16,
-    paddingBottom: 32,
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 40,
   },
   headerCard: {
     backgroundColor: colors.white,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
-    elevation: 1,
+    borderRadius: 16,
+    padding: 24,
+    marginBottom: 24,
+    elevation: 2,
+    shadowColor: colors.textPrimary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
   },
   headerRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 16,
   },
   headerText: {
-    marginLeft: 12,
+    marginLeft: 16,
+    flex: 1,
   },
   aggregationType: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: colors.dark,
+    fontSize: 20,
+    fontFamily: "Inter-SemiBold",
+    color: colors.textPrimary,
   },
   aggregationQuantity: {
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: "Inter-Medium",
     color: colors.primary,
     marginTop: 4,
+  },
+  statusBadge: {
+    alignSelf: "flex-start",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    backgroundColor: colors.warningLight,
+    marginTop: 8,
+  },
+  statusText: {
+    fontSize: 13,
+    fontFamily: "Inter-SemiBold",
+    color: colors.warning,
+    textTransform: "uppercase",
   },
   detailRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 8,
-    gap: 8,
+    marginTop: 12,
+  },
+  detailIcon: {
+    marginRight: 8,
   },
   detailText: {
-    fontSize: 14,
-    color: colors.gray,
+    fontSize: 15,
+    fontFamily: "Inter-Regular",
+    color: colors.textSecondary,
+    flex: 1,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.dark,
-    marginTop: 16,
-    marginBottom: 12,
+    fontSize: 18,
+    fontFamily: "Inter-SemiBold",
+    color: colors.textPrimary,
+    marginBottom: 16,
+    letterSpacing: -0.2,
   },
   listContainer: {
-    marginBottom: 16,
+    gap: 12,
+    marginBottom: 24,
   },
   requestCard: {
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: colors.white,
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 12,
+    borderRadius: 16,
+    padding: 20,
     elevation: 1,
+    shadowColor: colors.textPrimary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
   },
   requestInfo: {
     flex: 1,
   },
   farmerName: {
     fontSize: 16,
-    fontWeight: "600",
-    color: colors.dark,
+    fontFamily: "Inter-SemiBold",
+    color: colors.textPrimary,
+    marginBottom: 4,
   },
   farmName: {
     fontSize: 14,
-    color: colors.gray,
-    marginTop: 4,
+    fontFamily: "Inter-Regular",
+    color: colors.textSecondary,
+    marginBottom: 4,
   },
   requestDate: {
-    fontSize: 12,
-    color: colors.gray,
-    marginTop: 4,
+    fontSize: 13,
+    fontFamily: "Inter-Regular",
+    color: colors.textTertiary,
   },
   quantityText: {
     fontSize: 16,
-    fontWeight: "600",
-    color: colors.dark,
+    fontFamily: "Inter-SemiBold",
+    color: colors.primary,
     marginLeft: 12,
   },
   notesInput: {
-    minHeight: 100,
+    minHeight: 120,
     backgroundColor: colors.white,
-    borderRadius: 8,
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: colors.lightGray,
-    padding: 12,
+    borderColor: colors.border,
+    padding: 16,
     textAlignVertical: "top",
+    fontSize: 15,
+    fontFamily: "Inter-Regular",
+    color: colors.textPrimary,
     marginBottom: 24,
+    elevation: 1,
+  },
+  notesLabel: {
+    fontSize: 14,
+    fontFamily: "Inter-Medium",
+    color: colors.textSecondary,
+    marginBottom: 8,
   },
   buttonRow: {
     flexDirection: "row",
@@ -330,22 +382,32 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    padding: 16,
-    borderRadius: 8,
+    paddingVertical: 16,
+    borderRadius: 12,
     gap: 8,
+    elevation: 3,
   },
   approveButton: {
     backgroundColor: colors.success,
+    shadowColor: colors.success,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
   },
   rejectButton: {
-    backgroundColor: colors.danger,
+    backgroundColor: colors.error,
+    shadowColor: colors.error,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
   },
   disabledButton: {
     opacity: 0.6,
+    shadowOpacity: 0,
   },
   actionButtonText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "Inter-SemiBold",
   },
 });
