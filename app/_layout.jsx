@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { ApolloProvider } from "@apollo/client";
+import { PaperProvider } from 'react-native-paper';
 import client from "../apollo/client";
 
 // import { ApolloClient, InMemoryCache, ApolloProvider,  } from '@apollo/client';
@@ -19,11 +20,13 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
+      <PaperProvider>
       <ApolloProvider client={client}>
         <AuthLoader />
         <StatusBar style="auto" />
         <Slot />
       </ApolloProvider>
+      </PaperProvider>
     </Provider>
   );
 }
