@@ -5,7 +5,7 @@ import { store } from "../redux/store";
 import { ApolloProvider } from "@apollo/client";
 import { PaperProvider } from 'react-native-paper';
 import client from "../apollo/client";
-
+import "../global.css";
 // import { ApolloClient, InMemoryCache, ApolloProvider,  } from '@apollo/client';
 import AuthLoader from "../components/authLoader"
 

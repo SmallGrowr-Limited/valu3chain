@@ -8,7 +8,7 @@ export default function HomeLayout() {
       <Stack.Screen name="fundAllocation" options={{ headerShown: false }} />
       <Stack.Screen name="investmentDetails" options={{ headerShown: false }} />
       <Stack.Screen name="payments" options={{ headerShown: false }} />
-      <Stack.Screen name="productListing" options={{ headerShown: false }} />
+      <Stack.Screen name="transactions" options={{ headerShown: false }} />
       <Stack.Screen name="purchaseOrder" options={{ headerShown: false }} />
       <Stack.Screen name="returns" options={{ headerShown: false }} />
     </Stack>

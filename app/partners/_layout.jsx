@@ -12,6 +12,14 @@ export default function Partners(params) {
           options={{ headerShown: true, title: "" }}
         />
         <Stack.Screen
+          name="invest"
+          options={{ headerShown: true, title: "" }}
+        />
+        <Stack.Screen
+          name="investmentForm"
+          options={{ headerShown: true, title: "" }}
+        />
+        <Stack.Screen
           name="transactions"
           options={{ headerShown: true, title: "" }}
         />

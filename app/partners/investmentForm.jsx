@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Picker,
 } from "react-native";
-//import { Colors } from "../../components/constants/colors";
+import { Colors } from "../../components/constants/colors";
 import {
   MaterialIcons,
   FontAwesome,
@@ -16,7 +16,7 @@ import {
 } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const Investment = ({ navigation }) => {
+const InvestmentForm = ({ navigation }) => {
   const [investmentType, setInvestmentType] = useState("farm_input");
   const [formData, setFormData] = useState({
     title: "",
@@ -30,8 +30,8 @@ const Investment = ({ navigation }) => {
     inputType: "seeds",
     quantity: "",
     unit: "kg",
-    farmerType: "",
-    targetCrops: "",
+    farmerType:"",
+    targetCrops:"",
     // Equipment specific
     equipmentType: "tractor",
     duration: "",
@@ -151,22 +151,23 @@ const Investment = ({ navigation }) => {
         </View>
       </View>
 
-      {formData.inputType === "seeds" && (
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Target Crops</Text>
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={formData.targetCrops}
-              onValueChange={(value) => handleChange("targetCrops", value)}
-              style={styles.picker}
-            >
-              <Picker.Item label="Any" value="Any" />
-              <Picker.Item label="Grains" value="Grains" />
-              <Picker.Item label="Vegitables" value="Vegitables" />
-            </Picker>
+      {formData.inputType ===
+        "seeds" && (
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Target Crops</Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={formData.targetCrops}
+                onValueChange={(value) => handleChange("targetCrops", value)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Any" value="Any" />
+                <Picker.Item label="Grains" value="Grains" />
+                <Picker.Item label="Vegitables" value="Vegitables" />
+              </Picker>
+            </View>
           </View>
-        </View>
-      )}
+        )}
     </>
   );
 
@@ -343,12 +344,12 @@ const Investment = ({ navigation }) => {
 
         {/* Common Fields */}
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Investment Title</Text>
+          <Text style={styles.label}>Title</Text>
           <TextInput
             style={styles.input}
             value={formData.title}
             onChangeText={(text) => handleChange("title", text)}
-            placeholder="e.g., “Tractor Loan for Maize Farmers - Bauchi”"
+            placeholder="Investment title"
             placeholderTextColor="#aaa"
           />
         </View>
@@ -442,28 +443,6 @@ const Investment = ({ navigation }) => {
   );
 };
 
-const Colors = {
-  primary: "#2E7D32", // Deep green - represents growth and agriculture
-  primaryLight: "#E8F5E9",
-  primaryDark: "#1B5E20",
-  secondary: "#FF8F00", // Amber - for attention and actions
-  background: "#F8FAF8", // Very light green tint
-  white: "#FFFFFF",
-  cardBg: "#FFFFFF",
-  textPrimary: "#263238", // Dark blue-gray
-  textSecondary: "#455A64",
-  textTertiary: "#718096",
-  textOnPrimary: "#FFFFFF",
-  border: "#CFD8DC",
-  success: "#388E3C",
-  warning: "#F57C00",
-  error: "#D32F2F",
-  disabled: "#B0BEC5",
-  highlight: "#FFF9C4",
-  surface: "#FFFFFF",
-  lightGray: "#ECEFF1",
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -473,65 +452,52 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 20,
+    padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    borderBottomColor: Colors.lightGray,
   },
   headerTitle: {
-    fontSize: 22,
-    fontFamily: "Inter-SemiBold",
-    color: Colors.primary,
-    letterSpacing: -0.3,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: Colors.primaryText,
   },
   formContainer: {
-    padding: 24,
-    paddingBottom: 40,
+    padding: 16,
   },
   inputGroup: {
-    marginBottom: 24,
+    marginBottom: 16,
   },
   inputRow: {
     flexDirection: "row",
-    gap: 16,
+    justifyContent: "space-between",
   },
   label: {
-    fontSize: 15,
-    fontFamily: "Inter-Medium",
-    color: Colors.textPrimary,
-    marginBottom: 12,
-  },
-  requiredLabel: {
-    color: Colors.error,
+    fontSize: 14,
+    color: Colors.primaryText,
+    marginBottom: 8,
   },
   input: {
-    backgroundColor: Colors.white,
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: Colors.surface,
+    borderRadius: 8,
+    padding: 12,
     fontSize: 16,
-    fontFamily: "Inter-Regular",
-    color: Colors.textPrimary,
+    color: Colors.primaryText,
     borderWidth: 1,
-    borderColor: Colors.border,
-    elevation: 1,
-    shadowColor: Colors.textPrimary,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    borderColor: Colors.lightGray,
   },
   dateInput: {
-    backgroundColor: Colors.white,
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: Colors.surface,
+    borderRadius: 8,
+    padding: 12,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: Colors.border,
-    elevation: 1,
+    borderColor: Colors.lightGray,
   },
   typeButtons: {
     flexDirection: "row",
-    gap: 12,
+    justifyContent: "space-between",
     marginTop: 8,
   },
   typeButton: {
@@ -539,185 +505,45 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.white,
-    borderRadius: 12,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    elevation: 1,
+    backgroundColor: Colors.lightGray,
+    borderRadius: 8,
+    padding: 12,
+    marginHorizontal: 4,
   },
   activeTypeButton: {
     backgroundColor: Colors.primary,
-    borderColor: Colors.primaryDark,
-    elevation: 2,
   },
   typeButtonText: {
     marginLeft: 8,
-    fontSize: 14,
-    fontFamily: "Inter-Medium",
-    color: Colors.textPrimary,
+    color: Colors.primaryText,
   },
   activeTypeButtonText: {
     color: Colors.textOnPrimary,
   },
   pickerContainer: {
-    backgroundColor: Colors.white,
-    borderRadius: 12,
+    backgroundColor: Colors.surface,
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: Colors.lightGray,
     overflow: "hidden",
-    elevation: 1,
   },
   picker: {
-    height: 56,
+    height: 50,
     width: "100%",
-    color: Colors.textPrimary,
+    color: Colors.primaryText,
   },
   submitButton: {
     backgroundColor: Colors.primary,
-    borderRadius: 12,
-    padding: 18,
+    borderRadius: 8,
+    padding: 16,
     alignItems: "center",
-    marginTop: 32,
-    elevation: 3,
-    shadowColor: Colors.primaryDark,
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
+    marginTop: 24,
   },
   submitButtonText: {
     color: Colors.textOnPrimary,
     fontSize: 18,
-    fontFamily: "Inter-SemiBold",
-  },
-  disabledButton: {
-    opacity: 0.6,
-    elevation: 0,
-  },
-  currencyInput: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  currencySymbol: {
-    position: "absolute",
-    left: 16,
-    zIndex: 2,
-    fontSize: 16,
-    fontFamily: "Inter-Regular",
-    color: Colors.textSecondary,
-  },
-  currencyInputField: {
-    paddingLeft: 40,
-  },
-  validationError: {
-    fontSize: 13,
-    fontFamily: "Inter-Regular",
-    color: Colors.error,
-    marginTop: 8,
+    fontWeight: "bold",
   },
 });
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: Colors.background,
-//   },
-//   header: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     padding: 16,
-//     borderBottomWidth: 1,
-//     borderBottomColor: Colors.lightGray,
-//   },
-//   headerTitle: {
-//     fontSize: 20,
-//     fontWeight: "bold",
-//     color: Colors.primaryText,
-//   },
-//   formContainer: {
-//     padding: 16,
-//   },
-//   inputGroup: {
-//     marginBottom: 16,
-//   },
-//   inputRow: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//   },
-//   label: {
-//     fontSize: 14,
-//     color: Colors.primaryText,
-//     marginBottom: 8,
-//   },
-//   input: {
-//     backgroundColor: Colors.surface,
-//     borderRadius: 8,
-//     padding: 12,
-//     fontSize: 16,
-//     color: Colors.primaryText,
-//     borderWidth: 1,
-//     borderColor: Colors.lightGray,
-//   },
-//   dateInput: {
-//     backgroundColor: Colors.surface,
-//     borderRadius: 8,
-//     padding: 12,
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     borderWidth: 1,
-//     borderColor: Colors.lightGray,
-//   },
-//   typeButtons: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     marginTop: 8,
-//   },
-//   typeButton: {
-//     flex: 1,
-//     flexDirection: "row",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     backgroundColor: Colors.lightGray,
-//     borderRadius: 8,
-//     padding: 12,
-//     marginHorizontal: 4,
-//   },
-//   activeTypeButton: {
-//     backgroundColor: Colors.primary,
-//   },
-//   typeButtonText: {
-//     marginLeft: 8,
-//     color: Colors.primaryText,
-//   },
-//   activeTypeButtonText: {
-//     color: Colors.textOnPrimary,
-//   },
-//   pickerContainer: {
-//     backgroundColor: Colors.surface,
-//     borderRadius: 8,
-//     borderWidth: 1,
-//     borderColor: Colors.lightGray,
-//     overflow: "hidden",
-//   },
-//   picker: {
-//     height: 50,
-//     width: "100%",
-//     color: Colors.primaryText,
-//   },
-//   submitButton: {
-//     backgroundColor: Colors.primary,
-//     borderRadius: 8,
-//     padding: 16,
-//     alignItems: "center",
-//     marginTop: 24,
-//   },
-//   submitButtonText: {
-//     color: Colors.textOnPrimary,
-//     fontSize: 18,
-//     fontWeight: "bold",
-//   },
-// });
-
-export default Investment;
+export default InvestmentForm;

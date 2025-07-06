@@ -11,7 +11,7 @@ export default function MetricCard({ title, value, trend, icon }) {
       <Text style={styles.value}>{value}</Text>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.trend}>
-        {trend} <Ionicons name="trending-up" size={14} color={colors.success} />
+        {/* {trend} <Ionicons name="trending-up" size={14} color={colors.success} /> */}
       </Text>
     </View>
   );
@@ -19,7 +19,7 @@ export default function MetricCard({ title, value, trend, icon }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "30%",
+    width: "32%",
     backgroundColor: colors.white,
     borderRadius: 12,
     padding: 12,

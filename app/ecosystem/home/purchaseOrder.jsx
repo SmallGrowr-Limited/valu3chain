@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  Picker,
 } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { Colors } from "../../../components/constants/colors";
@@ -14,116 +15,125 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
 
 const PurchaseOrderModal = ({ route, navigation }) => {
-  const [supplier, setSupplier] = useState("Smallgrowr Limited");
-  const [deliveryAddress, setDeliveryAddress] = useState("");
-  const [deliveryMethod, setDeliveryMethod] = useState("");
-  const [deliveryDate, setDeliveryDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [items, setItems] = useState([
-    { id: 1, name: "", quantity: "", unit: "kg", unitPrice: "" },
-  ]);
-  const [notes, setNotes] = useState("");
-  const [paymentTerms, setPaymentTerms] = useState("30 days after delivery");
+  const [deliveryDate, setDeliveryDate] = useState(new Date());
+
+  // Product categories and types
+  const categories = [
+    { id: "grains", name: "Grains" },
+    { id: "vegetables", name: "Vegetables" },
+    { id: "fruits", name: "Fruits" },
+    { id: "tubers", name: "Tubers" },
+    { id: "livestock", name: "Livestock" },
+    { id: "poultry", name: "Poultry" },
+    { id: "dairy", name: "Dairy" },
+  ];
+
+  const productNames = {
+    grains: ["Maize", "Rice", "Wheat", "Barley", "Sorghum", "Millet"],
+    vegetables: ["Tomato", "Onion", "Pepper", "Cabbage", "Carrot", "Lettuce"],
+    fruits: ["Apple", "Orange", "Banana", "Mango", "Pineapple", "Watermelon"],
+    tubers: ["Potato", "Yam", "Cassava", "Sweet Potato", "Cocoyam"],
+    livestock: ["Cattle", "Goat", "Sheep", "Pig"],
+    poultry: ["Chicken", "Turkey", "Duck", "Quail"],
+    dairy: ["Milk", "Cheese", "Yogurt", "Butter"],
+  };
+
+  // Market prices (would typically come from an API)
+  const marketPrices = {
+    Maize: 500000,
+    Rice: 30000,
+    Wheat: 35000,
+    Tomato: 80000,
+    Onion: 75000,
+    // ... other prices
+  };
+
+  const [errors, setErrors] = useState({});
+  const [availableTypes, setAvailableTypes] = useState([]);
+
   const router = useRouter();
 
-  const investment = {
-    id: 1,
-    category: "Rice",
-    location: "Zaria",
-  };
+  //Form state
+  const [formData, setFormData] = useState({
+    supplier: "Smallgrowr Limited",
+    category: "",
+    productName: "",
+    quantity: "",
+    unit: "tons",
+    pricePerUnit: "",
+    totalPrice: "",
+    deliveryAddress: "",
+    deliveryDate: new Date(),
+    purchaseType: "",
+    varietyType: "",
+    moistureLevel: "",
+    notes: "",
+    paymentTerms: "",
+  });
 
-  // Dropdown options (moved outside component if reused elsewhere)
-  const dropdownOptions = {
-    varietyType: [
-      { key: "1", value: "Type 1" },
-      { key: "2", value: "Type 2" },
-    ],
-    purchaseType: [
-      { key: "1", value: "Outright" },
-      { key: "2", value: "Storage" },
-    ],
-    units: [
-      { key: "1", value: "kg" },
-      { key: "2", value: "tons" },
-    ],
-    deliveryMethods: [
-      { key: "1", value: "Buyer Truck" },
-      { key: "2", value: "Supplier Delivery" },
-      { key: "3", value: "Third-Party Logistics" },
-    ],
-    paymentModes: [
-      { key: "1", value: "Bank Transfer" },
-      { key: "2", value: "Cheque" },
-      { key: "3", value: "Cash" }, // Fixed duplicate key
-    ],
-    paymentTerms: [
-      { key: "1", value: "On Delivery" },
-      { key: "2", value: "50% Advance" },
-    ],
-    moistureOpt: [
-      { key: "1", value: "Type 1" },
-      { key: "2", value: "Type 2" },
-    ],
-  };
-
-  const handleAddItem = () => {
-    setItems([
-      ...items,
-      {
-        id: items.length + 1,
-        name: "",
-        quantity: "",
-        unit: "kg",
-        unitPrice: "",
-      },
-    ]);
-  };
-
-  const handleRemoveItem = (id) => {
-    if (items.length > 1) {
-      setItems(items.filter((item) => item.id !== id));
+  // Update available product types when category changes
+  useEffect(() => {
+    if (formData.category) {
+      setAvailableTypes(productNames[formData.category] || []);
+      setFormData((prev) => ({ ...prev, productName: "" }));
     }
-  };
+  }, [formData.category]);
 
-  const handleItemChange = (id, field, value) => {
-    setItems(
-      items.map((item) => (item.id === id ? { ...item, [field]: value } : item))
-    );
-  };
+  // Calculate price when product type or quantity changes
+  useEffect(() => {
+    if (formData.productName && formData.quantity) {
+      const price = marketPrices[formData.productName] || 0;
+      const quantity = parseFloat(formData.quantity) || 0;
+
+      setFormData((prev) => ({
+        ...prev,
+        pricePerUnit: price.toFixed(2),
+        totalPrice: (price * quantity).toFixed(2),
+      }));
+    }
+  }, [formData.productName, formData.quantity]);
 
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
-      setDeliveryDate(selectedDate);
+      console.log(selectedDate);
+      //setFormData(selectedDate);
     }
   };
 
-  const calculateTotal = () => {
-    return items.reduce((total, item) => {
-      const quantity = parseFloat(item.quantity) || 0;
-      const price = parseFloat(item.unitPrice) || 0;
-      return total + quantity * price;
-    }, 0);
+  const handleChange = (name, value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error when field is updated
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.category) newErrors.category = "Category is required";
+    if (!formData.productName)
+      newErrors.productName = "Product type is required";
+    if (!formData.totalInStore)
+      newErrors.totalInStore = "Total in store is required";
+    if (!formData.quantity) newErrors.quantity = "Quantity to sell is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = () => {
-    const order = {
-      investmentId: investment.id,
-      supplier,
-      deliveryAddress,
-      deliveryDate,
-      items,
-      total: calculateTotal(),
-      notes,
-      paymentTerms,
-      deliveryMethod,
-      status: "pending",
-      createdAt: new Date(),
-    };
-    console.log("Purchase Order Submitted:", order);
-    router.navigate("/ecosystem/dashboard");
-    // navigation.goBack();
-    // Here you would typically send the order to your backend
+    console.log("Form submitted:", formData);
+    alert("Product Ordered successfully!");
+    router.back();
+    // if (validateForm()) {
+    //   // Here you would typically send the data to your API
+    //   console.log("Form submitted:", formData);
+    //   alert("Product listed successfully!");
+    //   router.back();
+    // }
   };
 
   return (
@@ -131,9 +141,7 @@ const PurchaseOrderModal = ({ route, navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => router.navigate("/ecosystem/home")}
-          >
+          <TouchableOpacity onPress={() => router.navigate("/ecosystem/home")}>
             <Ionicons name="close" size={28} color={Colors.primaryText} />
           </TouchableOpacity>
           <Text style={styles.title}>New Purchase Order</Text>
@@ -144,13 +152,6 @@ const PurchaseOrderModal = ({ route, navigation }) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Supplier Details</Text>
           <Text style={styles.supplierName}>Smallgrowr Limited</Text>
-          {/* <TextInput
-            style={styles.input}
-            placeholder="Supplier Name"
-            value={supplier}
-            onChangeText={setSupplier}
-            placeholderTextColor={Colors.secondaryText}
-          /> */}
         </View>
 
         {/* Delivery Information */}
@@ -162,12 +163,12 @@ const PurchaseOrderModal = ({ route, navigation }) => {
           >
             <MaterialIcons name="date-range" size={20} color={Colors.primary} />
             <Text style={styles.dateText}>
-              {deliveryDate.toLocaleDateString()}
+              {formData.deliveryDate.toLocaleDateString()}
             </Text>
           </TouchableOpacity>
           {showDatePicker && (
             <DateTimePicker
-              value={deliveryDate}
+              value={formData.deliveryDate}
               mode="date"
               display="default"
               onChange={handleDateChange}
@@ -178,137 +179,190 @@ const PurchaseOrderModal = ({ route, navigation }) => {
 
         {/* Order Items */}
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Order Items</Text>
-            <TouchableOpacity onPress={handleAddItem} style={styles.addButton}>
-              <Ionicons name="add" size={20} color={Colors.textOnPrimary} />
-              <Text style={styles.addButtonText}>Add Item</Text>
-            </TouchableOpacity>
+          {/* Category Selection */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Product Category</Text>
+            <View
+              style={[
+                styles.pickerContainer,
+                errors.category && styles.errorBorder,
+              ]}
+            >
+              <Picker
+                selectedValue={formData.category}
+                onValueChange={(value) => handleChange("category", value)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Select a category" value="" />
+                {categories.map((category) => (
+                  <Picker.Item
+                    key={category.id}
+                    label={category.name}
+                    value={category.id}
+                  />
+                ))}
+              </Picker>
+            </View>
+            {errors.category && (
+              <Text style={styles.errorText}>{errors.category}</Text>
+            )}
           </View>
 
-          {items.map((item) => (
-            <View key={item.id} style={styles.itemCard}>
-              <View style={styles.itemRow}>
-                <TextInput
-                  style={[styles.input, styles.itemInput]}
-                  placeholder="Item Name"
-                  value={item.name}
-                  onChangeText={(text) =>
-                    handleItemChange(item.id, "name", text)
-                  }
-                  placeholderTextColor={Colors.secondaryText}
-                />
-                {items.length > 1 && (
-                  <TouchableOpacity
-                    onPress={() => handleRemoveItem(item.id)}
-                    style={styles.removeButton}
-                  >
-                    <Ionicons name="trash" size={20} color={Colors.danger} />
-                  </TouchableOpacity>
-                )}
-              </View>
-              <View style={styles.quantityRow}>
-                <View style={{ width: "50%" }}>
-                  <TextInput
-                    style={[styles.input, styles.quantityInput]}
-                    placeholder="Quantity"
-                    value={item.quantity}
-                    onChangeText={(text) =>
-                      handleItemChange(item.id, "quantity", text)
-                    }
-                    keyboardType="numeric"
-                    placeholderTextColor={Colors.secondaryText}
-                  />
-                </View>
-                <View style={{ width: "46%" }}>
-                  <SelectList
-                    style={[styles.input, styles.unitInput]}
-                    setSelected={(text) =>
-                      handleItemChange(item.id, "unit", text)
-                    }
-                    data={dropdownOptions.units}
-                    save="value"
-                    defaultOption={{ key: "1", value: "kg" }}
-                  />
-                </View>
-              </View>
-              <View style={styles.quantityRow}>
-                <View style={{ width: "100%" }}>
-                  <TextInput
-                    style={[styles.input, styles.priceInput]}
-                    placeholder="Unit Price"
-                    value={item.unitPrice}
-                    onChangeText={(text) =>
-                      handleItemChange(item.id, "unitPrice", text)
-                    }
-                    keyboardType="numeric"
-                    placeholderTextColor={Colors.secondaryText}
-                  />
-                </View>
-              </View>
-              <View style={styles.quantityRow}>
-                <View style={{ width: "100%" }}>
-                  <SelectList
-                    setSelected={(text) =>
-                      handleItemChange(item.id, "unit", text)
-                    }
-                    data={dropdownOptions.varietyType}
-                    save="value"
-                    style={styles.input}
-                    defaultOption={{ key: "1", value: "Preferred Variety" }}
-                  />
-                </View>
-              </View>
-
-              <View style={styles.quantityRow}>
-                <View style={{ width: "100%" }}>
-                  <SelectList
-                    setSelected={(text) =>
-                      handleItemChange(item.id, "unit", text)
-                    }
-                    data={dropdownOptions.varietyType}
-                    save="value"
-                    style={styles.input}
-                    defaultOption={{
-                      key: "1",
-                      value: "Acceptable moisture level",
-                    }}
-                  />
-                </View>
-              </View>
+          {/* Product Type Selection */}
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Product Name</Text>
+            <View
+              style={[
+                styles.pickerContainer,
+                errors.productName && styles.errorBorder,
+              ]}
+            >
+              <Picker
+                selectedValue={formData.productName}
+                onValueChange={(value) => handleChange("productName", value)}
+                style={styles.picker}
+                enabled={!!formData.category}
+              >
+                <Picker.Item label="Select a Product" value="" />
+                {availableTypes.map((type) => (
+                  <Picker.Item key={type} label={type} value={type} />
+                ))}
+              </Picker>
             </View>
-          ))}
+            {errors.productName && (
+              <Text style={styles.errorText}>{errors.productName}</Text>
+            )}
+          </View>
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Quantity(tons)</Text>
+            <TextInput
+              style={[styles.input, styles.quantityInput]}
+              placeholder="Quantity"
+              value={formData.quantity}
+              onChangeText={(text) => handleChange("quantity", text)}
+              keyboardType="numeric"
+              placeholderTextColor={Colors.secondaryText}
+            />
+          </View>
+
+          {/* Price Information */}
+          <View style={styles.priceContainer}>
+            <View style={styles.priceBox}>
+              <Text style={styles.priceLabel}>Price Per Unit (ton)</Text>
+              <Text style={styles.priceValue}>
+                ₦{formData.pricePerUnit || "0.00"}
+              </Text>
+            </View>
+            <View style={styles.priceBox}>
+              <Text style={styles.priceLabel}>Total Price</Text>
+              <Text style={styles.priceValue}>
+                ₦{formData.totalPrice || "0.00"}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Preferred Variety</Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={formData.varietyType}
+                onValueChange={(value) => handleChange("varietyType", value)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Select " value="" />
+                <Picker.Item label="Type A" value="Type A" />
+                <Picker.Item label="Type B" value="Type B" />
+                <Picker.Item label="Type C" value="Type C" />
+              </Picker>
+            </View>
+          </View>
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Acceptable Moisture Level</Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={formData.moistureLevel}
+                onValueChange={(value) => handleChange("moistureLevel", value)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Select " value="" />
+                <Picker.Item label="Level A" value="Level A" />
+                <Picker.Item label="Level B" value="Level B" />
+                <Picker.Item label="Level C" value="Level C" />
+              </Picker>
+            </View>
+          </View>
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Purchase Type</Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={formData.purchaseType}
+                onValueChange={(value) => handleChange("purchaseType", value)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Select " value="" />
+                <Picker.Item label="Outright" value="Outright" />
+                <Picker.Item label="Storage" value="Storage" />
+              </Picker>
+            </View>
+          </View>
         </View>
 
         {/* Delivery and Payment */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Delivery and Payment</Text>
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginVertical: 10 }}>
             <TextInput
               style={styles.input}
               placeholder="Delivery Address"
-              value={deliveryAddress}
-              onChangeText={(text) => setDeliveryAddress(text)}
+              value={formData.deliveryAddress}
+              multiline
+              numberOfLines={3}
+              onChangeText={(text) => handleChange("deliveryAddress", text)}
               placeholderTextColor={Colors.secondaryText}
             />
           </View>
-          <View style={{ marginBottom: 10 }}>
-            <SelectList
-              setSelected={(text) => setDeliveryMethod(text)}
-              data={dropdownOptions.deliveryMethods}
-              save="value"
-              style={styles.input}
-              defaultOption={{ key: "1", value: "Delivery Method" }}
-            />
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Delivery Method</Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={formData.deliveryMethods}
+                onValueChange={(value) =>
+                  handleChange("deliveryMethods", value)
+                }
+                style={styles.picker}
+              >
+                <Picker.Item label="Select " value="" />
+                <Picker.Item
+                  label="Supplier Delivery"
+                  value="Supplier Delivery"
+                />
+                <Picker.Item label="Buyer Truck" value="Buyer Truck" />
+                <Picker.Item
+                  label="Third-Party Logistics"
+                  value="Third-Party Logistics"
+                />
+              </Picker>
+            </View>
           </View>
-          <View style={{ marginBottom: 10 }}>
-            <SelectList
-              setSelected={(text) => setPaymentTerms(text)}
-              data={dropdownOptions.paymentTerms}
-              save="value"
-              style={styles.input}
-              defaultOption={{ key: "1", value: "Payment Terms" }}
-            />
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Payment Terms</Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={formData.paymentTerms}
+                onValueChange={(value) => handleChange("paymentTerms", value)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Select " value="" />
+                <Picker.Item label="100% Upfront" value="100% Upfront" />
+                <Picker.Item label="50% Advance" value="50% Advance" />
+                <Picker.Item label="On Delivery" value="On Delivery" />
+              </Picker>
+            </View>
           </View>
         </View>
 
@@ -318,20 +372,12 @@ const PurchaseOrderModal = ({ route, navigation }) => {
           <TextInput
             style={[styles.input, styles.notesInput]}
             placeholder="Additional notes..."
-            value={notes}
-            onChangeText={setNotes}
+            value={formData.notes}
+            onChangeText={(text) => handleChange("notes", text)}
             multiline
             numberOfLines={3}
             placeholderTextColor={Colors.secondaryText}
           />
-        </View>
-
-        {/* Total */}
-        <View style={styles.totalContainer}>
-          <Text style={styles.totalLabel}>Total Amount:</Text>
-          <Text style={styles.totalAmount}>
-            ₦{calculateTotal().toLocaleString()}
-          </Text>
         </View>
       </ScrollView>
 
@@ -370,7 +416,6 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 24,
-    //backgroundColor: Colors.surface,
   },
   sectionHeader: {
     flexDirection: "row",
@@ -388,15 +433,7 @@ const styles = StyleSheet.create({
     color: Colors.secondaryText,
     fontSize: 16,
   },
-  input: {
-    backgroundColor: Colors.surface,
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
-    color: Colors.primaryText,
-    borderWidth: 1,
-    borderColor: Colors.lightGray,
-  },
+
   dateInput: {
     flexDirection: "row",
     alignItems: "center",
@@ -411,77 +448,85 @@ const styles = StyleSheet.create({
     color: Colors.primaryText,
     marginLeft: 8,
   },
-  addButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: Colors.primary,
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-  addButtonText: {
-    color: Colors.textOnPrimary,
-    marginLeft: 4,
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  itemCard: {
-    backgroundColor: Colors.surface,
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: Colors.lightGray,
-  },
-  itemRow: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  itemInput: {
-    flex: 1,
-    marginRight: 8,
-  },
-  removeButton: {
-    padding: 8,
-  },
-  quantityRow: {
-    flexDirection: "row",
-    marginTop: 8,
-  },
-  quantityInput: {
-    flex: 2,
-    marginRight: 8,
-  },
-  unitInput: {
-    flex: 1,
-    marginRight: 8,
-  },
-  priceInput: {
-    flex: 2,
-  },
+
   notesInput: {
     minHeight: 80,
     textAlignVertical: "top",
   },
-  totalContainer: {
+
+  formGroup: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 15,
+    // fontFamily: "Inter-Medium",
+    color: Colors.textPrimary,
+    marginBottom: 8,
+  },
+  requiredLabel: {
+    color: Colors.error,
+  },
+  input: {
+    backgroundColor: Colors.white,
+    borderRadius: 12,
+    padding: 16,
+    fontSize: 16,
+    fontFamily: "Inter-Regular",
+    color: Colors.textPrimary,
+    borderWidth: 1,
+    borderColor: Colors.lightGray,
+    elevation: 1,
+    shadowColor: Colors.textPrimary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+  },
+  textArea: {
+    minHeight: 120,
+    textAlignVertical: "top",
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    backgroundColor: Colors.white,
+  },
+  pickerContainer: {
+    backgroundColor: Colors.white,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.lightGray,
+    overflow: "hidden",
+    elevation: 1,
+  },
+  picker: {
+    height: 46,
+    width: "100%",
+    color: Colors.textPrimary,
+  },
+  priceContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: Colors.surface,
-    borderRadius: 8,
+    marginBottom: 24,
+  },
+  priceBox: {
+    backgroundColor: Colors.earthLight,
     padding: 16,
-    marginTop: 12,
+    borderRadius: 12,
+    width: "48%",
+    alignItems: "center",
+    elevation: 1,
   },
-  totalLabel: {
+  priceLabel: {
+    fontSize: 14,
+    fontFamily: "Inter-Medium",
+    // color: Colors.primaryDark,
+    marginBottom: 8,
+  },
+  priceValue: {
     fontSize: 18,
-    fontWeight: "600",
-    color: Colors.primaryText,
+    fontFamily: "Inter-SemiBold",
+    // color: Colors.priceHighlight,
   },
-  totalAmount: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: Colors.primary,
-  },
+
   submitButton: {
     position: "absolute",
     bottom: 20,

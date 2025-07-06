@@ -100,7 +100,8 @@ export default function FarmerDetails() {
       <View style={styles.actionButtons}>
         <TouchableOpacity
           style={styles.actionButton}
-          onPress={() => router.push(`/audits/new?farmerId=${farmer.id}`)}
+          onPress={() => router.push(`/extension-agent/home/audits/schedule`)}
+          //onPress={() => router.push(`/audits/new?farmerId=${farmer.id}`)}
         >
           <MaterialIcons name="assignment" size={24} color={colors.primary} />
           <Text style={styles.actionText}>New Audit</Text>
@@ -108,7 +109,7 @@ export default function FarmerDetails() {
 
         <TouchableOpacity
           style={styles.actionButton}
-          onPress={() => router.push(`/inputs/request?farmerId=${farmer.id}`)}
+          onPress={() => router.push(`/extension-agent/home/inputs/request`)}
         >
           <MaterialCommunityIcons
             name="tractor"

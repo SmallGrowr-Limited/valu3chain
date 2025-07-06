@@ -32,7 +32,7 @@ export default function Dashboard() {
               key={index}
               title={metric.title}
               value={metric.value}
-              trend={metric.trend}
+              // trend={metric.trend}
               icon={metric.icon}
             />
           ))}

@@ -106,9 +106,9 @@ export default function Dashboard() {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => router.push("/ecosystem/home/fundAllocation")}
+            onPress={() => router.push("/ecosystem/home/transactions")}
           >
-            <Text style={styles.actionText}>Allocate Funds</Text>
+            <Text style={styles.actionText}>Transaction History</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.actionsContainer}>
@@ -120,9 +120,9 @@ export default function Dashboard() {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => router.push("/ecosystem/home/payments")}
+            onPress={() => router.push("/investments")}
           >
-            <Text style={styles.actionText}>Payments</Text>
+            <Text style={styles.actionText}>Investments</Text>
           </TouchableOpacity>
         </View>
       </View>

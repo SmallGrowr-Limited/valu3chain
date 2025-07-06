@@ -146,10 +146,106 @@ const SettingsScreen = () => {
   );
 };
 
+const Colors = {
+  primary: "#2E7D32", // Deep green - represents brand identity
+  primaryLight: "#E8F5E9",
+  primaryDark: "#1B5E20",
+  secondary: "#FF8F00", // Amber - for interactive elements
+  background: "#F8FAF8", // Very light green tint
+  backgroundDark: "#121212",
+  white: "#FFFFFF",
+  cardBg: "#FFFFFF",
+  cardBgDark: "#1E1E1E",
+  textPrimary: "#263238", // Dark blue-gray
+  textSecondary: "#455A64",
+  textTertiary: "#718096",
+  textOnPrimary: "#FFFFFF",
+  border: "#CFD8DC",
+  borderDark: "#333333",
+  switchActive: "#81b0ff",
+  switchInactive: "#767577",
+  switchThumb: "#f5dd4b",
+  sectionHeaderLight: "#E8F5E9",
+  sectionHeaderDark: "#2D3748",
+};
+
 const styles = StyleSheet.create({
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: Colors.background,
+  // },
+  // darkContainer: {
+  //   backgroundColor: Colors.backgroundDark,
+  // },
+  // sectionHeader: {
+  //   backgroundColor: Colors.sectionHeaderLight,
+  //   paddingVertical: 12,
+  //   paddingHorizontal: 20,
+  //   marginTop: 24,
+  //   marginBottom: 8,
+  // },
+  // darkSectionHeader: {
+  //   backgroundColor: Colors.sectionHeaderDark,
+  // },
+  // sectionHeaderText: {
+  //   fontSize: 15,
+  //   fontFamily: "Inter-SemiBold",
+  //   color: Colors.primaryDark,
+  //   letterSpacing: 0.5,
+  //   textTransform: "uppercase",
+  // },
+  // darkSectionHeaderText: {
+  //   color: Colors.white,
+  // },
+  // settingItem: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   alignItems: "center",
+  //   paddingVertical: 18,
+  //   paddingHorizontal: 20,
+  //   backgroundColor: Colors.white,
+  //   marginBottom: 1,
+  // },
+  // darkSettingItem: {
+  //   backgroundColor: Colors.cardBgDark,
+  // },
+  // settingText: {
+  //   fontSize: 16,
+  //   fontFamily: "Inter-Medium",
+  //   color: Colors.textPrimary,
+  // },
+  // darkSettingText: {
+  //   color: Colors.white,
+  // },
+  // arrow: {
+  //   fontSize: 24,
+  //   color: Colors.textTertiary,
+  // },
+  // darkArrow: {
+  //   color: Colors.textTertiary,
+  // },
+  // switchContainer: {
+  //   transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }],
+  // },
+  // logoutButton: {
+  //   marginTop: 32,
+  //   marginHorizontal: 20,
+  //   paddingVertical: 16,
+  //   backgroundColor: Colors.error,
+  //   borderRadius: 12,
+  //   alignItems: "center",
+  //   elevation: 2,
+  // },
+  // logoutText: {
+  //   color: Colors.white,
+  //   fontSize: 16,
+  //   fontFamily: "Inter-SemiBold",
+  // },
+
+  //kkkkkkkkkkkkkk
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: Colors.background,
     paddingHorizontal: 16,
   },
   darkContainer: {
