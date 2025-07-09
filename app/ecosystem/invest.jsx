@@ -7,17 +7,79 @@ import {
   TouchableOpacity,
   StyleSheet,
   Picker,
+  Image,
 } from "react-native";
 //import { Colors } from "../../components/constants/colors";
 import {
   MaterialIcons,
   FontAwesome,
   MaterialCommunityIcons,
+  Ionicons,
 } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+const investments = [
+  {
+    id: "1",
+    type: "Farm Inputs",
+    title: "Premium Hybrid Maize Seeds",
+    description:
+      "High-yield hybrid maize seeds with 95% germination rate and drought resistance",
+    eligibility:
+      "Minimum investment: ₦500,000\nFarm size: 5+ hectares\nLocation: Northern regions",
+    availability: { start: "2023-09-01", end: "2023-11-15" },
+    roi: "18-25%",
+    duration: "6 months",
+    risk: "Medium",
+    image: require("../../assets/images/maize.jpeg"),
+    category: "seeds",
+  },
+  {
+    id: "2",
+    type: "Equipment",
+    title: "Tractor Lease Program",
+    description:
+      "Modern tractors available for seasonal lease with operator and maintenance included",
+    eligibility: "Minimum investment: ₦1,200,000\nFarm cooperatives preferred",
+    availability: { start: "2023-08-15", end: "2024-02-28" },
+    roi: "12-15%",
+    duration: "12 months",
+    risk: "Low",
+    image: require("../../assets/images/tractor.jpeg"),
+    category: "equipment",
+  },
+  {
+    id: "3",
+    type: "Funding",
+    title: "Cassava Processing Facility",
+    description:
+      "Equity investment in modern cassava processing plant serving 200 smallholder farmers",
+    eligibility: "Minimum investment: ₦2,500,000\nAccredited investors only",
+    availability: { start: "2023-10-01", end: "2023-12-31" },
+    roi: "22-30%",
+    duration: "18 months",
+    risk: "High",
+    image: require("../../assets/images/cassava.jpg"),
+    category: "funding",
+  },
+  {
+    id: "4",
+    type: "Farm Inputs",
+    title: "Organic Fertilizer Package",
+    description: "Premium organic fertilizer tailored for vegetable production",
+    eligibility:
+      "Minimum investment: ₦750,000\nMust commit to organic practices",
+    availability: { start: "2023-09-15", end: "2024-01-15" },
+    roi: "15-20%",
+    duration: "8 months",
+    risk: "Medium",
+    image: require("../../assets/images/fertilizer.jpg"),
+    category: "inputs",
+  },
+]
+
 const Investment = ({ navigation }) => {
-  const [investmentType, setInvestmentType] = useState("farm_input");
+  const [investmentType, setInvestmentType] = useState("home");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -39,6 +101,11 @@ const Investment = ({ navigation }) => {
     projectId: "",
     minAmount: "5,000,000",
   });
+
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
 
   const handleChange = (name, value) => {
     setFormData({
@@ -245,10 +312,84 @@ const Investment = ({ navigation }) => {
     </>
   );
 
+  const renderInvestmentOpportunity = ()=>{
+    return (
+      <View>
+        {/* Investment Opportunities */}
+        <ScrollView style={styles.investmentContainer}>
+          {investments.map((investment) => (
+            <TouchableOpacity
+              key={investment.id}
+              style={styles.investmentCard}
+              
+              // onPress={() => router.push(`/investments/${investment.id}`)}
+            >
+              <Image source={investment.image} style={styles.investmentImage} />
+
+              <View style={styles.investmentContent}>
+                <View style={styles.investmentHeader}>
+                  {/* {getTypeIcon(investment.type)} */}
+                  <Text style={styles.investmentType}>{investment.type}</Text>
+                  <View
+                    style={[
+                      styles.roiPill,
+                      investment.risk === "High"
+                        ? styles.highRisk
+                        : investment.risk === "Medium"
+                          ? styles.mediumRisk
+                          : styles.lowRisk,
+                    ]}
+                  >
+                    <Text style={styles.roiText}>{investment.roi} ROI</Text>
+                  </View>
+                </View>
+
+                <Text style={styles.investmentTitle}>{investment.title}</Text>
+
+                <Text style={styles.investmentDescription} numberOfLines={2}>
+                  {investment.description}
+                </Text>
+
+                <View style={styles.detailRow}>
+                  <MaterialIcons
+                    name="calendar-today"
+                    size={16}
+                    color={Colors.secondaryText}
+                  />
+                  <Text style={styles.detailText}>
+                    {formatDate(investment.availability.start)} -{" "}
+                    {formatDate(investment.availability.end)}
+                  </Text>
+                </View>
+
+                <View style={styles.detailRow}>
+                  <MaterialCommunityIcons
+                    name="clock-outline"
+                    size={16}
+                    color={Colors.secondaryText}
+                  />
+                  <Text style={styles.detailText}>{investment.duration}</Text>
+                </View>
+
+                <View style={styles.detailRow}>
+                  <MaterialIcons
+                    name="assessment"
+                    size={16}
+                    color={Colors.secondaryText}
+                  />
+                  <Text style={styles.detailText}>Risk: {investment.risk}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+    );
+  }
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => setInvestmentType("home")}>
           <MaterialIcons name="arrow-back" size={24} color={Colors.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>New Investment</Text>
@@ -258,7 +399,7 @@ const Investment = ({ navigation }) => {
       <View style={styles.formContainer}>
         {/* Investment Type Selection */}
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Investment Type</Text>
+          {/* <Text style={styles.label}>Investment Type</Text> */}
           <View style={styles.typeButtons}>
             <TouchableOpacity
               style={[
@@ -287,7 +428,7 @@ const Investment = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={[
                 styles.typeButton,
                 investmentType === "equipment" && styles.activeTypeButton,
@@ -311,7 +452,7 @@ const Investment = ({ navigation }) => {
               >
                 Equipment
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               style={[
@@ -341,102 +482,115 @@ const Investment = ({ navigation }) => {
           </View>
         </View>
 
-        {/* Common Fields */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Investment Title</Text>
-          <TextInput
-            style={styles.input}
-            value={formData.title}
-            onChangeText={(text) => handleChange("title", text)}
-            placeholder="e.g., “Tractor Loan for Maize Farmers - Bauchi”"
-            placeholderTextColor="#aaa"
-          />
-        </View>
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Description</Text>
-          <TextInput
-            style={[styles.input, { height: 100, textAlignVertical: "top" }]}
-            multiline
-            value={formData.description}
-            onChangeText={(text) => handleChange("description", text)}
-            placeholder="Detailed description of the investment"
-            placeholderTextColor="#aaa"
-          />
-        </View>
-
-        <View style={styles.inputRow}>
-          <View style={[styles.inputGroup, { flex: 1, marginRight: 8 }]}>
-            <Text style={styles.label}>Start Date</Text>
-            <TouchableOpacity
-              style={styles.dateInput}
-              onPress={() => handleChange("showStartDatePicker", true)}
-            >
-              <Text>{formData.startDate.toLocaleDateString()}</Text>
-              <MaterialIcons
-                name="calendar-today"
-                size={20}
-                color={Colors.primary}
+        {investmentType === "home" ? (
+          renderInvestmentOpportunity()
+        ) : (
+          <>
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Investment Title</Text>
+              <TextInput
+                style={styles.input}
+                value={formData.title}
+                onChangeText={(text) => handleChange("title", text)}
+                placeholder="e.g., “Tractor Loan for Maize Farmers - Bauchi”"
+                placeholderTextColor="#aaa"
               />
-            </TouchableOpacity>
-            {formData.showStartDatePicker && (
-              <DateTimePicker
-                value={formData.startDate}
-                mode="date"
-                display="default"
-                onChange={(e, d) => handleDateChange(e, d, "startDate")}
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Description</Text>
+              <TextInput
+                style={[
+                  styles.input,
+                  { height: 100, textAlignVertical: "top" },
+                ]}
+                multiline
+                value={formData.description}
+                onChangeText={(text) => handleChange("description", text)}
+                placeholder="Detailed description of the investment"
+                placeholderTextColor="#aaa"
               />
+            </View>
+
+            <View style={styles.inputRow}>
+              <View style={[styles.inputGroup, { flex: 1, marginRight: 8 }]}>
+                <Text style={styles.label}>Start Date</Text>
+                <TouchableOpacity
+                  style={styles.dateInput}
+                  onPress={() => handleChange("showStartDatePicker", true)}
+                >
+                  <Text>{formData.startDate.toLocaleDateString()}</Text>
+                  <MaterialIcons
+                    name="calendar-today"
+                    size={20}
+                    color={Colors.primary}
+                  />
+                </TouchableOpacity>
+                {formData.showStartDatePicker && (
+                  <DateTimePicker
+                    value={formData.startDate}
+                    mode="date"
+                    display="default"
+                    onChange={(e, d) => handleDateChange(e, d, "startDate")}
+                  />
+                )}
+              </View>
+
+              <View style={[styles.inputGroup, { flex: 1 }]}>
+                <Text style={styles.label}>End Date</Text>
+                <TouchableOpacity
+                  style={styles.dateInput}
+                  onPress={() => handleChange("showEndDatePicker", true)}
+                >
+                  <Text>{formData.endDate.toLocaleDateString()}</Text>
+                  <MaterialIcons
+                    name="calendar-today"
+                    size={20}
+                    color={Colors.primary}
+                  />
+                </TouchableOpacity>
+                {formData.showEndDatePicker && (
+                  <DateTimePicker
+                    value={formData.endDate}
+                    mode="date"
+                    display="default"
+                    onChange={(e, d) => handleDateChange(e, d, "endDate")}
+                    minimumDate={formData.startDate}
+                  />
+                )}
+              </View>
+            </View>
+
+            {/* Dynamic Fields Based on Investment Type */}
+
+            {investmentType === "farm_input" && renderFarmInputFields()}
+            {investmentType === "equipment" && renderEquipmentFields()}
+            {investmentType === "funding" && renderFundingFields()}
+
+            {/* Amount Field (Common but required for funding) */}
+            {investmentType !== "funding" && (
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Amount (₦)</Text>
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  value={formData.amount}
+                  onChangeText={(text) => handleChange("amount", text)}
+                  placeholder="Enter investment amount"
+                />
+              </View>
             )}
-          </View>
 
-          <View style={[styles.inputGroup, { flex: 1 }]}>
-            <Text style={styles.label}>End Date</Text>
+            {/* Submit Button */}
             <TouchableOpacity
-              style={styles.dateInput}
-              onPress={() => handleChange("showEndDatePicker", true)}
+              style={styles.submitButton}
+              onPress={handleSubmit}
             >
-              <Text>{formData.endDate.toLocaleDateString()}</Text>
-              <MaterialIcons
-                name="calendar-today"
-                size={20}
-                color={Colors.primary}
-              />
+              <Text style={styles.submitButtonText}>Submit Investment</Text>
             </TouchableOpacity>
-            {formData.showEndDatePicker && (
-              <DateTimePicker
-                value={formData.endDate}
-                mode="date"
-                display="default"
-                onChange={(e, d) => handleDateChange(e, d, "endDate")}
-                minimumDate={formData.startDate}
-              />
-            )}
-          </View>
-        </View>
-
-        {/* Dynamic Fields Based on Investment Type */}
-        {investmentType === "farm_input" && renderFarmInputFields()}
-        {investmentType === "equipment" && renderEquipmentFields()}
-        {investmentType === "funding" && renderFundingFields()}
-
-        {/* Amount Field (Common but required for funding) */}
-        {investmentType !== "funding" && (
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Amount (₦)</Text>
-            <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              value={formData.amount}
-              onChangeText={(text) => handleChange("amount", text)}
-              placeholder="Enter investment amount"
-            />
-          </View>
+          </>
         )}
-
-        {/* Submit Button */}
-        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-          <Text style={styles.submitButtonText}>Submit Investment</Text>
-        </TouchableOpacity>
+        {/* Common Fields */}
       </View>
     </ScrollView>
   );
@@ -615,109 +769,82 @@ const styles = StyleSheet.create({
     color: Colors.error,
     marginTop: 8,
   },
+  investmentContainer: {
+    flex: 1,
+    marginBottom: 16,
+  },
+  investmentCard: {
+    backgroundColor: Colors.surface,
+    borderRadius: 12,
+    overflow: "hidden",
+    marginBottom: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  investmentImage: {
+    width: "100%",
+    height: 160,
+    resizeMode: "cover",
+  },
+  investmentContent: {
+    padding: 16,
+  },
+  investmentHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  investmentType: {
+    marginLeft: 8,
+    color: Colors.primaryText,
+    fontWeight: "600",
+  },
+  roiPill: {
+    marginLeft: "auto",
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+  },
+  lowRisk: {
+    backgroundColor: Colors.successLight,
+  },
+  mediumRisk: {
+    backgroundColor: Colors.warningLight,
+  },
+  highRisk: {
+    backgroundColor: Colors.dangerLight,
+  },
+  roiText: {
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  investmentTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: Colors.primaryText,
+    marginBottom: 8,
+  },
+  investmentDescription: {
+    fontSize: 14,
+    color: Colors.secondaryText,
+    marginBottom: 12,
+    lineHeight: 20,
+  },
+  detailRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 6,
+  },
+  detailText: {
+    marginLeft: 8,
+    fontSize: 14,
+    color: Colors.secondaryText,
+  },
 });
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: Colors.background,
-//   },
-//   header: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     padding: 16,
-//     borderBottomWidth: 1,
-//     borderBottomColor: Colors.lightGray,
-//   },
-//   headerTitle: {
-//     fontSize: 20,
-//     fontWeight: "bold",
-//     color: Colors.primaryText,
-//   },
-//   formContainer: {
-//     padding: 16,
-//   },
-//   inputGroup: {
-//     marginBottom: 16,
-//   },
-//   inputRow: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//   },
-//   label: {
-//     fontSize: 14,
-//     color: Colors.primaryText,
-//     marginBottom: 8,
-//   },
-//   input: {
-//     backgroundColor: Colors.surface,
-//     borderRadius: 8,
-//     padding: 12,
-//     fontSize: 16,
-//     color: Colors.primaryText,
-//     borderWidth: 1,
-//     borderColor: Colors.lightGray,
-//   },
-//   dateInput: {
-//     backgroundColor: Colors.surface,
-//     borderRadius: 8,
-//     padding: 12,
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     borderWidth: 1,
-//     borderColor: Colors.lightGray,
-//   },
-//   typeButtons: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     marginTop: 8,
-//   },
-//   typeButton: {
-//     flex: 1,
-//     flexDirection: "row",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     backgroundColor: Colors.lightGray,
-//     borderRadius: 8,
-//     padding: 12,
-//     marginHorizontal: 4,
-//   },
-//   activeTypeButton: {
-//     backgroundColor: Colors.primary,
-//   },
-//   typeButtonText: {
-//     marginLeft: 8,
-//     color: Colors.primaryText,
-//   },
-//   activeTypeButtonText: {
-//     color: Colors.textOnPrimary,
-//   },
-//   pickerContainer: {
-//     backgroundColor: Colors.surface,
-//     borderRadius: 8,
-//     borderWidth: 1,
-//     borderColor: Colors.lightGray,
-//     overflow: "hidden",
-//   },
-//   picker: {
-//     height: 50,
-//     width: "100%",
-//     color: Colors.primaryText,
-//   },
-//   submitButton: {
-//     backgroundColor: Colors.primary,
-//     borderRadius: 8,
-//     padding: 16,
-//     alignItems: "center",
-//     marginTop: 24,
-//   },
-//   submitButtonText: {
-//     color: Colors.textOnPrimary,
-//     fontSize: 18,
-//     fontWeight: "bold",
-//   },
-// });
+
 
 export default Investment;
