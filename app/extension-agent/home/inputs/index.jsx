@@ -11,7 +11,7 @@ import {
 import { useRouter } from "expo-router";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import Header from "../../../../components/agent-components/Header";
-import { colors } from "../../../../components/agent-components/constants/colors";
+//import { colors } from "../../../../components/agent-components/constants/colors";
 
 // Mock data - replace with your actual data source
 const inputsData = [
@@ -175,88 +175,90 @@ export default function InputsList() {
             )}
           </View>
 
-          <View style={styles.filterContainer}>
-            <TouchableOpacity
-              style={[
-                styles.filterButton,
-                filter === "All" && styles.activeFilter,
-              ]}
-              onPress={() => setFilter("All")}
-            >
-              <Text
+          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
+            <View style={styles.filterContainer}>
+              <TouchableOpacity
                 style={[
-                  styles.filterText,
-                  filter === "All" && styles.activeFilterText,
+                  styles.filterButton,
+                  filter === "All" && styles.activeFilter,
                 ]}
+                onPress={() => setFilter("All")}
               >
-                All
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.filterButton,
-                filter === "Pending" && styles.activeFilter,
-              ]}
-              onPress={() => setFilter("Pending")}
-            >
-              <Text
+                <Text
+                  style={[
+                    styles.filterText,
+                    filter === "All" && styles.activeFilterText,
+                  ]}
+                >
+                  All
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={[
-                  styles.filterText,
-                  filter === "Pending" && styles.activeFilterText,
+                  styles.filterButton,
+                  filter === "Pending" && styles.activeFilter,
                 ]}
+                onPress={() => setFilter("Pending")}
               >
-                Pending
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.filterButton,
-                filter === "Approved" && styles.activeFilter,
-              ]}
-              onPress={() => setFilter("Approved")}
-            >
-              <Text
+                <Text
+                  style={[
+                    styles.filterText,
+                    filter === "Pending" && styles.activeFilterText,
+                  ]}
+                >
+                  Pending
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={[
-                  styles.filterText,
-                  filter === "Approved" && styles.activeFilterText,
+                  styles.filterButton,
+                  filter === "Approved" && styles.activeFilter,
                 ]}
+                onPress={() => setFilter("Approved")}
               >
-                Approved
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.filterButton,
-                filter === "In Transit" && styles.activeFilter,
-              ]}
-              onPress={() => setFilter("In Transit")}
-            >
-              <Text
+                <Text
+                  style={[
+                    styles.filterText,
+                    filter === "Approved" && styles.activeFilterText,
+                  ]}
+                >
+                  Approved
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={[
-                  styles.filterText,
-                  filter === "In Transit" && styles.activeFilterText,
+                  styles.filterButton,
+                  filter === "In Transit" && styles.activeFilter,
                 ]}
+                onPress={() => setFilter("In Transit")}
               >
-                In Transit
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.filterButton,
-                filter === "Delivered" && styles.activeFilter,
-              ]}
-              onPress={() => setFilter("Delivered")}
-            >
-              <Text
+                <Text
+                  style={[
+                    styles.filterText,
+                    filter === "In Transit" && styles.activeFilterText,
+                  ]}
+                >
+                  In Transit
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={[
-                  styles.filterText,
-                  filter === "Delivered" && styles.activeFilterText,
+                  styles.filterButton,
+                  filter === "Delivered" && styles.activeFilter,
                 ]}
+                onPress={() => setFilter("Delivered")}
               >
-                Delivered
-              </Text>
-            </TouchableOpacity>
-          </View>
+                <Text
+                  style={[
+                    styles.filterText,
+                    filter === "Delivered" && styles.activeFilterText,
+                  ]}
+                >
+                  Delivered
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </View>
 
         {/* Stats */}
@@ -313,6 +315,30 @@ export default function InputsList() {
   );
 }
 
+const colors = {
+  primary: "#3A7D44", // Earthy green - represents agriculture and growth
+  primaryLight: "#E8F5E9",
+  primaryDark: "#2B5E35",
+  secondary: "#FF9E1B", // Amber for important actions
+  background: "#F8FAF8", // Very light green tint
+  white: "#FFFFFF",
+  cardBg: "#FFFFFF",
+  textPrimary: "#263238", // Dark blue-gray
+  textSecondary: "#455A64",
+  textTertiary: "#718096",
+  border: "#E2E8F0",
+  success: "#388E3C",
+  warning: "#F57C00",
+  error: "#D32F2F",
+  info: "#0288D1",
+  disabled: "#B0BEC5",
+  highlight: "#FFF9C4",
+  statusDelivered: "#388E3C",
+  statusPending: "#F57C00",
+  statusInTransit: "#0288D1",
+  statusApproved: "#3A7D44",
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -346,19 +372,19 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 12,
     fontSize: 16,
-    fontFamily: "Inter-Medium",
-    color: colors.textPrimary,
+    //fontFamily: "Inter-Medium",
+    //color: colors.textPrimary,
   },
   filterContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 8,
-    marginTop: 12,
+    marginVertical:16,
   },
   filterButton: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    borderRadius: 16,
+    borderRadius: 8,
     backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: colors.border,
@@ -369,8 +395,8 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontSize: 14,
-    fontFamily: "Inter-Medium",
-    color: colors.textSecondary,
+    //fontFamily: "Inter-Medium",
+    // color: colors.textSecondary,
   },
   activeFilterText: {
     color: colors.white,
@@ -394,14 +420,14 @@ const styles = StyleSheet.create({
   },
   statValue: {
     fontSize: 22,
-    fontFamily: "Inter-Bold",
-    color: colors.primary,
+    //fontFamily: "Inter-Bold",
+    //color: colors.primary,
     marginBottom: 4,
   },
   statLabel: {
     fontSize: 13,
-    fontFamily: "Inter-Medium",
-    color: colors.textSecondary,
+    //fontFamily: "Inter-Medium",
+    //color: colors.textSecondary,
   },
   listContainer: {
     gap: 12,
@@ -424,14 +450,14 @@ const styles = StyleSheet.create({
   },
   farmerName: {
     fontSize: 18,
-    fontFamily: "Inter-SemiBold",
-    color: colors.textPrimary,
+    //fontFamily: "Inter-SemiBold",
+    //color: colors.textPrimary,
     marginBottom: 4,
   },
   inputType: {
     fontSize: 16,
-    fontFamily: "Inter-Medium",
-    color: colors.textSecondary,
+    //fontFamily: "Inter-Medium",
+    //color: colors.textSecondary,
   },
   statusBadge: {
     paddingHorizontal: 12,
@@ -442,7 +468,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 13,
-    fontFamily: "Inter-SemiBold",
+    //fontFamily: "Inter-SemiBold",
     color: colors.white,
     textTransform: "uppercase",
     letterSpacing: 0.5,
@@ -460,7 +486,7 @@ const styles = StyleSheet.create({
   },
   detailText: {
     fontSize: 14,
-    fontFamily: "Inter-Regular",
+    //fontFamily: "Inter-Regular",
     color: colors.textSecondary,
   },
   notesContainer: {
@@ -470,13 +496,13 @@ const styles = StyleSheet.create({
   },
   notesLabel: {
     fontSize: 13,
-    fontFamily: "Inter-Medium",
+    //fontFamily: "Inter-Medium",
     color: colors.textTertiary,
     marginBottom: 8,
   },
   notesText: {
     fontSize: 14,
-    fontFamily: "Inter-Regular",
+    //fontFamily: "Inter-Regular",
     color: colors.textSecondary,
     lineHeight: 20,
   },
@@ -493,14 +519,14 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    fontFamily: "Inter-SemiBold",
+    //fontFamily: "Inter-SemiBold",
     color: colors.textPrimary,
     marginBottom: 8,
     textAlign: "center",
   },
   emptySubtext: {
     fontSize: 15,
-    fontFamily: "Inter-Regular",
+    //fontFamily: "Inter-Regular",
     color: colors.textSecondary,
     marginBottom: 24,
     textAlign: "center",
@@ -520,6 +546,7 @@ const styles = StyleSheet.create({
   addInputText: {
     color: colors.white,
     fontSize: 16,
-    fontFamily: "Inter-SemiBold",
+    //fontFamily: "Inter-SemiBold",
   },
 });
+

@@ -247,10 +247,22 @@ export default function MarketPriceUpdate() {
               </View>
 
               <View style={styles.inputContainer}>
+                <Text style={styles.label}>Market Source</Text>
+                <TextInput
+                  style={styles.marketNameInput}
+                  placeholder="Add "
+                  placeholderTextColor="#aaa"
+                  value={notes}
+                  onChangeText={setNotes}
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
                 <Text style={styles.label}>Notes</Text>
                 <TextInput
                   style={styles.notesInput}
                   placeholder="Add any notes about this price change..."
+                  placeholderTextColor="#aaa"
                   value={notes}
                   onChangeText={setNotes}
                   multiline
@@ -321,7 +333,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     color: colors.dark,
     marginTop: 16,
     marginBottom: 12,
@@ -346,7 +358,7 @@ const styles = StyleSheet.create({
   },
   cropName: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     color: colors.dark,
   },
   cropPrice: {
@@ -355,7 +367,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   trendIndicator: {
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   formCard: {
     backgroundColor: colors.white,
@@ -365,7 +377,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   inputRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 16,
     marginBottom: 16,
   },
@@ -375,7 +387,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: colors.gray,
+    // color: colors.dark,
     marginBottom: 8,
   },
   currentPrice: {
@@ -386,8 +398,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   priceInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: colors.lightGray,
@@ -406,14 +418,14 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   trendButtons: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
   },
   trendButton: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 8,
     borderRadius: 8,
     borderWidth: 1,
@@ -437,7 +449,16 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGray,
     borderRadius: 8,
     padding: 12,
-    textAlignVertical: 'top',
+    textAlignVertical: "top",
+  },
+  marketNameInput: {
+    // minHeight: 80,
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.lightGray,
+    borderRadius: 8,
+    padding: 12,
+    textAlignVertical: "top",
   },
   historyCard: {
     backgroundColor: colors.white,
@@ -447,9 +468,9 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   historyItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: colors.lightGray,
@@ -459,7 +480,7 @@ const styles = StyleSheet.create({
   },
   historyPrice: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
     color: colors.dark,
   },
   historyDate: {
@@ -475,7 +496,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 12,
     padding: 16,
-    alignItems: 'center',
+    alignItems: "center",
     elevation: 1,
   },
   emptyText: {
@@ -483,9 +504,9 @@ const styles = StyleSheet.create({
     color: colors.gray,
   },
   submitButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: colors.primary,
     padding: 16,
     borderRadius: 8,
@@ -497,6 +518,6 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });

@@ -28,6 +28,7 @@ const priceHistory = [
     updatedBy: "John Doe",
     trend: "up",
     notes: "Increased demand from local mills",
+    marketName: "Sabo Market",
   },
   {
     id: "2",
@@ -39,6 +40,7 @@ const priceHistory = [
     updatedBy: "Jane Smith",
     trend: "down",
     notes: "Harvest season surplus",
+    marketName: "Makarfi Market",
   },
   {
     id: "3",
@@ -50,6 +52,7 @@ const priceHistory = [
     updatedBy: "John Doe",
     trend: "up",
     notes: "Early season price adjustment",
+    marketName: "Soba Market",
   },
   {
     id: "4",
@@ -61,6 +64,7 @@ const priceHistory = [
     updatedBy: "Jane Smith",
     trend: "stable",
     notes: "Stable import prices",
+    marketName: "Sabo Market",
   },
   {
     id: "5",
@@ -72,6 +76,7 @@ const priceHistory = [
     updatedBy: "John Doe",
     trend: "up",
     notes: "Reduced supply from northern regions",
+    marketName: "Zaria Market",
   },
   {
     id: "6",
@@ -83,6 +88,7 @@ const priceHistory = [
     updatedBy: "Jane Smith",
     trend: "down",
     notes: "Increased production from greenhouse farms",
+    marketName: "Zaria Market",
   },
 ];
 
@@ -154,12 +160,16 @@ export default function PriceHistory() {
 
       <View style={styles.historyDetails}>
         <View style={styles.detailRow}>
-          <Ionicons name="calendar" size={16} color={colors.gray} />
+          <Ionicons name="calendar" size={16} color={colors.dark} />
           <Text style={styles.detailText}>{item.date}</Text>
         </View>
         <View style={styles.detailRow}>
-          <Ionicons name="person" size={16} color={colors.gray} />
+          <Ionicons name="person" size={16} color={colors.dark} />
           <Text style={styles.detailText}>{item.updatedBy}</Text>
+        </View>
+        <View style={styles.detailRow}>
+          <Ionicons name="location" size={16} color={colors.dark} />
+          <Text style={styles.detailText}>{item.marketName}</Text>
         </View>
       </View>
 
@@ -298,7 +308,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: "600",
-    color: colors.dark,
+    // color: colors.dark,
     marginTop: 16,
     marginBottom: 12,
   },
@@ -320,7 +330,7 @@ const styles = StyleSheet.create({
   },
   cropFilterText: {
     fontSize: 14,
-    color: colors.dark,
+    // color: colors.dark,
   },
   selectedCropFilterText: {
     color: colors.white,
@@ -366,7 +376,7 @@ const styles = StyleSheet.create({
   cropName: {
     fontSize: 16,
     fontWeight: "600",
-    color: colors.dark,
+    // color: colors.dark,
   },
   priceContainer: {
     flexDirection: "row",
@@ -376,7 +386,7 @@ const styles = StyleSheet.create({
   priceText: {
     fontSize: 16,
     fontWeight: "600",
-    color: colors.dark,
+    // color: colors.dark,
   },
   historyDetails: {
     gap: 8,
@@ -398,7 +408,7 @@ const styles = StyleSheet.create({
   },
   notesText: {
     fontSize: 14,
-    color: colors.dark,
+    // color: colors.dark,
     lineHeight: 20,
   },
   emptyState: {
@@ -412,7 +422,7 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     fontWeight: "600",
-    color: colors.dark,
+    // color: colors.dark,
     marginTop: 16,
   },
   emptySubtext: {

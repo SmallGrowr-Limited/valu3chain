@@ -10,7 +10,7 @@ import Header from "../../../components/agent-components/Header";
 import MetricCard from "../../../components/agent-components/MetricCard";
 import FeatureCard from "../../../components/agent-components/FeatureCard";
 import TaskItem from "../../../components/agent-components/TaskItem";
-import { colors } from "../../../components/agent-components/constants/colors";
+//import { colors } from "../../../components/agent-components/constants/colors";
 import {
   metrics,
   features,
@@ -69,6 +69,28 @@ export default function Dashboard() {
     </View>
   );
 }
+
+const colors = {
+  primary: "#3A7D44", // Earthy green - represents agriculture and growth
+  primaryLight: "#E8F5E9",
+  primaryDark: "#2B5E35",
+  secondary: "#FF9E1B", // Amber for important actions
+  background: "#F8FAF8", // Very light green tint
+  white: "#FFFFFF",
+  cardBg: "#FFFFFF",
+  textPrimary: "#263238", // Dark blue-gray
+  textSecondary: "#455A64",
+  textTertiary: "#718096",
+  border: "#E2E8F0",
+  success: "#388E3C",
+  warning: "#F57C00",
+  error: "#D32F2F",
+  info: "#0288D1",
+  highlight: "#FFF9C4",
+  urgent: "#E53935",
+  highPriority: "#FB8C00",
+  normalPriority: "#039BE5",
+};
 
 const styles = StyleSheet.create({
   container: {

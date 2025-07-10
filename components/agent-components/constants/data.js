@@ -103,11 +103,12 @@ export const features = [
     route: "/extension-agent/home/farmers",
   },
   {
-    title: "Request Inputs",
-    icon: "cart",
-    color: "#FF9800",
+    title: "Input Request",
+    icon: "help-circle",
+    color: "#607D8B",
     route: "/extension-agent/home/inputs",
   },
+
   {
     title: "Farm Audit",
     icon: "clipboard",
@@ -115,10 +116,10 @@ export const features = [
     route: "/extension-agent/home/audits",
   },
   {
-    title: "Input Aggregation",
+    title: "Inputs Distribution",
     icon: "stats-chart",
     color: "#9C27B0",
-    route: "/extension-agent/home/inputs/aggregate",
+    route: "/extension-agent/home/inputs/distribution",
   },
   {
     title: "Market Prices",
@@ -126,11 +127,12 @@ export const features = [
     color: "#F44336",
     route: "/extension-agent/home/market",
   },
+
   {
-    title: "Support",
-    icon: "help-circle",
-    color: "#607D8B",
-    route: "/extension-agent/home",
+    title: "Input Aggregation",
+    icon: "cart",
+    color: "#FF9800",
+    route: "/extension-agent/home/inputs/aggregation",
   },
 ];
 

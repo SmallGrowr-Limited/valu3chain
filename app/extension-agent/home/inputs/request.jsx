@@ -12,16 +12,12 @@ import { Picker } from "@react-native-picker/picker";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import Header from "../../../../components/agent-components/Header";
-import { colors } from "../../../../components/agent-components/constants/colors";
+//import { colors } from "../../../../components/agent-components/constants/colors";
 
 // Mock data - replace with your actual data sourcec
 const inputTypes = [
-  { id: "1", name: "Fertilizer (NPK)", unit: "kg" },
-  { id: "2", name: "Seeds (Maize)", unit: "kg" },
-  { id: "3", name: "Pesticides", unit: "liters" },
-  { id: "4", name: "Herbicides", unit: "liters" },
-  { id: "5", name: "Farming Tools", unit: "pieces" },
-  { id: "6", name: "Irrigation Equipment", unit: "units" },
+  { id: "1", name: "Fertilizer", unit: "kg" },
+  { id: "2", name: "Seeds/Seedling", unit: "kg" },
 ];
 
 const farmersList = [
@@ -202,72 +198,117 @@ export default function RequestInputs() {
   );
 }
 
+
+const colors = {
+  primary: "#3A7D44", // Earthy green - represents agriculture
+  primaryLight: "#E8F5E9",
+  primaryDark: "#2B5E35",
+  secondary: "#FF9E1B", // Amber for important actions
+  background: "#F8FAF8", // Very light green tint
+  white: "#FFFFFF",
+  cardBg: "#FFFFFF",
+  textPrimary: "#263238", // Dark blue-gray
+  textSecondary: "#455A64",
+  textTertiary: "#718096",
+  border: "#E2E8F0",
+  success: "#388E3C",
+  warning: "#F57C00",
+  error: "#D32F2F",
+  urgencyNormal: "#3182CE",
+  urgencyHigh: "#DD6B20",
+  urgencyCritical: "#E53E3E",
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
   },
   scrollContainer: {
-    padding: 16,
-    paddingBottom: 32,
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 40,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.dark,
-    marginTop: 8,
-    marginBottom: 12,
+    fontSize: 18,
+    //fontFamily: "Inter-SemiBold",
+    // color: colors.textPrimary,
+    marginBottom: 16,
+    letterSpacing: -0.2,
   },
   inputContainer: {
-    marginBottom: 16,
+    marginBottom: 24,
   },
   inputRow: {
     flexDirection: "row",
     gap: 16,
   },
+  labelContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
   label: {
     fontSize: 14,
-    color: colors.gray,
-    marginBottom: 8,
+    //fontFamily: "Inter-Medium",
+    // color: colors.textSecondary,
+    marginRight: 4,
+  },
+  requiredIndicator: {
+    color: colors.error,
   },
   pickerContainer: {
     backgroundColor: colors.white,
-    borderRadius: 8,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: colors.lightGray,
+    borderColor: colors.border,
     overflow: "hidden",
+    elevation: 1,
+    shadowColor: colors.textPrimary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
   },
   picker: {
+    height: 56,
     width: "100%",
+    color: colors.textPrimary,
   },
   quantityInput: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.white,
-    borderRadius: 8,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: colors.lightGray,
-    paddingHorizontal: 12,
+    borderColor: colors.border,
+    paddingHorizontal: 16,
+    elevation: 1,
   },
   input: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 14,
     fontSize: 16,
-    color: colors.dark,
+    //fontFamily: "Inter-Regular",
+    color: colors.textPrimary,
   },
   unit: {
     fontSize: 14,
-    color: colors.gray,
+    //fontFamily: "Inter-Medium",
+    color: colors.textTertiary,
     marginLeft: 8,
   },
   multilineInput: {
-    minHeight: 100,
+    minHeight: 120,
     textAlignVertical: "top",
     backgroundColor: colors.white,
-    borderRadius: 8,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: colors.lightGray,
-    padding: 12,
+    borderColor: colors.border,
+    padding: 16,
+    fontSize: 16,
+    //fontFamily: "Inter-Regular",
+    color: colors.textPrimary,
+    elevation: 1,
   },
   submitButton: {
     flexDirection: "row",
@@ -284,22 +325,28 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
   },
-  // submitButton: {
-  //   flexDirection: "row",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   backgroundColor: colors.primary,
-  //   padding: 16,
-  //   borderRadius: 8,
-  //   marginTop: 24,
-  //   gap: 8,
-  // },
-  disabledButton: {
-    opacity: 0.6,
-  },
   submitButtonText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: "600",
+    //fontFamily: "Inter-SemiBold",
+    marginLeft: 8,
+  },
+  disabledButton: {
+    backgroundColor: colors.disabled,
+    shadowOpacity: 0,
+  },
+  urgencyTag: {
+    position: "absolute",
+    right: 16,
+    top: 14,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  urgencyTagText: {
+    fontSize: 12,
+    //fontFamily: "Inter-SemiBold",
+    color: colors.white,
+    textTransform: "uppercase",
   },
 });

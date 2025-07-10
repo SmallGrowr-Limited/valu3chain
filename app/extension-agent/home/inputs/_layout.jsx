@@ -8,6 +8,7 @@ export default function InputsLayout() {
         <Stack.Screen name="[id]" options={{ headerShown: false }} />
         <Stack.Screen name="aggregate" options={{ headerShown: false }} />
         <Stack.Screen name="aggregate-requests" options={{ headerShown: false }} />
+        <Stack.Screen name="distribution" options={{ headerShown: false }} />
       </Stack>
     );
 }
