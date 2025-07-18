@@ -261,7 +261,7 @@ const ProductSeller = () => {
       </View>
 
       {/* Product Details */}
-      <View style={styles.formGroup}>
+      {/* <View style={styles.formGroup}>
         <Text style={styles.label}>Product Name</Text>
         <TextInput
           style={[styles.input, errors.productName && styles.errorBorder]}
@@ -273,9 +273,9 @@ const ProductSeller = () => {
         {errors.productName && (
           <Text style={styles.errorText}>{errors.productName}</Text>
         )}
-      </View>
+      </View> */}
 
-      <View style={styles.formGroup}>
+      {/* <View style={styles.formGroup}>
         <Text style={styles.label}>Product Description</Text>
         <TextInput
           style={[styles.textArea, errors.description && styles.errorBorder]}
@@ -289,38 +289,9 @@ const ProductSeller = () => {
         {errors.description && (
           <Text style={styles.errorText}>{errors.description}</Text>
         )}
-      </View>
+      </View> */}
 
-      {/* Additional Information */}
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Quality Grade</Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={formData.qualityGrade}
-            onValueChange={(value) => handleChange("qualityGrade", value)}
-            style={styles.picker}
-          >
-            <Picker.Item label="Grade A" value="A" />
-            <Picker.Item label="Grade B" value="B" />
-            <Picker.Item label="Grade C" value="C" />
-          </Picker>
-        </View>
-      </View>
-
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Packaging Type</Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={formData.packagingType}
-            onValueChange={(value) => handleChange("packagingType", value)}
-            style={styles.picker}
-          >
-            <Picker.Item label="Sack" value="Sack" />
-            <Picker.Item label="Crate" value="Crate" />
-            <Picker.Item label="Basket" value="Basket" />
-          </Picker>
-        </View>
-      </View>
+      
 
       <View style={styles.formGroup}>
         <Text style={styles.label}>Location</Text>

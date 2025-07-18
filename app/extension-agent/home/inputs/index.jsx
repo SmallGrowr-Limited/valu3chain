@@ -150,7 +150,7 @@ export default function InputsList() {
         title="Farm Inputs"
         rightAction={
           <TouchableOpacity
-            onPress={() => router.push("/extension-agent/home/inputs/request")}
+            onPress={() => router.navigate("/extension-agent/home/inputs/request")}
           >
             <Ionicons name="add" size={24} color={colors.primary} />
           </TouchableOpacity>

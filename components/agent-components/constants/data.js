@@ -116,7 +116,7 @@ export const features = [
     route: "/extension-agent/home/audits",
   },
   {
-    title: "Inputs Distribution",
+    title: "Sales",
     icon: "stats-chart",
     color: "#9C27B0",
     route: "/extension-agent/home/inputs/distribution",
@@ -129,7 +129,7 @@ export const features = [
   },
 
   {
-    title: "Input Aggregation",
+    title: "Commodity Aggregation",
     icon: "cart",
     color: "#FF9800",
     route: "/extension-agent/home/inputs/aggregation",

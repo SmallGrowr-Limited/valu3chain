@@ -13,10 +13,19 @@ import { Colors } from "./constants/colors";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
+import { Checkbox, useTheme } from "react-native-paper";
 
 const PurchaseOrder = ({ route, navigation }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState(new Date());
+
+  const options = [
+    { id: "0 - 10", level: "0 - 10" },
+    { id: "11 - 20", level: "11 - 20" },
+    { id: "21 - 30", level: "21 - 30" },
+    { id: "31 - 40", level: "31 - 40" },
+    { id: "41 - 50", level: "41 - 50" },
+  ];
 
   // Product categories and types
   const categories = [
@@ -100,6 +109,24 @@ const PurchaseOrder = ({ route, navigation }) => {
       console.log(selectedDate);
       //setFormData(selectedDate);
     }
+  };
+
+  const handleCheckboxChange = (value) => {
+   try {
+     setFormData((prev) => ({
+      ...prev,
+      moistureLevel:{...prev.moistureLevel, }
+    }));
+
+    console.log("formData", value);
+
+   } catch (error) {
+    console.log(error);
+    
+   }
+
+    
+    
   };
 
   const handleChange = (name, value) => {
@@ -199,7 +226,6 @@ const PurchaseOrder = ({ route, navigation }) => {
             <Text style={styles.errorText}>{errors.category}</Text>
           )}
         </View>
-
         {/* Product Type Selection */}
         <View style={styles.formGroup}>
           <Text style={styles.label}>Product Name</Text>
@@ -225,7 +251,6 @@ const PurchaseOrder = ({ route, navigation }) => {
             <Text style={styles.errorText}>{errors.productName}</Text>
           )}
         </View>
-
         <View style={styles.formGroup}>
           <Text style={styles.label}>Quantity(tons)</Text>
           <TextInput
@@ -237,7 +262,6 @@ const PurchaseOrder = ({ route, navigation }) => {
             placeholderTextColor={Colors.secondaryText}
           />
         </View>
-
         {/* Price Information */}
         <View style={styles.priceContainer}>
           <View style={styles.priceBox}>
@@ -253,7 +277,6 @@ const PurchaseOrder = ({ route, navigation }) => {
             </Text>
           </View>
         </View>
-
         <View style={styles.formGroup}>
           <Text style={styles.label}>Preferred Variety</Text>
           <View style={styles.pickerContainer}>
@@ -270,18 +293,53 @@ const PurchaseOrder = ({ route, navigation }) => {
           </View>
         </View>
 
-        <View style={styles.formGroup}>
+        {/* Options Section */}
+        <View style={styles.demographicSection}>
           <Text style={styles.label}>Acceptable Moisture Level</Text>
+          <View style={styles.optionsContainer}>
+            {options.map((option) => (
+              <View key={option.id} style={styles.optionRow}>
+                <Checkbox
+                  status={
+                    formData.moistureLevel === option.level
+                      ? "checked"
+                      : "unchecked"
+                  }
+                  onPress={(value) => handleChange("moistureLevel", value)}
+                />
+                <Text>{option.level}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+
+        {/* Additional Information */}
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Quality Grade</Text>
           <View style={styles.pickerContainer}>
             <Picker
-              selectedValue={formData.moistureLevel}
-              onValueChange={(value) => handleChange("moistureLevel", value)}
+              selectedValue={formData.qualityGrade}
+              onValueChange={(value) => handleChange("qualityGrade", value)}
               style={styles.picker}
             >
-              <Picker.Item label="Select " value="" />
-              <Picker.Item label="Level A" value="Level A" />
-              <Picker.Item label="Level B" value="Level B" />
-              <Picker.Item label="Level C" value="Level C" />
+              <Picker.Item label="Grade A" value="A" />
+              <Picker.Item label="Grade B" value="B" />
+              <Picker.Item label="Grade C" value="C" />
+            </Picker>
+          </View>
+        </View>
+
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Packaging Type</Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={formData.packagingType}
+              onValueChange={(value) => handleChange("packagingType", value)}
+              style={styles.picker}
+            >
+              <Picker.Item label="Sack" value="Sack" />
+              <Picker.Item label="Crate" value="Crate" />
+              <Picker.Item label="Basket" value="Basket" />
             </Picker>
           </View>
         </View>
@@ -432,6 +490,27 @@ const styles = StyleSheet.create({
   requiredLabel: {
     color: Colors.error,
   },
+
+  demographicSection: {
+    marginBottom: 16,
+    backgroundColor: "#fff",
+    padding: 12,
+    borderRadius: 8,
+    elevation: 2,
+  },
+  demographicLabel: {
+    marginBottom: 8,
+  },
+  optionsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  optionRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "50%",
+    marginBottom: 4,
+  },
   input: {
     backgroundColor: Colors.white,
     borderRadius: 12,
@@ -530,7 +609,6 @@ const styles = StyleSheet.create({
   formCol: {
     flex: 1,
   },
-  
 });
 
 export default PurchaseOrder;

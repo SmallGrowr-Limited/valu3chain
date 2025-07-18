@@ -12,7 +12,7 @@ import { useRouter } from "expo-router";
 import PurchaseOrder from "../../components/productOrder";
 import ProductSeller from "../../components/productSeller";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-// import { Colors } from "../../components/constants/colors";
+
 
 
 const farms = [
@@ -41,6 +41,7 @@ const farms = [
     auditStatus: "Needs Improvement",
   },
 ];
+
 const ProductListingForm = () => {
   const router = useRouter();
   const [selectedTrade, setSelectedTrade] = useState("description");
