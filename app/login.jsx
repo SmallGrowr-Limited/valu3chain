@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
-import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../graphql/mutations/userMutation";
@@ -64,6 +64,13 @@ const Login = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.headerNavgator}>
+        <TouchableOpacity onPress={() => router.navigate("/home")}>
+          <Ionicons name="arrow-back" size={24} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.titleNavigator}>Login</Text>
+        <View style={{ width: 24 }} />
+      </View>
       <View style={styles.content}>
         <View style={styles.brandSection}>
           <Image source={valu3chain} alt="" style={styles.image} />
@@ -138,6 +145,17 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
     marginHorizontal: 10,
+  },
+  headerNavgator: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  titleNavigator: {
+    fontSize: 22,
+    fontWeight: "bold",
+    
   },
   header: {
     // flex: 1,

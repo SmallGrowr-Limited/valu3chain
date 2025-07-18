@@ -87,6 +87,13 @@ const SignupPartner = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.headerNavgator}>
+        <TouchableOpacity onPress={() => router.navigate("/home")}>
+          <Ionicons name="arrow-back" size={24} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.titleNavigator}>Login</Text>
+        <View style={{ width: 24 }} />
+      </View>
       <View style={styles.content}>
         <View style={styles.brandSection}>
           <Image source={valu3chain} alt="" style={styles.image} />
@@ -150,9 +157,7 @@ const SignupPartner = () => {
               <View style={styles.signIn}>
                 <Text style={styles.signInText}>
                   Already have an account?{" "}
-                  <TouchableOpacity
-                    onPress={() => router.navigate("/login")}
-                  >
+                  <TouchableOpacity onPress={() => router.navigate("/login")}>
                     <Text style={[styles.linkText, { marginBottom: -5 }]}>
                       Sign in
                     </Text>
@@ -180,6 +185,16 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
     marginHorizontal: 10,
+  },
+  headerNavgator: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  titleNavigator: {
+    fontSize: 22,
+    fontWeight: "bold",
   },
   header: {
     // flex: 1,
