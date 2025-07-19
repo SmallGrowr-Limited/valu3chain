@@ -173,7 +173,59 @@ const HomeScreen = () => {
 
         {/* Analytics with Graphs */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Farm Analytics</Text>
+          <Text style={styles.sectionTitle}>Commodity Prices</Text>
+          <View style={styles.analyticsContainer}>
+            {analyticsData.map((item) => (
+              <View
+                key={item.id}
+                style={[styles.analyticsCard, { borderTopColor: item.color }]}
+              >
+                <View style={styles.analyticsHeader}>
+                  <FontAwesome5 name={item.icon} size={16} color={item.color} />
+                  <Text style={[styles.analyticsTitle, { color: item.color }]}>
+                    {item.title}
+                  </Text>
+                  {item.trend === "up" && (
+                    <Feather name="trending-up" size={16} color="#4CAF50" />
+                  )}
+                  {item.trend === "down" && (
+                    <Feather name="trending-down" size={16} color="#F44336" />
+                  )}
+                  {item.trend === "neutral" && (
+                    <Feather name="minus" size={16} color="#FFC107" />
+                  )}
+                </View>
+                <Text style={styles.analyticsValue}>{item.value}</Text>
+                <Text
+                  style={[
+                    styles.analyticsChange,
+                    {
+                      color:
+                        item.trend === "up"
+                          ? "#4CAF50"
+                          : item.trend === "down"
+                            ? "#F44336"
+                            : "#FFC107",
+                    },
+                  ]}
+                >
+                  {item.change}
+                </Text>
+                {/* Graph Visualization */}
+                <View style={styles.graphContainer}>
+                  {renderLineGraph(item.data, item.color)}
+                </View>
+                <View style={styles.timePeriod}>
+                  <Text style={styles.timePeriodText}>Last 5 periods</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </View>
+
+        {/* Analytics with Graphs */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Investment Opportunities</Text>
           <View style={styles.analyticsContainer}>
             {analyticsData.map((item) => (
               <View
@@ -224,7 +276,7 @@ const HomeScreen = () => {
         </View>
 
         {/* Features Grid */}
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <Text style={styles.sectionTitle}>Tools & Features</Text>
           <View style={styles.featuresGrid}>
             {features.map((feature) => (
@@ -242,7 +294,7 @@ const HomeScreen = () => {
               </TouchableOpacity>
             ))}
           </View>
-        </View>
+        </View> */}
       </ScrollView>
 
       {/* Auth Modal */}
@@ -319,25 +371,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f9f9f9",
   },
-  //   heroImage: {
-  //     height: 220,
-  //     justifyContent: "flex-end",
-  //   },
-  //   heroOverlay: {
-  //     backgroundColor: "rgba(0,0,0,0.4)",
-  //     padding: 20,
-  //   },
-  //   heroTitle: {
-  //     fontSize: 28,
-  //     fontWeight: "bold",
-  //     color: "white",
-  //     marginBottom: 8,
-  //   },
-  //   heroSubtitle: {
-  //     fontSize: 16,
-  //     color: "white",
-  //     opacity: 0.9,
-  //   },
+  
   heroContainer: {
     height: 220,
     position: "relative",
@@ -450,8 +484,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   timePeriodText: {
-    fontSize: 10,
-    color: "#888",
+    fontSize: 16,
+    color: "#000",
   },
   featuresGrid: {
     flexDirection: "row",

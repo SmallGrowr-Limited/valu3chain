@@ -145,17 +145,18 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
     marginHorizontal: 10,
+    borderRadius: 8,
   },
   headerNavgator: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 16,
+    padding: 16,
   },
   titleNavigator: {
     fontSize: 22,
     fontWeight: "bold",
-    
   },
   header: {
     // flex: 1,
