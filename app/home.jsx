@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -19,6 +18,8 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 import Svg, { Circle, Rect, Path, G } from "react-native-svg";
+import { CommodityPricesSection } from "../components/agent-components/CommodityPrices";
+import { InvestmentOpportunities } from "../components/agent-components/InvestmentOpportunities";
 
 const { width } = Dimensions.get("window");
 
@@ -26,6 +27,17 @@ const HomeScreen = () => {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+
+  const priceData = [
+    { commodity: "Yellow maize", price: "47,000", change: -2.1 },
+    { commodity: "White maize", price: "45,000", change: -4.3 },
+    { commodity: "White beans", price: "103,000", change: -1.9 },
+    { commodity: "Brown beans", price: "105,000", change: -4.5 },
+    { commodity: "Sorghum (dawa)", price: "49,000", change: -3.9 },
+    { commodity: "Soyabeans", price: "83,000", change: -2.3 },
+    { commodity: "Long grain rice", price: "45,000", change: 0 },
+    { commodity: "Short grain rice", price: "41,000", change: 0 },
+  ];
 
   // Check authentication status on component mount
   useEffect(() => {
@@ -42,91 +54,23 @@ const HomeScreen = () => {
   const quickLinks = [
     {
       id: 1,
-      icon: "assessment",
+      icon: "qr-code",
       name: "Scan QR Code",
       component: "FarmReports",
     },
     { id: 2, icon: "wb-sunny", name: "Weather", component: "Weather" },
-    { id: 3, icon: "agriculture", name: "Resources", component: "Equipment" },
-    { id: 4, icon: "headset-mic", name: "Support", component: "Support" },
+    { id: 3, icon: "calendar-month", name: "Planting Calendar", component: "Equipment" },
+    
   ];
 
-  // Analytics data with graph points
-  const analyticsData = [
-    {
-      id: 1,
-      title: "Crop Yield",
-      value: "85%",
-      trend: "up",
-      change: "+5%",
-      icon: "leaf",
-      data: [30, 45, 60, 75, 85], // Yield percentages over last 5 periods
-      color: "#4CAF50",
-    },
-    {
-      id: 2,
-      title: "Revenue",
-      value: "₦24,580",
-      trend: "up",
-      change: "+12%",
-      icon: "dollar-sign",
-      data: [12000, 15000, 18000, 21000, 24580], // Revenue over last 5 periods
-      color: "#2196F3",
-    },
-  ];
 
-  // Features data
-  const features = [
-    { id: 1, name: "Soil Scan", icon: "flask" },
-    { id: 2, name: "Market Prices", icon: "chart-line" },
-    { id: 3, name: "Inventory", icon: "clipboard-list" },
-    { id: 4, name: "Pest Alert", icon: "bug" },
-    { id: 5, name: "Irrigation", icon: "tint" },
-    { id: 6, name: "Crop Plan", icon: "calendar-alt" },
-  ];
 
   const handleLoginSuccess = () => {
     setIsAuthenticated(true);
     setShowAuthModal(false);
   };
 
-  // Function to render a line graph
-  const renderLineGraph = (data, color) => {
-    const graphWidth = (width - 64) / 3 - 32; // Adjusted for padding and margins
-    const graphHeight = 60;
-    const maxValue = Math.max(...data);
-    const minValue = Math.min(...data);
-    const range = maxValue - minValue;
-
-    const points = data
-      .map((value, index) => {
-        const x = (index / (data.length - 1)) * graphWidth;
-        const y = graphHeight - ((value - minValue) / range) * graphHeight;
-        return `${x},${y}`;
-      })
-      .join(" ");
-
-    return (
-      <Svg width={graphWidth} height={graphHeight}>
-        <Path
-          d={`M${points}`}
-          fill="none"
-          stroke={color}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        {/* Add dots at each data point */}
-        {data.map((value, index) => {
-          const x = (index / (data.length - 1)) * graphWidth;
-          const y = graphHeight - ((value - minValue) / range) * graphHeight;
-          return (
-            <Circle key={`point-${index}`} cx={x} cy={y} r="3" fill={color} />
-          );
-        })}
-      </Svg>
-    );
-  };
+  
 
   return (
     <View style={styles.container}>
@@ -171,130 +115,8 @@ const HomeScreen = () => {
           </View>
         </View>
 
-        {/* Analytics with Graphs */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Commodity Prices</Text>
-          <View style={styles.analyticsContainer}>
-            {analyticsData.map((item) => (
-              <View
-                key={item.id}
-                style={[styles.analyticsCard, { borderTopColor: item.color }]}
-              >
-                <View style={styles.analyticsHeader}>
-                  <FontAwesome5 name={item.icon} size={16} color={item.color} />
-                  <Text style={[styles.analyticsTitle, { color: item.color }]}>
-                    {item.title}
-                  </Text>
-                  {item.trend === "up" && (
-                    <Feather name="trending-up" size={16} color="#4CAF50" />
-                  )}
-                  {item.trend === "down" && (
-                    <Feather name="trending-down" size={16} color="#F44336" />
-                  )}
-                  {item.trend === "neutral" && (
-                    <Feather name="minus" size={16} color="#FFC107" />
-                  )}
-                </View>
-                <Text style={styles.analyticsValue}>{item.value}</Text>
-                <Text
-                  style={[
-                    styles.analyticsChange,
-                    {
-                      color:
-                        item.trend === "up"
-                          ? "#4CAF50"
-                          : item.trend === "down"
-                            ? "#F44336"
-                            : "#FFC107",
-                    },
-                  ]}
-                >
-                  {item.change}
-                </Text>
-                {/* Graph Visualization */}
-                <View style={styles.graphContainer}>
-                  {renderLineGraph(item.data, item.color)}
-                </View>
-                <View style={styles.timePeriod}>
-                  <Text style={styles.timePeriodText}>Last 5 periods</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        </View>
-
-        {/* Analytics with Graphs */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Investment Opportunities</Text>
-          <View style={styles.analyticsContainer}>
-            {analyticsData.map((item) => (
-              <View
-                key={item.id}
-                style={[styles.analyticsCard, { borderTopColor: item.color }]}
-              >
-                <View style={styles.analyticsHeader}>
-                  <FontAwesome5 name={item.icon} size={16} color={item.color} />
-                  <Text style={[styles.analyticsTitle, { color: item.color }]}>
-                    {item.title}
-                  </Text>
-                  {item.trend === "up" && (
-                    <Feather name="trending-up" size={16} color="#4CAF50" />
-                  )}
-                  {item.trend === "down" && (
-                    <Feather name="trending-down" size={16} color="#F44336" />
-                  )}
-                  {item.trend === "neutral" && (
-                    <Feather name="minus" size={16} color="#FFC107" />
-                  )}
-                </View>
-                <Text style={styles.analyticsValue}>{item.value}</Text>
-                <Text
-                  style={[
-                    styles.analyticsChange,
-                    {
-                      color:
-                        item.trend === "up"
-                          ? "#4CAF50"
-                          : item.trend === "down"
-                            ? "#F44336"
-                            : "#FFC107",
-                    },
-                  ]}
-                >
-                  {item.change}
-                </Text>
-                {/* Graph Visualization */}
-                <View style={styles.graphContainer}>
-                  {renderLineGraph(item.data, item.color)}
-                </View>
-                <View style={styles.timePeriod}>
-                  <Text style={styles.timePeriodText}>Last 5 periods</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        </View>
-
-        {/* Features Grid */}
-        {/* <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Tools & Features</Text>
-          <View style={styles.featuresGrid}>
-            {features.map((feature) => (
-              <TouchableOpacity
-                key={feature.id}
-                style={styles.featureCard}
-                onPress={() =>
-                  isAuthenticated ? null : setShowAuthModal(true)
-                }
-              >
-                <View style={styles.featureIcon}>
-                  <FontAwesome5 name={feature.icon} size={20} color="#4CAF50" />
-                </View>
-                <Text style={styles.featureText}>{feature.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View> */}
+        <CommodityPricesSection />
+        <InvestmentOpportunities />
       </ScrollView>
 
       {/* Auth Modal */}
@@ -371,7 +193,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f9f9f9",
   },
-  
+
   heroContainer: {
     height: 220,
     position: "relative",
@@ -397,7 +219,7 @@ const styles = StyleSheet.create({
     color: "white",
     opacity: 0.9,
   },
- 
+
   section: {
     padding: 16,
   },
@@ -593,4 +415,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
-
