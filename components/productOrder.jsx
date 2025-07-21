@@ -19,13 +19,8 @@ const PurchaseOrder = ({ route, navigation }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState(new Date());
 
-  const options = [
-    { id: "0 - 10", level: "0 - 10" },
-    { id: "11 - 20", level: "11 - 20" },
-    { id: "21 - 30", level: "21 - 30" },
-    { id: "31 - 40", level: "31 - 40" },
-    { id: "41 - 50", level: "41 - 50" },
-  ];
+
+const options = [1, 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,"Above 20%"];
 
   // Product categories and types
   const categories = [
@@ -169,33 +164,6 @@ const PurchaseOrder = ({ route, navigation }) => {
       contentContainerStyle={styles.scrollContainer}
       showsVerticalScrollIndicator={false}
     >
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Supplier</Text>
-        <Text style={styles.supplierName}>{formData.supplier}</Text>
-      </View>
-      {/* Delivery Information */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Date</Text>
-        <TouchableOpacity
-          style={styles.dateInput}
-          onPress={() => setShowDatePicker(true)}
-        >
-          <MaterialIcons name="date-range" size={20} color={Colors.primary} />
-          <Text style={styles.dateText}>
-            {formData.deliveryDate.toLocaleDateString()}
-          </Text>
-        </TouchableOpacity>
-        {showDatePicker && (
-          <DateTimePicker
-            value={formData.deliveryDate}
-            mode="date"
-            display="default"
-            onChange={handleDateChange}
-            minimumDate={new Date()}
-          />
-        )}
-      </View>
-
       {/* Order Items */}
       <View style={styles.section}>
         {/* Category Selection */}
@@ -294,22 +262,19 @@ const PurchaseOrder = ({ route, navigation }) => {
         </View>
 
         {/* Options Section */}
-        <View style={styles.demographicSection}>
-          <Text style={styles.label}>Acceptable Moisture Level</Text>
-          <View style={styles.optionsContainer}>
-            {options.map((option) => (
-              <View key={option.id} style={styles.optionRow}>
-                <Checkbox
-                  status={
-                    formData.moistureLevel === option.level
-                      ? "checked"
-                      : "unchecked"
-                  }
-                  onPress={(value) => handleChange("moistureLevel", value)}
-                />
-                <Text>{option.level}</Text>
-              </View>
-            ))}
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Moisture Level (%)</Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={formData.moistureLevel}
+              onValueChange={(value) => handleChange("moistureLevel", value)}
+              style={styles.picker}
+            >
+              <Picker.Item label="Select Moisture Level" value="A" />
+              {options.map((option) => (
+                <Picker.Item key={option} label={option} value={option} />
+              ))}
+            </Picker>
           </View>
         </View>
 
