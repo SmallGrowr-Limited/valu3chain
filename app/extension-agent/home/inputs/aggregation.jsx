@@ -18,6 +18,10 @@ const FarmProduceAggregation = () => {
   const [showFarmerList, setShowFarmerList] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFarmerProducts, setShowFarmerProducts] = useState(false);
+  const [targetQuantity, setTargetQuantity] = useState(40);
+  const [selectedCrop, setSelectedCrop] = useState(null);
+  const [aggregationProgress, setAggregationProgress] = useState(0);
+
   const [aggregationData, setAggregationData] = useState({
     farmerId: "",
     farmerName: "",
@@ -170,10 +174,30 @@ const FarmProduceAggregation = () => {
       farmer.phone.includes(searchQuery)
   );
 
+  // Get farmers who have the selected crop
+  const farmersWithSelectedCrop = selectedCrop
+    ? farmers.filter((farmer) =>
+        farmer.products.some((product) => product.id === selectedCrop.id)
+      )
+    : [];
+
   // Get the selected farmer's products
   const selectedFarmerProducts =
     farmers.find((farmer) => farmer.id === aggregationData.farmerId)
       ?.products || [];
+
+  // Calculate aggregation progress
+  useEffect(() => {
+    if (selectedCrop && targetQuantity > 0) {
+      const totalAggregated = selectedProducts
+        .filter((product) => product.id === selectedCrop.id)
+        .reduce((sum, product) => sum + product.quantityAvailable, 0);
+      const progress = Math.min((totalAggregated / targetQuantity) * 100, 100);
+      setAggregationProgress(progress);
+    } else {
+      setAggregationProgress(0);
+    }
+  }, [selectedProducts, targetQuantity, selectedCrop]);
 
   const handleAddProduct = () => {
     if (!currentProduct) return;
@@ -248,8 +272,7 @@ const FarmProduceAggregation = () => {
   };
 
   const addFarmerProduct = (product) => {
-    // Check if product is already added
-    if (selectedProducts.some((p) => p.id === product.id)) return;
+    if (!selectedCrop || product.id !== selectedCrop.id) return;
 
     const productType = productTypes.find((p) => p.id === product.id);
     if (productType) {
@@ -257,6 +280,8 @@ const FarmProduceAggregation = () => {
         ...selectedProducts,
         {
           ...productType,
+          farmerId: aggregationData.farmerId,
+          farmerName: aggregationData.farmerName,
           totalQuantity: product.quantity,
           quantityAvailable: product.quantity,
           moistureLevel: product.moistureLevel,
@@ -290,6 +315,7 @@ const FarmProduceAggregation = () => {
 
     // Reset form
     setSelectedProducts([]);
+    setSelectedCrop(null);
     setAggregationData({
       ...aggregationData,
       farmerId: "",
@@ -298,7 +324,22 @@ const FarmProduceAggregation = () => {
       notes: "",
     });
     setShowFarmerProducts(false);
+    setTargetQuantity(40);
+    setAggregationProgress(0);
   };
+
+  const handleCropSelection = (productId) => {
+    const crop = productTypes.find((p) => p.id === productId);
+    setSelectedCrop(crop);
+    setShowFarmerList(true);
+  };
+
+  // Calculate total aggregated for the selected crop
+  const totalAggregated = selectedCrop
+    ? selectedProducts
+        .filter((product) => product.id === selectedCrop.id)
+        .reduce((sum, product) => sum + product.quantityAvailable, 0)
+    : 0;
 
   return (
     <ScrollView style={styles.container}>
@@ -309,12 +350,71 @@ const FarmProduceAggregation = () => {
         </Text>
       </View>
 
-      {/* Farmer Information */}
+      {/* Crop Selection and Target Quantity */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Farmer Details</Text>
+        <Text style={styles.sectionTitle}>Crop Aggregation</Text>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Select Farmer</Text>
+          <Text style={styles.label}>Select Crop to Aggregate</Text>
+          <Picker
+            selectedValue={selectedCrop?.id || ""}
+            onValueChange={handleCropSelection}
+            style={styles.picker}
+          >
+            <Picker.Item label="Select a crop..." value="" />
+            {productTypes.map((product) => (
+              <Picker.Item
+                key={product.id}
+                label={`${product.name} (${product.category})`}
+                value={product.id}
+              />
+            ))}
+          </Picker>
+        </View>
+
+        {selectedCrop && (
+          <>
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Target Quantity (units)</Text>
+              <TextInput
+                style={styles.input}
+                value={targetQuantity.toString()}
+                onChangeText={(text) => setTargetQuantity(Number(text) || 0)}
+                keyboardType="numeric"
+              />
+            </View>
+
+            <View style={styles.progressContainer}>
+              <View style={styles.progressHeader}>
+                <Text style={styles.progressLabel}>Aggregation Progress</Text>
+                <Text style={styles.progressText}>
+                  {totalAggregated} / {targetQuantity} {selectedCrop.unit}
+                </Text>
+              </View>
+              <View style={styles.progressBar}>
+                <View
+                  style={[
+                    styles.progressFill,
+                    { width: `${aggregationProgress}%` },
+                  ]}
+                />
+              </View>
+              <Text style={styles.progressPercentage}>
+                {Math.round(aggregationProgress)}%
+              </Text>
+            </View>
+          </>
+        )}
+      </View>
+
+      {/* Farmer Selection */}
+      {selectedCrop && (
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Select Farmers</Text>
+          <Text style={styles.sectionSubtitle}>
+            Farmers with {selectedCrop.name}
+          </Text>
+
           <TouchableOpacity
             style={styles.farmerSelectButton}
             onPress={() => setShowFarmerList(!showFarmerList)}
@@ -334,297 +434,306 @@ const FarmProduceAggregation = () => {
               color="#566573"
             />
           </TouchableOpacity>
+
+          {showFarmerList && (
+            <View style={styles.farmerSearchContainer}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search farmers by name, ID or phone"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+              <FlatList
+                data={filteredFarmers.filter((farmer) =>
+                  farmer.products.some((p) => p.id === selectedCrop.id)
+                )}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.farmerListItem}
+                    onPress={() => selectFarmer(item)}
+                  >
+                    <View>
+                      <Text style={styles.farmerName}>{item.name}</Text>
+                      <Text style={styles.farmerDetails}>
+                        ID: {item.id} • {item.phone}
+                      </Text>
+                      <Text style={styles.farmerDetails}>
+                        {item.location} • {item.farmSize}
+                      </Text>
+                      <Text style={styles.farmerProductInfo}>
+                        {
+                          item.products.find((p) => p.id === selectedCrop.id)
+                            .quantity
+                        }{" "}
+                        {selectedCrop.unit} available
+                      </Text>
+                    </View>
+                    {aggregationData.farmerId === item.id && (
+                      <MaterialCommunityIcons
+                        name="check"
+                        size={24}
+                        color="#4CAF50"
+                      />
+                    )}
+                  </TouchableOpacity>
+                )}
+                style={styles.farmerList}
+                contentContainerStyle={{ paddingBottom: 10 }}
+                keyboardShouldPersistTaps="handled"
+              />
+            </View>
+          )}
+
+          {showFarmerProducts && (
+            <View style={styles.farmerProductsSection}>
+              <Text style={styles.sectionSubtitle}>
+                {selectedCrop.name} from {aggregationData.farmerName}
+              </Text>
+
+              {selectedFarmerProducts
+                .filter((product) => product.id === selectedCrop.id)
+                .map((product) => (
+                  <View
+                    key={`${product.id}-${product.quantity}`}
+                    style={styles.farmerProductCard}
+                  >
+                    <View style={styles.farmerProductHeader}>
+                      <Text style={styles.farmerProductName}>
+                        {product.name}
+                      </Text>
+                      <Text style={styles.farmerProductQuantity}>
+                        {product.quantity} {product.unit}
+                      </Text>
+                    </View>
+
+                    <View style={styles.farmerProductDetails}>
+                      <View style={styles.detailRow}>
+                        <Text style={styles.detailLabel}>Moisture Level:</Text>
+                        <Text style={styles.detailValue}>
+                          {product.moistureLevel}
+                        </Text>
+                      </View>
+                      <View style={styles.detailRow}>
+                        <Text style={styles.detailLabel}>Storage:</Text>
+                        <Text style={styles.detailValue}>
+                          {product.storage}
+                        </Text>
+                      </View>
+                      <View style={styles.detailRow}>
+                        <Text style={styles.detailLabel}>Packaging:</Text>
+                        <Text style={styles.detailValue}>
+                          {product.packaging}
+                        </Text>
+                      </View>
+                      <View style={styles.detailRow}>
+                        <Text style={styles.detailLabel}>Price:</Text>
+                        <Text style={styles.detailValue}>
+                          ₦ {product.price.toFixed(2)}/{product.unit}
+                        </Text>
+                      </View>
+                    </View>
+
+                    <TouchableOpacity
+                      style={[
+                        styles.addFarmerProductButton,
+                        totalAggregated >= targetQuantity &&
+                          styles.disabledButton,
+                      ]}
+                      onPress={() => addFarmerProduct(product)}
+                      disabled={
+                        selectedProducts.some(
+                          (p) =>
+                            p.id === product.id &&
+                            p.farmerId === aggregationData.farmerId
+                        ) || totalAggregated >= targetQuantity
+                      }
+                    >
+                      <Text style={styles.addFarmerProductButtonText}>
+                        {selectedProducts.some(
+                          (p) =>
+                            p.id === product.id &&
+                            p.farmerId === aggregationData.farmerId
+                        )
+                          ? "Added"
+                          : totalAggregated >= targetQuantity
+                            ? "Target Reached"
+                            : "Add to Aggregation"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+            </View>
+          )}
         </View>
-
-        {showFarmerList && (
-          <View style={styles.farmerSearchContainer}>
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search farmers by name, ID or phone"
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
-            <FlatList
-              data={filteredFarmers}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={styles.farmerListItem}
-                  onPress={() => selectFarmer(item)}
-                >
-                  <View>
-                    <Text style={styles.farmerName}>{item.name}</Text>
-                    <Text style={styles.farmerDetails}>
-                      ID: {item.id} • {item.phone}
-                    </Text>
-                    <Text style={styles.farmerDetails}>
-                      {item.location} • {item.farmSize}
-                    </Text>
-                  </View>
-                  {aggregationData.farmerId === item.id && (
-                    <MaterialCommunityIcons
-                      name="check"
-                      size={24}
-                      color="#4CAF50"
-                    />
-                  )}
-                </TouchableOpacity>
-              )}
-              style={styles.farmerList}
-              contentContainerStyle={{ paddingBottom: 10 }}
-              keyboardShouldPersistTaps="handled"
-            />
-          </View>
-        )}
-
-        {showFarmerProducts && (
-          <View style={styles.farmerProductsSection}>
-            <Text style={styles.sectionTitle}>Farmer's Products</Text>
-            <Text style={styles.farmerProductsSubtitle}>
-              Available products from {aggregationData.farmerName}
-            </Text>
-
-            {selectedFarmerProducts.map((product) => (
-              <View
-                key={`${product.id}-${product.quantity}`}
-                style={styles.farmerProductCard}
-              >
-                <View style={styles.farmerProductHeader}>
-                  <Text style={styles.farmerProductName}>{product.name}</Text>
-                  <Text style={styles.farmerProductQuantity}>
-                    {product.quantity} {product.unit}
-                  </Text>
-                </View>
-
-                <View style={styles.farmerProductDetails}>
-                  <View style={styles.detailRow}>
-                    <Text style={styles.detailLabel}>Moisture Level:</Text>
-                    <Text style={styles.detailValue}>
-                      {product.moistureLevel}
-                    </Text>
-                  </View>
-                  <View style={styles.detailRow}>
-                    <Text style={styles.detailLabel}>Storage:</Text>
-                    <Text style={styles.detailValue}>{product.storage}</Text>
-                  </View>
-                  <View style={styles.detailRow}>
-                    <Text style={styles.detailLabel}>Packaging:</Text>
-                    <Text style={styles.detailValue}>{product.packaging}</Text>
-                  </View>
-                  <View style={styles.detailRow}>
-                    <Text style={styles.detailLabel}>Price:</Text>
-                    <Text style={styles.detailValue}>
-                      ₦ {product.price.toFixed(2)}/{product.unit}
-                    </Text>
-                  </View>
-                </View>
-
-                <TouchableOpacity
-                  style={styles.addFarmerProductButton}
-                  onPress={() => addFarmerProduct(product)}
-                  disabled={selectedProducts.some((p) => p.id === product.id)}
-                >
-                  <Text style={styles.addFarmerProductButtonText}>
-                    {selectedProducts.some((p) => p.id === product.id)
-                      ? "Added"
-                      : "Add to Aggregation"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View>
-        )}
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Season</Text>
-          <TextInput
-            style={styles.input}
-            value={aggregationData.season}
-            onChangeText={(text) =>
-              setAggregationData({ ...aggregationData, season: text })
-            }
-          />
-        </View>
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Record Date</Text>
-          <TextInput
-            style={styles.input}
-            value={aggregationData.date}
-            onChangeText={(text) =>
-              setAggregationData({ ...aggregationData, date: text })
-            }
-          />
-        </View>
-      </View>
-
-      {/* Product Selection */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Add Harvested Products</Text>
-        <View style={styles.inputRow}>
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={currentProduct}
-              onValueChange={(itemValue) => setCurrentProduct(itemValue)}
-              style={styles.picker}
-            >
-              <Picker.Item label="Select a product..." value="" />
-              {productTypes.map((product) => (
-                <Picker.Item
-                  key={product.id}
-                  label={`${product.name} (${product.category})`}
-                  value={product.id}
-                />
-              ))}
-            </Picker>
-          </View>
-          <TouchableOpacity style={styles.addButton} onPress={handleAddProduct}>
-            <MaterialCommunityIcons name="plus" size={24} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      </View>
+      )}
 
       {/* Selected Products List */}
       {selectedProducts.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Recorded Products</Text>
-          {selectedProducts.map((product) => (
-            <View key={product.id} style={styles.productCard}>
-              <View style={styles.productCardHeader}>
-                <View>
-                  <Text style={styles.productName}>{product.name}</Text>
-                  <Text style={styles.productCategory}>{product.category}</Text>
-                </View>
-                <TouchableOpacity onPress={() => removeProduct(product.id)}>
-                  <MaterialCommunityIcons
-                    name="close"
-                    size={20}
-                    color="#F44336"
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.productDetails}>
-                <View style={styles.detailRow}>
-                  <Text style={styles.detailLabel}>Market Price:</Text>
-                  <Text style={styles.detailValue}>
-                    ₦ {product.currentMarketPrice.toFixed(2)}/{product.unit}
-                  </Text>
-                </View>
-                <View style={styles.detailRow}>
-                  <Text style={styles.detailLabel}>Moisture Threshold:</Text>
-                  <Text style={styles.detailValue}>
-                    {product.moistureThreshold}
-                  </Text>
+          <Text style={styles.sectionTitle}>Aggregated Products</Text>
+          {selectedProducts
+            .filter((product) =>
+              selectedCrop ? product.id === selectedCrop.id : true
+            )
+            .map((product) => (
+              <View
+                key={`${product.id}-${product.farmerId}`}
+                style={styles.productCard}
+              >
+                <View style={styles.productCardHeader}>
+                  <View>
+                    <Text style={styles.productName}>{product.name}</Text>
+                    <Text style={styles.productCategory}>
+                      {product.category}
+                    </Text>
+                    <Text style={styles.farmerInfo}>
+                      From: {product.farmerName}
+                    </Text>
+                  </View>
+                  <TouchableOpacity onPress={() => removeProduct(product.id)}>
+                    <MaterialCommunityIcons
+                      name="close"
+                      size={20}
+                      color="#F44336"
+                    />
+                  </TouchableOpacity>
                 </View>
 
-                <View style={styles.quantityRow}>
-                  <View style={styles.quantityGroup}>
-                    <Text style={styles.quantityLabel}>Total Harvested</Text>
-                    <View style={styles.quantityInputContainer}>
-                      <TextInput
-                        style={styles.quantityInput}
-                        value={product.totalQuantity.toString()}
-                        onChangeText={(text) =>
-                          handleQuantityChange(
-                            product.id,
-                            "totalQuantity",
-                            text
-                          )
-                        }
-                        keyboardType="numeric"
-                      />
-                      <Text style={styles.quantityUnit}>{product.unit}</Text>
+                <View style={styles.productDetails}>
+                  <View style={styles.detailRow}>
+                    <Text style={styles.detailLabel}>Market Price:</Text>
+                    <Text style={styles.detailValue}>
+                      ₦ {product.currentMarketPrice.toFixed(2)}/{product.unit}
+                    </Text>
+                  </View>
+                  <View style={styles.detailRow}>
+                    <Text style={styles.detailLabel}>Moisture Threshold:</Text>
+                    <Text style={styles.detailValue}>
+                      {product.moistureThreshold}
+                    </Text>
+                  </View>
+
+                  <View style={styles.quantityRow}>
+                    <View style={styles.quantityGroup}>
+                      <Text style={styles.quantityLabel}>Total Harvested</Text>
+                      <View style={styles.quantityInputContainer}>
+                        <TextInput
+                          style={styles.quantityInput}
+                          value={product.totalQuantity.toString()}
+                          onChangeText={(text) =>
+                            handleQuantityChange(
+                              product.id,
+                              "totalQuantity",
+                              text
+                            )
+                          }
+                          keyboardType="numeric"
+                        />
+                        <Text style={styles.quantityUnit}>{product.unit}</Text>
+                      </View>
+                    </View>
+
+                    <View style={styles.quantityGroup}>
+                      <Text style={styles.quantityLabel}>
+                        Available to Sell
+                      </Text>
+                      <View style={styles.quantityInputContainer}>
+                        <TextInput
+                          style={styles.quantityInput}
+                          value={product.quantityAvailable.toString()}
+                          onChangeText={(text) =>
+                            handleQuantityChange(
+                              product.id,
+                              "quantityAvailable",
+                              text
+                            )
+                          }
+                          keyboardType="numeric"
+                        />
+                        <Text style={styles.quantityUnit}>{product.unit}</Text>
+                      </View>
                     </View>
                   </View>
 
-                  <View style={styles.quantityGroup}>
-                    <Text style={styles.quantityLabel}>Available to Sell</Text>
-                    <View style={styles.quantityInputContainer}>
-                      <TextInput
-                        style={styles.quantityInput}
-                        value={product.quantityAvailable.toString()}
-                        onChangeText={(text) =>
-                          handleQuantityChange(
-                            product.id,
-                            "quantityAvailable",
-                            text
-                          )
-                        }
-                        keyboardType="numeric"
-                      />
-                      <Text style={styles.quantityUnit}>{product.unit}</Text>
-                    </View>
+                  <View style={styles.moistureRow}>
+                    <Text style={styles.detailLabel}>Moisture Level:</Text>
+                    <TextInput
+                      style={[styles.input, styles.moistureInput]}
+                      value={product.moistureLevel}
+                      onChangeText={(text) =>
+                        handleMoistureChange(product.id, text)
+                      }
+                      placeholder="Enter moisture %"
+                      keyboardType="numeric"
+                    />
+                  </View>
+
+                  <View style={styles.valueRow}>
+                    <Text style={styles.detailLabel}>Estimated Value:</Text>
+                    <Text style={styles.productValue}>
+                      ₦ {product.totalValue.toFixed(2)}
+                    </Text>
                   </View>
                 </View>
-
-                <View style={styles.moistureRow}>
-                  <Text style={styles.detailLabel}>Moisture Level:</Text>
-                  <TextInput
-                    style={[styles.input, styles.moistureInput]}
-                    value={product.moistureLevel}
-                    onChangeText={(text) =>
-                      handleMoistureChange(product.id, text)
-                    }
-                    placeholder="Enter moisture %"
-                    keyboardType="numeric"
-                  />
-                </View>
-
-                <View style={styles.valueRow}>
-                  <Text style={styles.detailLabel}>Estimated Value:</Text>
-                  <Text style={styles.productValue}>
-                    ₦ {product.totalValue.toFixed(2)}
-                  </Text>
-                </View>
               </View>
-            </View>
-          ))}
+            ))}
         </View>
       )}
 
       {/* Summary */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Aggregation Summary</Text>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Farmer:</Text>
-          <Text style={styles.summaryValue}>
-            {aggregationData.farmerName || "Not selected"}
-          </Text>
+      {selectedCrop && (
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Aggregation Summary</Text>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Crop:</Text>
+            <Text style={styles.summaryValue}>{selectedCrop.name}</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Target Quantity:</Text>
+            <Text style={styles.summaryValue}>
+              {targetQuantity} {selectedCrop.unit}
+            </Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Aggregated Quantity:</Text>
+            <Text style={styles.summaryValue}>
+              {totalAggregated} {selectedCrop.unit}
+            </Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Remaining:</Text>
+            <Text style={styles.summaryValue}>
+              {Math.max(0, targetQuantity - totalAggregated)}{" "}
+              {selectedCrop.unit}
+            </Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Farmers Contributed:</Text>
+            <Text style={styles.summaryValue}>
+              {
+                new Set(
+                  selectedProducts
+                    .filter((p) => p.id === selectedCrop.id)
+                    .map((p) => p.farmerId)
+                ).size
+              }
+            </Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Total Estimated Value:</Text>
+            <Text style={[styles.summaryValue, styles.totalValue]}>
+              ₦{" "}
+              {selectedProducts
+                .filter((p) => p.id === selectedCrop.id)
+                .reduce((sum, product) => sum + product.totalValue, 0)
+                .toFixed(2)}
+            </Text>
+          </View>
         </View>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Products Recorded:</Text>
-          <Text style={styles.summaryValue}>{selectedProducts.length}</Text>
-        </View>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Total Harvested:</Text>
-          <Text style={styles.summaryValue}>
-            {selectedProducts.reduce(
-              (sum, product) => sum + product.totalQuantity,
-              0
-            )}{" "}
-            units
-          </Text>
-        </View>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Total Available to Sell:</Text>
-          <Text style={styles.summaryValue}>
-            {selectedProducts.reduce(
-              (sum, product) => sum + product.quantityAvailable,
-              0
-            )}{" "}
-            units
-          </Text>
-        </View>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Total Estimated Value:</Text>
-          <Text style={[styles.summaryValue, styles.totalValue]}>
-            ₦{" "}
-            {selectedProducts
-              .reduce((sum, product) => sum + product.totalValue, 0)
-              .toFixed(2)}
-          </Text>
-        </View>
+      )}
 
+      <View style={styles.section}>
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Notes</Text>
           <TextInput
@@ -707,6 +816,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#E8F5E9",
   },
+  sectionSubtitle: {
+    fontSize: 14,
+    color: "#689F38",
+    marginBottom: 15,
+    fontWeight: "500",
+  },
   inputGroup: {
     marginBottom: 18,
   },
@@ -784,6 +899,12 @@ const styles = StyleSheet.create({
     color: "#78909C",
     marginBottom: 2,
   },
+  farmerProductInfo: {
+    fontSize: 12,
+    color: "#2E7D32",
+    fontWeight: "600",
+    marginTop: 4,
+  },
   inputRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -846,6 +967,11 @@ const styles = StyleSheet.create({
     color: "#689F38",
     fontWeight: "500",
     marginTop: 2,
+  },
+  farmerInfo: {
+    fontSize: 12,
+    color: "#546E7A",
+    marginTop: 4,
   },
   productDetails: {
     marginBottom: 5,
@@ -975,23 +1101,9 @@ const styles = StyleSheet.create({
   saveIcon: {
     marginLeft: 5,
   },
-  // New styles for farmer products section
+  // Farmer products section
   farmerProductsSection: {
-    marginBottom: 25,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 12,
-    padding: 18,
-    shadowColor: "#2E7D32",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 3,
-  },
-  farmerProductsSubtitle: {
-    fontSize: 14,
-    color: "#689F38",
     marginBottom: 15,
-    fontWeight: "500",
   },
   farmerProductCard: {
     backgroundColor: "#F5F9F7",
@@ -1032,7 +1144,43 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
   },
+  // Progress bar styles
+  progressContainer: {
+    marginTop: 15,
+    marginBottom: 10,
+  },
+  progressHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+  progressLabel: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#455A64",
+  },
+  progressText: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#2E7D32",
+  },
+  progressBar: {
+    height: 10,
+    backgroundColor: "#E0E8E5",
+    borderRadius: 5,
+    overflow: "hidden",
+    marginBottom: 5,
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#4CAF50",
+    borderRadius: 5,
+  },
+  progressPercentage: {
+    textAlign: "right",
+    fontSize: 12,
+    color: "#78909C",
+  },
 });
 
 export default FarmProduceAggregation;
-
