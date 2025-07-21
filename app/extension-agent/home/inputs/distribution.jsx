@@ -493,66 +493,6 @@ const FarmInputDistribution = () => {
         </View>
       </View>
 
-      {/* Verification Code */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Verification</Text>
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Verification Code</Text>
-          <TextInput
-            style={styles.input}
-            value={verificationCode}
-            onChangeText={setVerificationCode}
-            placeholder="Enter code sent to farmer"
-          />
-          <TouchableOpacity
-            style={styles.verifyButton}
-            onPress={verifyCode}
-            disabled={!verificationCode || !distributionData.farmerId}
-          >
-            <Text style={styles.verifyButtonText}>
-              {isVerified ? "Verified" : "Verify Code"}
-            </Text>
-            {isVerified && (
-              <MaterialCommunityIcons
-                name="check-circle"
-                size={20}
-                color="#fff"
-                style={{ marginLeft: 5 }}
-              />
-            )}
-          </TouchableOpacity>
-          {isVerified && (
-            <Text style={styles.verifiedText}>Code verified successfully!</Text>
-          )}
-        </View>
-      </View>
-
-      {/* Input Selection */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Select Farm Inputs</Text>
-        <View style={styles.inputRow}>
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={currentInput}
-              onValueChange={(itemValue) => setCurrentInput(itemValue)}
-              style={styles.picker}
-            >
-              <Picker.Item label="Select an input..." value="" />
-              {inputTypes.map((input) => (
-                <Picker.Item
-                  key={input.id}
-                  label={`${input.name} (${input.producer})`}
-                  value={input.id}
-                />
-              ))}
-            </Picker>
-          </View>
-          <TouchableOpacity style={styles.addButton} onPress={handleAddInput}>
-            <MaterialCommunityIcons name="plus" size={24} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      </View>
-
       {/* Selected Inputs List */}
       {selectedInputs.length > 0 && (
         <View style={styles.section}>
@@ -671,6 +611,40 @@ const FarmInputDistribution = () => {
             placeholder="Any additional notes..."
             multiline
           />
+        </View>
+      </View>
+
+      {/* Verification Code */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Verification</Text>
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Verification Code</Text>
+          <TextInput
+            style={styles.input}
+            value={verificationCode}
+            onChangeText={setVerificationCode}
+            placeholder="Enter code sent to farmer"
+          />
+          <TouchableOpacity
+            style={styles.verifyButton}
+            onPress={verifyCode}
+            disabled={!verificationCode || !distributionData.farmerId}
+          >
+            <Text style={styles.verifyButtonText}>
+              {isVerified ? "Verified" : "Verify Code"}
+            </Text>
+            {isVerified && (
+              <MaterialCommunityIcons
+                name="check-circle"
+                size={20}
+                color="#fff"
+                style={{ marginLeft: 5 }}
+              />
+            )}
+          </TouchableOpacity>
+          {isVerified && (
+            <Text style={styles.verifiedText}>Code verified successfully!</Text>
+          )}
         </View>
       </View>
 
