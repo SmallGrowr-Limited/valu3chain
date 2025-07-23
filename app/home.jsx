@@ -116,7 +116,10 @@ const HomeScreen = () => {
         </View>
 
         <CommodityPricesSection />
-        <InvestmentOpportunities />
+        <InvestmentOpportunities
+          isAuthenticated={isAuthenticated}
+          setShowAuthModal={setShowAuthModal}
+        />
       </ScrollView>
 
       {/* Auth Modal */}

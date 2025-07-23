@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 
-export const InvestmentOpportunities = () => {
+export const InvestmentOpportunities = ({
+  isAuthenticated,
+  showAuthModal,
+  setShowAuthModal,
+}) => {
   const [selectedInvestment, setSelectedInvestment] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -77,7 +81,12 @@ export const InvestmentOpportunities = () => {
   const openInvestmentDetail = (investment) => {
     setSelectedInvestment(investment);
     setModalVisible(true);
+   
   };
+
+  const handleMakeInvestment = ()=>{
+    !isAuthenticated ? setShowAuthModal(true) : setModalVisible(true);
+  }
 
   return (
     <View style={styles.container}>
@@ -193,7 +202,10 @@ export const InvestmentOpportunities = () => {
               <Text style={styles.sectionTitle}>Managed By</Text>
               <Text style={styles.manager}>{selectedInvestment.manager}</Text>
 
-              <TouchableOpacity style={styles.investButton}>
+              <TouchableOpacity
+                style={styles.investButton}
+                onPress={handleMakeInvestment}
+              >
                 <Text style={styles.investButtonText}>Invest Now</Text>
               </TouchableOpacity>
             </View>
