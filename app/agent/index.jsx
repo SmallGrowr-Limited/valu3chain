@@ -69,7 +69,7 @@ export default function AgentDashboard() {
           query: GET_FARMERS_BY_AGENT,
           variables: { agentId: userId },
         });
-        console.log("farmerData:", data);
+        
         setFarmers(data.farmersByAgent);
         setAssignedFarmers(data.farmersByAgent.length);
         dispatch(getAllFarmers(data.farmersByAgent));

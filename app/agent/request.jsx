@@ -7,13 +7,15 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import DemandForm from "../../components/forms/farmerDemand";
+//import { farmers } from "../../components/data";
 import {useSelector} from "react-redux"
 
 export default function FarmerDemand() {
-  const farmers = useSelector(state=>state.farmer.allFarmers)
+ const farmersData = useSelector((state) => state.farmer.allFarmers);
+ const [farmers, setFarmers] = useState([])
   const [requestData, setRequestData] = useState({
     farmerId: "",
     farmerName: "",
@@ -28,13 +30,16 @@ export default function FarmerDemand() {
   });
 
   const [selectedFarmer, setSelectedFarmer] = useState("");
+  
   const farmersNameList = farmers.map((item) => {
-    return item.name;
+    return item.fullName;
   });
 
   const handleSelectFarmer = (value) => setSelectedFarmer(value);
   //filter farmer details selected from the dropdown input
-  let farmerDetail = farmers.filter((farmer) => farmer.name == selectedFarmer);
+  let farmerDetail = farmers.filter(
+    (farmer) => farmer.name == selectedFarmer
+  );
 
   const handleChange = (name, value) => {
     setRequestData((prev) => ({ ...prev, [name]: value }));
@@ -88,7 +93,11 @@ export default function FarmerDemand() {
     { key: "4", value: "Not Applicable" },
   ];
 
+  useEffect(() => {
+    
+    setFarmers(farmersData);
   
+  }, [farmersData]);
 
   return (
     <SafeAreaView style={styles.container}>
