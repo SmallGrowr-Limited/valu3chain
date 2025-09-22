@@ -21,11 +21,10 @@ import {
   GET_FARMER,
   GET_FARMERS_BY_AGENT,
 } from "../../graphql/queries/farmerQuery";
-import { getAllFarmers } from "../../redux/slices/farmerSlice";
+import { getAllFarmers } from "../../redux/slices/farmerSlice"; //save all farmers registerred by agent
 import { getUserData } from "../utils/storage";
 
 export default function AgentDashboard() {
-  // const [loading, setLoading] = useState(false);
   const [fullName, setFullName] = useState("");
   const [agentId, setAgentId] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);

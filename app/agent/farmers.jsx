@@ -10,13 +10,10 @@ import {
 import React, { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
-import { useQuery } from "@apollo/client";
-import { GET_FARMERS, GET_FARMER } from "../../graphql/queries/farmerQuery";
 import SearchBar from "../../components/searchbar";
 
 export default function Farmers() {
   const farmers = useSelector((state) => state.farmer.allFarmers);
-  const { data, loading, error } = useQuery(GET_FARMERS);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
 

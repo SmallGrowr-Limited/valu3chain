@@ -10,21 +10,10 @@ import {
 import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import DemandForm from "../../components/forms/farmerDemand";
-import { farmers } from "../../components/data";
+import {useSelector} from "react-redux"
 
 export default function FarmerDemand() {
-  // const [farmerId, setFarmerId] = useState("");
-  // const [farmerName, setFarmerName] = useState("");
-  // const [requestType, setRequestType] = useState("");
-  // const [termOfDemand, setTermOfDemand] = useState("");
-  // const [equity, setEquity] = useState("");
-  // const [itemType, setItemType] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [metric, setMetric] = useState("");
-  // const [quantity, setQuantity] = useState("");
-  // const [amount, setAmount] = useState("");
-  // const [requiredInput, setRequiredInput] = useState("");
-
+  const farmers = useSelector(state=>state.farmer.allFarmers)
   const [requestData, setRequestData] = useState({
     farmerId: "",
     farmerName: "",
