@@ -18,6 +18,7 @@ import { LOGIN_USER } from "../graphql/mutations/userMutation";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../redux/slices/authSlice";
 import valu3chain from "../assets/images/resources/valu3chain.png";
+import { saveUserData } from "./utils/storage";
 
 const Login = () => {
   const router = useRouter();
@@ -49,6 +50,9 @@ const Login = () => {
       });
 
       dispatch(loginSuccess(data.login));
+      
+      //persist data in local storage with session to expire in 2 days
+      await saveUserData(data.login);
 
       if (data.login.user.role === "Extention Agent") {
         router.navigate("/agent");

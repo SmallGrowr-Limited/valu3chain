@@ -29,6 +29,10 @@ export default function Farmers() {
     );
   });
 
+  useEffect(()=>{
+    console.log("data:", data)
+  })
+
   const renderItem = ({ item }) => (
     <View style={styles.rowItem}>
       <View style={styles.nameFieldWrap}>

@@ -22,6 +22,7 @@ import {
   GET_FARMERS_BY_AGENT,
 } from "../../graphql/queries/farmerQuery";
 import { getAllFarmers } from "../../redux/slices/farmerSlice";
+import { getUserData } from "../utils/storage";
 
 export default function AgentDashboard() {
   // const [loading, setLoading] = useState(false);
@@ -36,37 +37,90 @@ export default function AgentDashboard() {
   const [farmers, setFarmers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const user = useSelector((state) => state.auth.user);
+  //const user = useSelector((state) => state.auth.user);
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const fetchFarmers = async () => {
+  // Get user data from localStorage instead of Redux
+  const loadUserData = async () => {
     try {
-      setLoading(true);
-      const { data } = await client.query({
-        query: GET_FARMERS_BY_AGENT,
-        variables: { agentId },
-      });
-      setFarmers(data.farmersByAgent);
-      setAssignedFarmers(data.farmersByAgent.length);
-      dispatch(getAllFarmers(data.farmersByAgent)); //save all farmers to farmer slice
+      const userData = await getUserData();
+      if (userData) {
+        setFullName(userData.user.email);
+        setAgentId(userData.user.userId);
+        return userData.user.userId;
+      } else {
+        // If no user data found, redirect to login
+        router.navigate("/login");
+        return null;
+      }
     } catch (error) {
-      console.log(error.message);
-    } finally {
-      setLoading(false);
+      console.error("Error loading user data:", error);
+      router.navigate("/login");
+      return null;
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      setFullName(user.email);
-      setAgentId(user.userId);
-    }
+    const fetchFarmers = async (userId) => {
+      if (!userId) return;
 
-    if (agentId) {
-      fetchFarmers();
-    }
-  }, [agentId]);
+      try {
+        setLoading(true);
+        const { data } = await client.query({
+          query: GET_FARMERS_BY_AGENT,
+          variables: { agentId: userId },
+        });
+        console.log("farmerData:", data);
+        setFarmers(data.farmersByAgent);
+        setAssignedFarmers(data.farmersByAgent.length);
+        dispatch(getAllFarmers(data.farmersByAgent));
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+  // const fetchFarmers = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const { data } = await client.query({
+  //       query: GET_FARMERS_BY_AGENT,
+  //       variables: { agentId },
+  //     });
+  //     console.log("farmerData:", data);
+  //     setFarmers(data.farmersByAgent);
+  //     setAssignedFarmers(data.farmersByAgent.length);
+  //     dispatch(getAllFarmers(data.farmersByAgent)); //save all farmers to farmer slice
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (user) {
+  //     setFullName(user.email);
+  //     setAgentId(user.userId);
+  //   }
+
+  //   fetchFarmers();
+  //   if (agentId) {
+  //     fetchFarmers();
+  //   }
+  // }, [agentId]);
+
+   useEffect(() => {
+     const initializeDashboard = async () => {
+       const userId = await loadUserData();
+       if (userId) {
+         fetchFarmers(userId);
+       }
+     };
+
+     initializeDashboard();
+   }, []);
 
   const renderItem = ({ item }) => (
     <View style={styles.rowItem}>

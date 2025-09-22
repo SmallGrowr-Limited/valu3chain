@@ -68,9 +68,9 @@ export default function FarmerDemand() {
   ];
 
   const itemtype = [
-    { key: "1", value: "Fund" },
+    // { key: "1", value: "Fund" },
     { key: "2", value: "Farm Inputs" },
-    { key: "3", value: "Equipment" },
+    // { key: "3", value: "Equipment" },
   ];
 
   const input = [

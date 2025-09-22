@@ -27,6 +27,7 @@ export default function FarmAudit() {
   const [isChecked10, setChecked10] = useState(false);
 const [selectedFarmer, setSelectedFarmer] = useState("");
   //Return list of farmer names to be displayd in Select dropdown
+  // TODO: GET NAMES OF FARMER FROM DATABASE; localstorage
   const farmersNameList = farmers.map((item) => {
     return item.name;
   });
